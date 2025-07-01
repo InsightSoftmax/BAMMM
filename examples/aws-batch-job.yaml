@@ -1,0 +1,57 @@
+apiVersion: batch.unified.io/v1alpha1
+kind: BatchJob
+metadata:
+  name: aws-batch-example
+  labels:
+    app: bammm-example
+spec:
+  queue: aws-batch-queue
+  priorityClassName: normal
+  schedulingSpec:
+    maxRetry: 3
+    timeout: PT1H
+  tasks:
+    - name: batch-task
+      replicas: 1
+      pod:
+        containers:
+          - name: main
+            image: amazon/amazon-ecs-sample:latest
+            command: ["sh", "-c"]
+            args:
+              - |
+                echo "Running on AWS Batch"
+                echo "Job ID: $AWS_BATCH_JOB_ID"
+                echo "Job Queue: $AWS_BATCH_JQ_NAME"
+                echo "Job Definition: $AWS_BATCH_JOB_DEFINITION"
+                sleep 300
+            resources:
+              requests:
+                cpu: "1"
+                memory: "2Gi"
+              limits:
+                cpu: "2"
+                memory: "4Gi"
+        restartPolicy: Never
+  override:
+    awsBatch:
+      jobDefinition: "bammm-job-definition:1"
+      jobQueue: "bammm-job-queue"
+      jobName: "bammm-example-job"
+      containerOverrides:
+        - name: main
+          command: ["sh", "-c", "echo 'Custom AWS Batch command' && sleep 300"]
+          resourceRequirements:
+            - type: "VCPU"
+              value: "2"
+            - type: "MEMORY"
+              value: "4096"
+      parameters:
+        input_file: "s3://my-bucket/input/data.txt"
+        output_file: "s3://my-bucket/output/result.txt"
+      retryStrategy:
+        attempts: 3
+        evaluateOnExit:
+          - action: "RETRY"
+            onExitCode: "1"
+            onReason: ".*" 

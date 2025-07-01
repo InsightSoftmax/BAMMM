@@ -1,0 +1,36 @@
+apiVersion: batch.unified.io/v1alpha1
+kind: BatchJob
+metadata:
+  name: array-example
+  labels:
+    app: bammm-example
+spec:
+  queue: default
+  priorityClassName: normal
+  array:
+    size: 5
+    maxParallelism: 2
+  tasks:
+    - name: array-task
+      replicas: 1
+      pod:
+        containers:
+          - name: worker
+            image: busybox:latest
+            command: ["sh", "-c"]
+            args: 
+              - |
+                echo "Processing array job $ARRAY_INDEX"
+                sleep 10
+                echo "Array job $ARRAY_INDEX completed"
+            env:
+              - name: ARRAY_INDEX
+                value: "0"  # Will be replaced with actual array index
+            resources:
+              requests:
+                cpu: "500m"
+                memory: "512Mi"
+              limits:
+                cpu: "1000m"
+                memory: "1Gi"
+        restartPolicy: Never 

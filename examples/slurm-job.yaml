@@ -1,0 +1,47 @@
+apiVersion: batch.unified.io/v1alpha1
+kind: BatchJob
+metadata:
+  name: slurm-example
+  labels:
+    app: bammm-example
+spec:
+  queue: standard
+  priorityClassName: normal
+  notifications:
+    email: user@example.com
+    onEvents: ["BEGIN", "END", "FAIL"]
+  tasks:
+    - name: slurm-task
+      replicas: 1
+      pod:
+        containers:
+          - name: main
+            image: ubuntu:latest
+            command: ["sh", "-c"]
+            args:
+              - |
+                echo "Running on Slurm partition: $SLURM_PARTITION"
+                echo "Job ID: $SLURM_JOB_ID"
+                echo "Node: $SLURM_NODELIST"
+                sleep 120
+            resources:
+              requests:
+                cpu: "2"
+                memory: "4Gi"
+              limits:
+                cpu: "4"
+                memory: "8Gi"
+        restartPolicy: Never
+  override:
+    slurm:
+      partition: standard
+      time: "00:30:00"
+      nodes: 1
+      ntasks: 1
+      cpusPerTask: 4
+      mem: "8G"
+      mailType: "END,FAIL"
+      mailUser: "user@example.com"
+      output: "slurm-%j.out"
+      error: "slurm-%j.err"
+      exclusive: false 

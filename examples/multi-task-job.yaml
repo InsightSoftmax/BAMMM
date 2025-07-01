@@ -1,0 +1,58 @@
+apiVersion: batch.unified.io/v1alpha1
+kind: BatchJob
+metadata:
+  name: multi-task-example
+  labels:
+    app: bammm-example
+spec:
+  queue: default
+  priorityClassName: high
+  schedulingSpec:
+    minAvailable: 4  # Gang scheduling: all tasks must start together
+    maxRetry: 2
+    timeout: PT30M
+  tasks:
+    - name: data-prep
+      replicas: 1
+      pod:
+        containers:
+          - name: prep
+            image: alpine:latest
+            command: ["sh", "-c"]
+            args:
+              - |
+                echo "Preparing data..."
+                sleep 30
+                echo "Data preparation completed"
+            resources:
+              requests:
+                cpu: "1"
+                memory: "1Gi"
+              limits:
+                cpu: "2"
+                memory: "2Gi"
+        restartPolicy: Never
+    
+    - name: compute-worker
+      replicas: 3
+      pod:
+        containers:
+          - name: worker
+            image: busybox:latest
+            command: ["sh", "-c"]
+            args:
+              - |
+                echo "Starting compute worker $WORKER_ID"
+                sleep 60
+                echo "Compute worker $WORKER_ID completed"
+            env:
+              - name: WORKER_ID
+                value: "0"  # Will be replaced with worker index
+            resources:
+              requests:
+                cpu: "2"
+                memory: "2Gi"
+              limits:
+                cpu: "4"
+                memory: "4Gi"
+        restartPolicy: Never 
