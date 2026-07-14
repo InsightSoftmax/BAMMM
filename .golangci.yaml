@@ -1,0 +1,42 @@
+version: "2"
+
+linters:
+  default: none
+  enable:
+    - errcheck       # unchecked errors
+    - govet          # go vet checks
+    - staticcheck    # SA, S, QF, ST checks
+    - revive         # opinionated Go style
+    - misspell       # common English misspellings
+    - goimports      # import grouping / formatting
+    - godot          # period at end of comments
+    - noctx          # http calls without context
+    - bodyclose      # http response body not closed
+
+linters-settings:
+  revive:
+    rules:
+      - name: exported
+        arguments:
+          - disableStutteringCheck  # allow e.g. splat.SplatJob if ever needed
+      - name: unused-parameter
+      - name: error-return
+      - name: error-strings
+
+  godot:
+    scope: declarations
+    capital: false
+
+  misspell:
+    locale: US
+
+issues:
+  exclude-rules:
+    # Test files get more latitude.
+    - path: "_test\\.go"
+      linters: [errcheck, godot]
+    # Generated files.
+    - path: "zz_generated"
+      linters: [all]
+  max-issues-per-linter: 0
+  max-same-issues: 0

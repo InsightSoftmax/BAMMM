@@ -1,0 +1,188 @@
+# Volcano vcjob — produced by:
+#   bammm convert --from slurm --to volcano source.sh
+# or equivalently:
+#   bammm convert --to volcano intermediate.yaml
+#
+# TRANSLATION NOTES (SPLAT → Volcano):
+#
+# [AUTO] resources.nodes=4, tasks=32, tasks_per_node=8 → 4 worker pods × 8 processes each
+#        Represented as 4 replicas of the "worker" task (one pod per node, 8 ranks per pod)
+# [AUTO] resources.gpu.count=2 → nvidia.com/gpu: "2" per container
+# [AUTO] resources.gpu.type=a100 → nodeSelector advisory (no Volcano-native GPU model selector)
+# [AUTO] placement.constraint → nodeSelector (split on &; each term becomes a label key lookup)
+# [AUTO] distributed_framework: pytorch → plugins: [pytorch] injected
+# [AUTO] gang.min_available=32 → spec.minAvailable=4 (one pod per node; Volcano counts pods, not tasks)
+#        NOTE: Volcano minAvailable counts PODS; 4 pods × 8 ranks = 32 tasks.
+# [AUTO] schedule.walltime=PT8H → activeDeadlineSeconds=28800
+# [AUTO] schedule.priority → spec.priorityClassName="normal" (500 → normal; 600+ → high-priority)
+# [AUTO] schedule.queue → spec.queue (queue must exist in Volcano as a Queue CRD)
+#
+# [DROPPED] notifications.email — Volcano has no email notification mechanism. IGNORED.
+# [DROPPED] extensions.slurm.time_min — Slurm-only backfill hint. IGNORED.
+# [DROPPED] extensions.slurm.signal_before_end — No Volcano equivalent. IGNORED.
+# [DROPPED] schedule.qos — No direct Volcano equivalent; mapped to priorityClassName.
+# [DROPPED] output.stdout/stderr paths — Volcano uses pod log streams; paths ignored.
+#           Use `kubectl logs` or a logging sidecar to collect output.
+# [DROPPED] placement.constraint infiniband/avx512 — Mapped to advisory nodeSelector.
+#           These will only work if the cluster admin has labeled nodes accordingly.
+#
+# [WARN] The original script used `srun` and `module load`. The generated job uses
+#        `torchrun` inside the NVIDIA PyTorch container. The script body is embedded
+#        as a ConfigMap comment for reference but NOT executed by this job.
+#
+# REQUIRED MANUAL STEPS:
+#   1. Verify the Volcano Queue "gpu-hpc" exists: kubectl get queue gpu-hpc
+#   2. Verify the PriorityClass "normal" exists: kubectl get priorityclass normal
+#   3. Verify nodeSelector labels match your cluster's node labels
+#   4. Replace image "nvcr.io/nvidia/pytorch:24.01-py3" with your preferred image
+#   5. Mount /scratch/data/squad and /scratch/checkpoints via PVC or NFS volumes
+
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: bert-finetune
+  namespace: default
+  annotations:
+    bammm.io/source-format: slurm
+    bammm.io/original-partition: gpu-hpc
+    bammm.io/original-account: nlp-research
+spec:
+  schedulerName: volcano
+  queue: gpu-hpc
+  priorityClassName: normal
+  minAvailable: 4              # 4 pods (gang: all pods start or none start)
+  maxRetry: 0
+  ttlSecondsAfterFinished: 3600
+  activeDeadlineSeconds: 28800  # PT8H
+
+  plugins:
+    env: []                    # injects VC_TASK_INDEX, VC_TASK_NUM, VC_JOB_NAME etc.
+    svc: []                    # headless Service for pod DNS discovery
+    pytorch:
+      - "--master=master"
+      - "--worker=worker"
+      - "--port=29500"
+
+  policies:
+    - event: PodFailed
+      action: RestartJob
+    - event: PodEvicted
+      action: RestartJob
+
+  tasks:
+    - name: master
+      replicas: 1
+      policies:
+        - event: TaskCompleted
+          action: CompleteJob
+      template:
+        spec:
+          nodeSelector:
+            feature.node.kubernetes.io/network-infiniband.capable: "true"  # advisory
+          tolerations:
+            - key: nvidia.com/gpu
+              operator: Exists
+              effect: NoSchedule
+          containers:
+            - name: trainer
+              image: nvcr.io/nvidia/pytorch:24.01-py3
+              command:
+                - torchrun
+                - "--nproc_per_node=8"
+                - "--nnodes=4"
+                - "--node_rank=0"
+                - "--master_addr=$(VC_MASTER_ADDR)"
+                - "--master_port=29500"
+                - /workspace/train.py
+                - "--model=bert-large-uncased"
+                - "--dataset=/data/squad"
+                - "--output-dir=/checkpoints/bert-$(VC_JOB_NAME)"
+                - "--epochs=5"
+                - "--batch-size=32"
+              env:
+                - name: OMP_NUM_THREADS
+                  value: "6"
+                - name: NCCL_DEBUG
+                  value: INFO
+                - name: NCCL_IB_DISABLE
+                  value: "0"
+              resources:
+                requests:
+                  cpu: "6"
+                  memory: 48Gi
+                  nvidia.com/gpu: "2"
+                limits:
+                  cpu: "6"
+                  memory: 48Gi
+                  nvidia.com/gpu: "2"
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                  readOnly: true
+                - name: checkpoints
+                  mountPath: /checkpoints
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: squad-dataset-pvc   # MANUAL: create this PVC
+            - name: checkpoints
+              persistentVolumeClaim:
+                claimName: bert-checkpoints-pvc  # MANUAL: create this PVC
+          restartPolicy: Never
+
+    - name: worker
+      replicas: 3              # total 4 pods (1 master + 3 workers)
+      template:
+        spec:
+          nodeSelector:
+            feature.node.kubernetes.io/network-infiniband.capable: "true"
+          tolerations:
+            - key: nvidia.com/gpu
+              operator: Exists
+              effect: NoSchedule
+          containers:
+            - name: trainer
+              image: nvcr.io/nvidia/pytorch:24.01-py3
+              command:
+                - torchrun
+                - "--nproc_per_node=8"
+                - "--nnodes=4"
+                - "--node_rank=$(VC_TASK_INDEX)"
+                - "--master_addr=$(VC_MASTER_ADDR)"
+                - "--master_port=29500"
+                - /workspace/train.py
+                - "--model=bert-large-uncased"
+                - "--dataset=/data/squad"
+                - "--output-dir=/checkpoints/bert-$(VC_JOB_NAME)"
+                - "--epochs=5"
+                - "--batch-size=32"
+              env:
+                - name: OMP_NUM_THREADS
+                  value: "6"
+                - name: NCCL_DEBUG
+                  value: INFO
+                - name: NCCL_IB_DISABLE
+                  value: "0"
+              resources:
+                requests:
+                  cpu: "6"
+                  memory: 48Gi
+                  nvidia.com/gpu: "2"
+                limits:
+                  cpu: "6"
+                  memory: 48Gi
+                  nvidia.com/gpu: "2"
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                  readOnly: true
+                - name: checkpoints
+                  mountPath: /checkpoints
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: squad-dataset-pvc
+            - name: checkpoints
+              persistentVolumeClaim:
+                claimName: bert-checkpoints-pvc
+          restartPolicy: Never

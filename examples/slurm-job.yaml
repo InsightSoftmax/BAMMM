@@ -1,47 +1,63 @@
-apiVersion: batch.unified.io/v1alpha1
-kind: BatchJob
+# Slurm job example
+# Shows a Slurm-native job authored in SPLAT format.
+# Converting this to another scheduler will preserve all Tier 1 and Tier 2 fields;
+# Slurm-specific extensions (time_min, wckey, burst_buffer, etc.) will be dropped
+# with a warning when targeting non-Slurm schedulers.
+
+apiVersion: bammm.io/v1alpha1
+kind: Job
 metadata:
   name: slurm-example
   labels:
     app: bammm-example
 spec:
-  queue: standard
-  priorityClassName: normal
+  schedule:
+    queue: standard
+    account: my-project
+    priority: 500
+    walltime: PT30M
+    walltime_min: PT5M              # backfill: accept as short as 5 minutes
+    reservation: ""
+  resources:
+    nodes: 1
+    tasks: 1
+    cpus_per_task: 4
+    memory_per_task: "8Gi"
+    gpu:
+      count: 1
+      type: a100
+  execution:
+    script: |
+      #!/bin/bash
+      echo "Running on partition: ${SLURM_JOB_PARTITION}"
+      echo "Job ID: ${SLURM_JOB_ID}"
+      echo "Node: ${SLURM_NODELIST}"
+      nvidia-smi
+      sleep 120
+    working_dir: /scratch/$USER
+    environment:
+      vars:
+        MY_VAR: hello
+  placement:
+    constraint: "avx512"
+    exclusive: false
+  output:
+    stdout: "/scratch/logs/slurm-{job_id}.out"
+    stderr: "/scratch/logs/slurm-{job_id}.err"
   notifications:
-    email: user@example.com
-    onEvents: ["BEGIN", "END", "FAIL"]
-  tasks:
-    - name: slurm-task
-      replicas: 1
-      pod:
-        containers:
-          - name: main
-            image: ubuntu:latest
-            command: ["sh", "-c"]
-            args:
-              - |
-                echo "Running on Slurm partition: $SLURM_PARTITION"
-                echo "Job ID: $SLURM_JOB_ID"
-                echo "Node: $SLURM_NODELIST"
-                sleep 120
-            resources:
-              requests:
-                cpu: "2"
-                memory: "4Gi"
-              limits:
-                cpu: "4"
-                memory: "8Gi"
-        restartPolicy: Never
-  override:
+    email: "user@example.com"
+    events: [end, fail]
+  lifecycle:
+    max_retries: 1
+    requeue_on_failure: false
+
+  extensions:
     slurm:
-      partition: standard
-      time: "00:30:00"
-      nodes: 1
-      ntasks: 1
-      cpusPerTask: 4
-      mem: "8G"
-      mailType: "END,FAIL"
-      mailUser: "user@example.com"
-      output: "slurm-%j.out"
-      error: "slurm-%j.err"
-      exclusive: false 
+      mpi: pmix_v4
+      time_min: PT5M
+      wckey: my-workflow-key
+      kill_on_bad_exit: true
+      gpu_bind: closest
+      cpus_per_gpu: 4
+      mem_per_gpu: "16Gi"
+      signal_before_end: "USR1@60"

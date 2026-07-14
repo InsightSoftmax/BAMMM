@@ -1,36 +1,41 @@
-apiVersion: batch.unified.io/v1alpha1
-kind: BatchJob
+apiVersion: bammm.io/v1alpha1
+kind: Job
 metadata:
   name: array-example
   labels:
     app: bammm-example
 spec:
-  queue: default
-  priorityClassName: normal
+  schedule:
+    queue: default
+    priority: 500
+    walltime: PT30M
+  resources:
+    tasks: 1
+    cpus_per_task: 1
+    memory_per_task: "512Mi"
+    limits:
+      cpus_per_task: 1
+      memory_per_task: "1Gi"
   array:
-    size: 5
-    maxParallelism: 2
-  tasks:
-    - name: array-task
-      replicas: 1
-      pod:
-        containers:
-          - name: worker
-            image: busybox:latest
-            command: ["sh", "-c"]
-            args: 
-              - |
-                echo "Processing array job $ARRAY_INDEX"
-                sleep 10
-                echo "Array job $ARRAY_INDEX completed"
-            env:
-              - name: ARRAY_INDEX
-                value: "0"  # Will be replaced with actual array index
-            resources:
-              requests:
-                cpu: "500m"
-                memory: "512Mi"
-              limits:
-                cpu: "1000m"
-                memory: "1Gi"
-        restartPolicy: Never 
+    indices: "0-4"           # 5 elements (0,1,2,3,4)
+    max_concurrent: 2        # at most 2 running simultaneously
+  execution:
+    container:
+      image: busybox:latest
+      command: ["sh", "-c"]
+      args:
+        - |
+          echo "Processing array job ${BAMMM_ARRAY_INDEX}"
+          sleep 10
+          echo "Array job ${BAMMM_ARRAY_INDEX} completed"
+      environment:
+        vars:
+          BAMMM_ARRAY_INDEX: ""    # set per element; maps to scheduler native var
+    script: |
+      #!/bin/bash
+      echo "Processing array job ${BAMMM_ARRAY_INDEX}"
+      sleep 10
+      echo "Array job ${BAMMM_ARRAY_INDEX} completed"
+  output:
+    stdout: "/scratch/array-{job_id}-{array_index}.out"
+    stderr: "/scratch/array-{job_id}-{array_index}.err"

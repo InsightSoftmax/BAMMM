@@ -1,0 +1,145 @@
+# SPLAT intermediate — produced by:
+#   bammm convert --from slurm source.sh
+#
+# TRANSLATION NOTES (Slurm → SPLAT):
+#
+# [AUTO] --nodes=4, --ntasks-per-node=8 → resources.nodes=4, tasks=32, tasks_per_node=8
+# [AUTO] --cpus-per-task=6 → resources.cpus_per_task=6
+# [AUTO] --mem-per-cpu=8G × 6 = 48G → resources.memory_per_task="48Gi" (approx; 48GB = 44.7Gi, flagged)
+# [AUTO] --gres=gpu:a100:2 → resources.gpu.count=2, resources.gpu.type=a100
+# [AUTO] --time=08:00:00 → schedule.walltime=PT8H
+# [AUTO] --time-min=02:00:00 → extensions.slurm.time_min=PT2H (no generic equivalent; stored in extension)
+# [AUTO] --output, --error path patterns → output.stdout/stderr with {job_id} substitution
+# [AUTO] --mail-type, --mail-user → notifications.email + events
+# [AUTO] --signal=USR1@120 → extensions.slurm.signal_before_end="USR1@120"
+# [AUTO] --constraint=infiniband&avx512 → placement.constraint="infiniband&avx512"
+#        (also mapped to node_selector hint; advisory only for K8s)
+#
+# [WARN] No container image found in source. For K8s targets, BAMMM will use
+#        a placeholder image (bash:latest) and embed the script in a ConfigMap.
+#        You SHOULD set execution.container.image to a real image before converting
+#        to a K8s scheduler.
+#
+# [WARN] Script uses Slurm-specific env vars: $SLURM_JOB_ID, $SLURM_JOB_NODELIST,
+#        $SLURM_NNODES, $SLURM_NODEID. These will not be available on K8s schedulers.
+#        The Volcano pytorch plugin injects VC_WORKER_NUM and VC_TASK_INDEX; the
+#        generated Volcano job replaces srun with torchrun using these.
+#
+# [WARN] `module load` commands will fail in containers. The target Volcano job
+#        uses an NVIDIA PyTorch image that has CUDA/Python pre-installed.
+#
+# [WARN] --time-min is Slurm-only (backfill optimization hint). No equivalent in
+#        Volcano; preserved in extensions.slurm but dropped on Volcano output.
+#
+# [WARN] --qos=gpu-qos has no Volcano equivalent; mapped to priorityClassName.
+#        Verify that "gpu-qos" maps to an existing K8s PriorityClass.
+#
+# [INFO] srun is replaced by torchrun in the Volcano output.
+#        The original script is preserved in extensions.slurm for round-trip.
+
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  name: bert-finetune
+  annotations:
+    bammm.io/source-format: slurm
+    bammm.io/source-checksum: sha256:placeholder
+spec:
+  schedule:
+    queue: gpu-hpc
+    partition: gpu-hpc
+    account: nlp-research
+    qos: gpu-qos
+    priority: 500
+    walltime: PT8H
+
+  resources:
+    nodes: 4
+    tasks: 32
+    tasks_per_node: 8
+    cpus_per_task: 6
+    memory_per_task: "48Gi"    # --mem-per-cpu=8G × 6 cpus; WARN: 8G×6=48GB ≈ 44.7Gi; using 48Gi
+    gpu:
+      count: 2
+      type: a100
+      exclusive: true
+
+  execution:
+    # No container image in source. Populated as placeholder; replace before targeting K8s.
+    container:
+      image: "nvcr.io/nvidia/pytorch:24.01-py3"   # BAMMM best-guess; verify version
+      command: ["torchrun"]
+      args:
+        - "--nproc_per_node=8"
+        - "--nnodes=4"
+        - "--node_rank=$(VC_TASK_INDEX)"
+        - "--master_addr=$(VC_MASTER_ADDR)"     # injected by Volcano pytorch plugin
+        - "--master_port=29500"
+        - "/workspace/train.py"
+        - "--model=bert-large-uncased"
+        - "--dataset=/scratch/data/squad"
+        - "--output-dir=/scratch/checkpoints/bert-$(VC_JOB_NAME)"
+        - "--epochs=5"
+        - "--batch-size=32"
+      environment:
+        vars:
+          OMP_NUM_THREADS: "6"
+          NCCL_DEBUG: INFO
+          NCCL_IB_DISABLE: "0"
+          MASTER_PORT: "29500"
+
+    # Original script preserved for HPC round-trip
+    script: |
+      #!/bin/bash
+      module load cuda/12.1 python/3.11 openmpi/4.1.5
+
+      export OMP_NUM_THREADS=6
+      export NCCL_DEBUG=INFO
+      export NCCL_IB_DISABLE=0
+      export MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+      export MASTER_PORT=29500
+
+      echo "Job ID: $SLURM_JOB_ID"
+      echo "Nodes: $SLURM_JOB_NODELIST"
+      echo "Master: $MASTER_ADDR"
+
+      srun python -m torch.distributed.run \
+          --nproc_per_node=8 \
+          --nnodes=$SLURM_NNODES \
+          --node_rank=$SLURM_NODEID \
+          --master_addr=$MASTER_ADDR \
+          --master_port=$MASTER_PORT \
+          /workspace/train.py \
+              --model bert-large-uncased \
+              --dataset /scratch/data/squad \
+              --output-dir /scratch/checkpoints/bert-$SLURM_JOB_ID \
+              --epochs 5 \
+              --batch-size 32
+
+  gang:
+    min_available: 32
+    style: hard
+    timeout: PT10M
+
+  placement:
+    constraint: "infiniband&avx512"
+    node_selector:
+      feature.node.kubernetes.io/network-infiniband.capable: "true"  # advisory
+    topology: scatter
+
+  distributed_framework: pytorch
+
+  output:
+    stdout: "/scratch/logs/bert-{job_id}.out"
+    stderr: "/scratch/logs/bert-{job_id}.err"
+
+  notifications:
+    email: researcher@university.edu
+    events: [end, fail]
+
+  extensions:
+    slurm:
+      time_min: PT2H
+      signal_before_end: "USR1@120"
+      ntasks_per_socket: 4
+      gpu_bind: closest

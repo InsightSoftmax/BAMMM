@@ -1,0 +1,172 @@
+# SPLAT intermediate — produced by:
+#   bammm convert --from flux source.json
+#
+# TRANSLATION NOTES (Flux → SPLAT):
+#
+# [AUTO] resources[node].count=8, exclusive=true → resources.nodes=8, placement.exclusive=true
+# [AUTO] resources[slot].with[socket×2, core×16] → resources.cpus_per_task=32 (2 sockets × 16 cores)
+#        NOTE: Socket topology is LOST. SPLAT has no socket-level resource model.
+#        The flattened "32 cores per task" is correct for scheduling but loses NUMA awareness.
+# [AUTO] resources[gpu].count=4 → resources.gpu.count=4
+# [AUTO] resources[memory].count=512 GiB → resources.memory_per_task="512Gi"
+# [AUTO] tasks[0].command → execution.executable + args (or execution.container.command if image known)
+# [AUTO] attributes.system.duration=43200 → schedule.walltime=PT12H
+# [AUTO] attributes.system.queue → schedule.queue
+# [AUTO] attributes.system.bank → schedule.account
+# [AUTO] attributes.system.project → schedule.project
+# [AUTO] attributes.system.environment → execution.environment.vars
+# [AUTO] attributes.system.job.name → metadata.name
+# [AUTO] attributes.system.cwd → execution.working_dir
+# [AUTO] attributes.system.constraints.properties → placement.constraint
+# [AUTO] attributes.system.files["llm-config.yaml"] → file_staging.embedded_files
+# [AUTO] attributes.system.preemptible-after=600 → extensions.flux.preemptible_after=600
+# [AUTO] attributes.system.shell.options → extensions.flux.shell_options
+# [AUTO] attributes.user → extensions.flux.user_attributes (opaque pass-through)
+#
+# [HARD PROBLEM] dependencies[afterok:ƒ5oLkTLb]:
+#   Flux job IDs use F58 encoding (e.g., ƒ5oLkTLb). Kueue has NO dependency mechanism.
+#   BAMMM stores the dependency in extensions.flux.symbolic_dependencies and DROPS it
+#   for Kueue output. The user must implement workflow ordering externally (Argo, Airflow).
+#
+# [HARD PROBLEM] dependencies[string: "tokenized-pile-dataset", type: in]:
+#   This is a symbolic publish/subscribe dependency — the job declares it depends on
+#   a named data artifact "tokenized-pile-dataset". No other scheduler supports this.
+#   Stored in extensions.flux.symbolic_dependencies; DROPPED for Kueue output.
+#
+# [HARD PROBLEM] Hierarchical resource graph (socket topology):
+#   Flux's resource model: node → [slot → [socket×2 → [core×16], gpu×4, memory×512GiB]]
+#   This explicitly captures that 32 cores are distributed across 2 NUMA sockets.
+#   SPLAT and Kueue both use flat resource models: "32 CPUs + 4 GPUs + 512GiB per pod".
+#   The NUMA affinity is LOST. The generated Kueue job requests the same total resources
+#   but cannot guarantee NUMA-local core allocation.
+#   Original resource graph preserved in extensions.flux.resource_graph.
+#
+# [AUTO] tasks.distribution=block → no Kueue equivalent; DROPPED
+#
+# [INFO] No container image in source.json — Flux runs bare-metal executables.
+#   BAMMM generates a Kueue job with a placeholder image. The actual execution requires
+#   either a container image with the training code, or mounting the code via a PVC.
+
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  name: llm-pretraining
+  annotations:
+    bammm.io/source-format: flux
+    bammm.io/flux-experiment-id: llm-run-42
+    bammm.io/flux-notes: "GPT-2 XL pretraining on The Pile"
+spec:
+  schedule:
+    queue: ml-batch
+    account: llm-allocation
+    project: foundation-models
+    walltime: PT12H
+    priority: 500
+
+  resources:
+    nodes: 8
+    tasks: 8
+    tasks_per_node: 1
+    cpus_per_task: 32          # 2 sockets × 16 cores; WARN: socket topology lost
+    memory_per_task: "512Gi"
+    gpu:
+      count: 4
+
+  execution:
+    executable: python
+    arguments: "-m torch.distributed.run --nproc_per_node=4 --nnodes=8 --rdzv_id=job-{job_id} --rdzv_backend=c10d --rdzv_endpoint={flux_uri} train_llm.py --config=/tmp/job-configs/llm-config.yaml --checkpoint-dir=/checkpoints/llm-{job_id}"
+    # NOTE: {flux_uri} is Flux-specific; see extensions.flux for the original.
+    # For Kueue, use the service DNS or a shared rendezvous server instead.
+    container:
+      image: "nvcr.io/nvidia/pytorch:24.01-py3"   # WARN: no image in source; verify version
+      command: ["python", "-m", "torch.distributed.run"]
+      args:
+        - "--nproc_per_node=4"
+        - "--nnodes=8"
+        - "--node_rank=$(BAMMM_TASK_INDEX)"
+        - "--rdzv_id=job-$(BAMMM_JOB_ID)"
+        - "--rdzv_backend=c10d"
+        - "--rdzv_endpoint=$(MASTER_ADDR):29500"
+        - train_llm.py
+        - "--config=/tmp/job-configs/llm-config.yaml"
+        - "--checkpoint-dir=/checkpoints/llm-$(BAMMM_JOB_ID)"
+    working_dir: /home/user/llm-experiment
+    environment:
+      vars:
+        NCCL_DEBUG: INFO
+        NCCL_SOCKET_IFNAME: ib0
+        PYTHONPATH: /workspace
+        TRANSFORMERS_CACHE: /scratch/hf-cache
+        MASTER_PORT: "29500"
+
+  placement:
+    exclusive: true
+    constraint: "infiniband-hdr&avx512"
+    node_selector:
+      feature.node.kubernetes.io/network-infiniband.capable: "true"  # advisory
+
+  gang:
+    min_available: 8
+    style: hard
+
+  distributed_framework: pytorch
+
+  file_staging:
+    embedded_files:
+      - name: llm-config.yaml
+        content: |
+          model:
+            type: gpt2
+            layers: 48
+            hidden_size: 1600
+            num_heads: 25
+          training:
+            learning_rate: 0.0001
+            warmup_steps: 2000
+            max_steps: 100000
+        encoding: utf-8
+        permissions: "0644"
+
+  extensions:
+    flux:
+      bank: llm-allocation
+      urgency: 14
+      preemptible_after: 600
+      resource_graph:
+        # Original RFC 14 resource graph preserved for round-trip
+        - type: node
+          count: 8
+          exclusive: true
+          with:
+            - type: slot
+              count: 1
+              label: task
+              with:
+                - type: socket
+                  count: 2
+                  with:
+                    - type: core
+                      count: 16
+                - type: gpu
+                  count: 4
+                  unit: ""
+                - type: memory
+                  count: 512
+                  unit: GiB
+      symbolic_dependencies:
+        - scheme: afterok
+          value: "ƒ5oLkTLb"
+          # NOTE: This Flux job ID is opaque; cannot be represented in Kueue
+        - scheme: string
+          value: tokenized-pile-dataset
+          type: in
+          scope: user
+          # NOTE: Named dependency; no equivalent in Kueue
+      shell_options:
+        cpu-affinity: per-task
+        gpu-affinity: per-task
+        rlimit:
+          nofile: 65536
+      user_attributes:
+        experiment-id: llm-run-42
+        notes: "GPT-2 XL pretraining on The Pile"

@@ -1,0 +1,72 @@
+# HTCondor submit file — genomics variant calling sweep
+# This job runs a parametric sweep over 200 sample files using the
+# `queue N from` factory mechanism, with GPU-accelerated base calling.
+# Demonstrates: ClassAd requirements, GPU constraints, file transfer,
+# periodic_hold, retry_request_memory escalation, accounting group.
+
+universe           = docker
+docker_image       = broadinstitute/gatk:4.5.0.0
+
+executable         = /scripts/run-variant-calling.sh
+arguments          = $(sample_id) $(bam_file) $(output_dir)
+
+batch_name         = genomics-sweep-2026-06
+
+request_cpus       = 8
+request_memory     = 32768M
+request_disk       = 200G
+request_gpus       = 1
+
+# GPU must have at least 24GB VRAM (for GPU-accelerated base calling)
+require_gpus       = (GlobalMemoryMb >= 24576)
+gpus_minimum_capability = 7.5
+
+# Machine requirements: needs InfiniBand and at least 500GB local disk
+requirements = (HasInfiniband =?= True) && \
+               (Disk >= 500*1024*1024) && \
+               (OpSysAndVer == "CentOS7" || OpSysAndVer == "AlmaLinux9") && \
+               (Target.HasGATK4 =?= True || HasSingularity =?= True)
+
+# Prefer machines with more memory and GPU VRAM
+rank = TARGET.Memory / 1024 + TARGET.GPUMemoryMb / 4096
+
+# Accounting
++ProjectName     = genomics-pipeline
++AccountingGroup = bio.variant-calling
+
+# Output paths (per-process)
+output = /scratch/logs/gatk-$(Cluster)-$(Process).out
+error  = /scratch/logs/gatk-$(Cluster)-$(Process).err
+log    = /scratch/logs/gatk-$(Cluster).log
+
+# File transfer (input files FROM submit node, output files back)
+should_transfer_files   = YES
+when_to_transfer_output = ON_EXIT_OR_EVICT
+transfer_input_files    = /scripts/run-variant-calling.sh, \
+                          /reference/hg38.fa, \
+                          /reference/hg38.fa.fai, \
+                          /reference/known-sites.vcf.gz
+transfer_output_files   = $(output_dir)/$(sample_id).vcf.gz, \
+                          $(output_dir)/$(sample_id).vcf.gz.tbi
+transfer_output_remaps  = "$(sample_id).vcf.gz = /results/$(sample_id)/$(sample_id).vcf.gz"
+
+# Retry with escalating memory on eviction
+max_retries                  = 3
+retry_request_memory         = 65536M, 131072M
+retry_request_memory_increase = 32768M
+
+# Automatically hold jobs that have been running > 48h (likely stuck)
+periodic_hold   = (JobStatus == 2) && (time() - JobCurrentStartDate > 172800)
+periodic_hold_reason = "Exceeded 48-hour runtime limit"
+
+# Auto-release if hold code indicates transient failure (code 3 = input file problem)
+periodic_release = (HoldReasonCode == 3)
+
+# Remove jobs that have been idle > 7 days
+periodic_remove  = (JobStatus == 1) && (time() - EnteredCurrentStatus > 604800)
+
+notification  = Complete
+notify_user   = pipeline@genomics.org
+
+# Parametric sweep: iterate over (sample_id, bam_file, output_dir) from a file
+queue sample_id, bam_file, output_dir from /scratch/sample-manifest.txt

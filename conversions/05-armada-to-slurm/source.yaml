@@ -1,0 +1,124 @@
+# Armada job submission — expressed as YAML equivalent of the gRPC JobSubmitRequest.
+# In practice this would be submitted via `armadactl submit` or the Armada Python client,
+# but YAML is the most human-readable representation of the protobuf message.
+#
+# This job runs a Monte Carlo simulation suite with:
+# - Two gang-scheduled pods (driver + compute) that must start together
+# - An exposed metrics port via Armada ingress
+# - A K8s headless service for pod-to-pod communication
+# - Scheduler-specific priority and job-set grouping
+
+queue: research-simulations
+jobSetId: mc-simulation-batch-2026-06
+
+jobs:
+  - clientId: mc-sim-driver-a94a8fe5
+    priority: 75.0              # higher = higher priority within queue
+    namespace: physics-team
+    scheduler: default
+    externalJobUri: https://jira.example.com/browse/SIM-4521
+    labels:
+      app: monte-carlo-sim
+      component: driver
+      experiment: higgs-cross-section
+    annotations:
+      armadaproject.io/gang-id: mc-sim-gang-001
+      armadaproject.io/gang-cardinality: "2"
+      armadaproject.io/gang-minimum-job-size: "2"
+    podSpec:
+      priorityClassName: high
+      tolerations:
+        - key: simulation-node
+          operator: Exists
+          effect: NoSchedule
+      containers:
+        - name: driver
+          image: cern/mc-simulator:3.2.1-cuda
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              echo "Driver pod starting on $(hostname)"
+              /opt/simulator/driver \
+                --config /etc/sim/config.yaml \
+                --workers "mc-sim-compute.physics-team.svc.cluster.local:8080" \
+                --events 1000000 \
+                --output s3://physics-results/higgs/run-$JOB_ID/
+          env:
+            - name: JOB_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['armada.io/job-id']
+            - name: CUDA_VISIBLE_DEVICES
+              value: "0"
+          resources:
+            requests:
+              cpu: "4"
+              memory: 16Gi
+              nvidia.com/gpu: "1"
+            limits:
+              cpu: "4"
+              memory: 16Gi
+              nvidia.com/gpu: "1"
+          volumeMounts:
+            - name: config
+              mountPath: /etc/sim
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: mc-sim-config
+      restartPolicy: Never
+
+  - clientId: mc-sim-compute-b94a8fe5
+    priority: 75.0
+    namespace: physics-team
+    scheduler: default
+    labels:
+      app: monte-carlo-sim
+      component: compute
+      experiment: higgs-cross-section
+    annotations:
+      armadaproject.io/gang-id: mc-sim-gang-001
+      armadaproject.io/gang-cardinality: "2"
+      armadaproject.io/gang-minimum-job-size: "2"
+    podSpec:
+      priorityClassName: high
+      tolerations:
+        - key: simulation-node
+          operator: Exists
+          effect: NoSchedule
+      containers:
+        - name: compute
+          image: cern/mc-simulator:3.2.1-cuda
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              echo "Compute pod starting on $(hostname)"
+              /opt/simulator/worker \
+                --port 8080 \
+                --gpus 4 \
+                --threads 32
+          resources:
+            requests:
+              cpu: "32"
+              memory: 128Gi
+              nvidia.com/gpu: "4"
+            limits:
+              cpu: "32"
+              memory: 128Gi
+              nvidia.com/gpu: "4"
+      restartPolicy: Never
+
+ingress:
+  - clientId: mc-sim-driver-a94a8fe5
+    ports: [9090]
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      prometheus.io/scrape: "true"
+    tlsEnabled: false
+
+services:
+  - clientId: mc-sim-compute-b94a8fe5
+    type: Headless
+    ports: [8080]
+    name: mc-sim-compute

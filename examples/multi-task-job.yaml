@@ -1,58 +1,66 @@
-apiVersion: batch.unified.io/v1alpha1
-kind: BatchJob
+apiVersion: bammm.io/v1alpha1
+kind: Job
 metadata:
   name: multi-task-example
   labels:
     app: bammm-example
 spec:
-  queue: default
-  priorityClassName: high
-  schedulingSpec:
-    minAvailable: 4  # Gang scheduling: all tasks must start together
-    maxRetry: 2
-    timeout: PT30M
+  schedule:
+    queue: default
+    priority: 600
+    walltime: PT30M
+  gang:
+    min_available: 4
+    style: hard
+    timeout: PT5M
   tasks:
     - name: data-prep
       replicas: 1
-      pod:
-        containers:
-          - name: prep
-            image: alpine:latest
-            command: ["sh", "-c"]
-            args:
-              - |
-                echo "Preparing data..."
-                sleep 30
-                echo "Data preparation completed"
-            resources:
-              requests:
-                cpu: "1"
-                memory: "1Gi"
-              limits:
-                cpu: "2"
-                memory: "2Gi"
-        restartPolicy: Never
-    
+      resources:
+        cpus_per_task: 1
+        memory_per_task: "1Gi"
+        limits:
+          cpus_per_task: 2
+          memory_per_task: "2Gi"
+      execution:
+        container:
+          image: alpine:latest
+          command: ["sh", "-c"]
+          args:
+            - |
+              echo "Preparing data..."
+              sleep 30
+              echo "Data preparation completed"
+        script: |
+          #!/bin/bash
+          echo "Preparing data..."
+          sleep 30
+          echo "Data preparation completed"
+
     - name: compute-worker
       replicas: 3
-      pod:
-        containers:
-          - name: worker
-            image: busybox:latest
-            command: ["sh", "-c"]
-            args:
-              - |
-                echo "Starting compute worker $WORKER_ID"
-                sleep 60
-                echo "Compute worker $WORKER_ID completed"
-            env:
-              - name: WORKER_ID
-                value: "0"  # Will be replaced with worker index
-            resources:
-              requests:
-                cpu: "2"
-                memory: "2Gi"
-              limits:
-                cpu: "4"
-                memory: "4Gi"
-        restartPolicy: Never 
+      resources:
+        cpus_per_task: 2
+        memory_per_task: "2Gi"
+        limits:
+          cpus_per_task: 4
+          memory_per_task: "4Gi"
+      execution:
+        container:
+          image: busybox:latest
+          command: ["sh", "-c"]
+          args:
+            - |
+              echo "Starting compute worker ${BAMMM_TASK_INDEX}"
+              sleep 60
+              echo "Compute worker ${BAMMM_TASK_INDEX} completed"
+          environment:
+            vars:
+              BAMMM_TASK_INDEX: ""     # injected per replica
+        script: |
+          #!/bin/bash
+          echo "Starting compute worker ${BAMMM_TASK_INDEX}"
+          sleep 60
+          echo "Compute worker ${BAMMM_TASK_INDEX} completed"
+      depends_on:
+        - name: data-prep

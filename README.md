@@ -1,133 +1,144 @@
 # BAMMM: Batch Automatic Magic Multiplexing Mechanism
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Development-orange.svg)]()
-
-## Overview
-
-BAMMM is an open-source command-line tool that converts batch job specifications between different scheduler formats. It provides a unified intermediate format that can be translated to and from various batch schedulers including:
-
-- **Kubernetes-based**: Armada, Volcano, MCAD, Kueue, YuniKorn
-- **HPC**: Slurm, Flux
-- **Cloud**: AWS Batch
-
-## Problem Statement
-
-Today's batch computing landscape is fragmented across multiple schedulers, each with their own job specification formats:
-
-- **Slurm**: Shell scripts with `#SBATCH` directives
-- **Kubernetes-based**: YAML manifests with scheduler-specific CRDs (Kueue, MCAD, Armada, YuniKorn)
-- **AWS Batch**: JSON job definitions
-- **Flux**: JSON jobspec format
-
-This fragmentation creates several challenges:
-- **Vendor lock-in**: Jobs written for one scheduler can't easily migrate to another
-- **Learning curve**: Developers must learn multiple job specification formats
-- **Maintenance overhead**: Supporting multiple schedulers requires maintaining separate job definitions
-- **Deployment complexity**: Different environments require different job formats
-
-## Solution: Unified Batch Job Converter
-
-BAMMM defines a single, comprehensive YAML specification that captures the common semantics across all major batch schedulers. The tool acts as a converter between different scheduler formats:
-
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Source        │    │   BAMMM         │    │   Target        │
-│   Format        │───▶│   Converter     │───▶│   Format        │
-│                 │    │                 │    │                 │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                                                       │
-                                                       ▼
-                                              ┌─────────────────┐
-                                              │   Slurm         │
-                                              │   AWS Batch     │
-                                              │   Volcano       │
-                                              │   YuniKorn      │
-                                              │   Flux          │
-                                              │   Kueue         │
-                                              │   MCAD          │
-                                              └─────────────────┘
-```
-
-## Key Features
-
-### 🎯 **Universal Compatibility**
-- Convert between any supported scheduler formats
-- Preserve scheduler-specific features via override blocks
-- Maintain job semantics across conversions
-
-### 🔧 **Command-Line Interface**
-- Simple CLI for format conversion
-- Batch processing of multiple jobs
-- Validation of job specifications
-
-## Getting Started
-
-BAMMM is currently in active development. The tool will provide a simple command-line interface for converting between different batch job specification formats.
-
-Example usage will include:
-- Converting Slurm scripts to Volcano YAML
-- Converting AWS Batch JSON to Slurm scripts
-- Validating job specifications
-- Supporting all major batch schedulers
-
-## Development Status
-
-### ✅ **Completed**
-
-### 🚧 **In Progress**
-- [ ] Unified job specification design
-- [ ] Basic converter framework
-- [ ] Cross-scheduler feature mapping
-- [ ] Slurm to unified format converter
-- [ ] Unified format to Slurm converter
-- [ ] AWS Batch format converters
-- [ ] Volcano format converters
-
-### 📋 **Planned**
-- [ ] Flux format support
-- [ ] Kueue format support
-- [ ] MCAD format support
-- [ ] YuniKorn format support
-- [ ] Job validation and linting
-- [ ] Batch processing capabilities
-
-## Collaboration
-
-This is an active collaboration with:
-
-- AWS
-- Nitka Consulting
-- Insight Softmax Consulting
-
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Setup
-
-Development setup instructions will be provided once the implementation approach is finalized.
-
-## License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-- **Project Lead**: [Your Name]
-- **Email**: [your-email@example.com]
-- **Slack**: [Slack channel link]
-- **Discussions**: [GitHub Discussions](https://github.com/your-org/BAMMM/discussions)
-
-## Acknowledgments
-
-- **Armada Project** - For Kubernetes-native batch scheduling inspiration
-- **Volcano** - For gang scheduling and advanced Kubernetes job patterns
-- **Slurm** - For HPC scheduling best practices
-- **AWS Batch** - For cloud-native batch computing patterns
-- **Flux** - For modern HPC job specification design
-- **Kueue** - For Kubernetes-native queuing patterns
+[![CI](https://github.com/finos/bammm/actions/workflows/ci.yml/badge.svg)](https://github.com/finos/bammm/actions/workflows/ci.yml)
+[![Status](https://img.shields.io/badge/Status-Early%20Development-orange.svg)]()
 
 ---
 
-**BAMMM**: Making batch computing portable across all platforms through intelligent format conversion.
+Stuck trying to migrate to a new batch scheduler, but you can't convince ol' Neckbeard who's been writing `#SBATCH` scripts since before the Linux kernel hit 1.0? **Rejoice.** BAMMM rewrites those ancient batch job manifests into whatever crusty scheduler you actually want to run them on.
+
+Got a HPC cluster full of Slurm scripts and a new K8s platform breathing down your neck? BAMMM converts them. Kubernetes shop that just inherited a PBS-era bioinformatics pipeline? BAMMM handles it. Tired of maintaining the same distributed training job in three different formats for three different teams? You know where this is going.
+
+BAMMM converts between **10 batch scheduler formats** via a common interchange format called **SPLAT** (Scheduler-Portable Language for Abstracting Tasks). No scheduler lock-in. No rewriting jobs by hand. No explaining to your users why their 400-line `#BSUB` script needs to become a Kueue YAML.
+
+---
+
+## How it works
+
+Every scheduler format goes in as a **Parser** and comes out as an **Emitter**. In between sits SPLAT — a single YAML representation that's a superset of everything all 10 schedulers can express:
+
+```
+slurm script   ──┐                        ┌── slurm script
+volcano yaml   ──┤                        ├── volcano yaml
+kueue yaml     ──┼──▶  SPLAT (IR) ──▶ ───┼── kueue yaml
+htcondor .sub  ──┤                        ├── pbs script
+flux json      ──┘                        └── armada yaml ...
+```
+
+```sh
+# Convert a Slurm script to Volcano
+bammm convert --from slurm --to volcano job.sh
+
+# Or pipe it
+cat job.sub | bammm convert --from htcondor --to pbs
+
+# Inspect the intermediate representation
+bammm convert --from slurm --to splat job.sh
+```
+
+Wherever the translation is lossy, BAMMM tells you exactly what got dropped, what got approximated, and what's stuck in the `extensions.*` block waiting to be round-tripped back.
+
+## Supported schedulers
+
+| Scheduler | Type | Status |
+|---|---|---|
+| **Slurm** | HPC | Parser ✅ · Emitter 🚧 |
+| **Volcano** | K8s | 🚧 |
+| **Kueue** | K8s | 🚧 |
+| **Armada** | K8s | 🚧 |
+| **YuniKorn** | K8s | 🚧 |
+| **HTCondor** | HPC | 🚧 |
+| **OpenPBS** | HPC | 🚧 |
+| **Flux** | HPC | 🚧 |
+| **LSF** | HPC | Community 🚧 |
+| **Run.ai** | K8s | Partner 🚧 |
+
+## Installation
+
+```sh
+# Homebrew (coming soon)
+brew install finos/tap/bammm
+
+# From source (requires Go 1.24+)
+go install github.com/finos/bammm/cmd/bammm@latest
+
+# Or just grab a release binary from GitHub Releases
+```
+
+## SPLAT format quick start
+
+SPLAT is the format you write if you want a job that runs *anywhere*. Specify both a container image and a shell script — K8s emitters use the container, HPC emitters use the script.
+
+```yaml
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  name: my-training-job
+spec:
+  schedule:
+    queue: gpu-batch
+    walltime: "08:00:00"
+    account: my-project
+  resources:
+    nodes: 4
+    tasksPerNode: 8
+    cpusPerTask: 6
+    memoryPerTask: "48Gi"
+    gpu:
+      count: 2
+      type: a100
+  execution:
+    container:
+      image: "nvcr.io/nvidia/pytorch:24.01-py3"
+      command: ["torchrun", "train.py"]
+    script: |
+      #!/bin/bash
+      module load cuda/12.1
+      srun python train.py
+```
+
+See [SPEC.md](SPEC.md) for the complete field reference.
+See [`conversions/`](conversions/) for five annotated worked examples with full translation notes.
+See [`examples/`](examples/) for standalone SPLAT job examples.
+
+## Translation honesty
+
+BAMMM tells you upfront when a conversion is lossy. Some things genuinely cannot cross the HPC/K8s divide:
+
+- **HTCondor ClassAd `requirements`** — Turing-complete machine-matching expressions. Stored in `extensions.htcondor`, not executable anywhere else.
+- **Flux symbolic named dependencies** — publish/subscribe data dependencies. Dropped with a warning.
+- **Slurm het-jobs** — only Slurm can execute them natively; approximated as multi-task elsewhere.
+- **Run.ai GPU fractions** — virtual GPU partitioning rounds to whole GPUs on every other scheduler.
+
+The full list is in [SPEC.md § Known Lossy Translations](SPEC.md#known-lossy-translations) and [conversions/README.md](conversions/README.md).
+
+## Development
+
+```sh
+make build    # → bin/bammm
+make test     # go test -race ./...
+make lint     # golangci-lint
+make check    # lint + test
+```
+
+Requires Go 1.24+. For the Python corpus scraper: `uv` (not pip).
+
+See [CLAUDE.md](CLAUDE.md) for architecture decisions, the build plan, and notes for contributors.
+
+## Collaboration
+
+Active collaboration between:
+
+- **AWS**
+- **Nitka Consulting**
+- **Insight Softmax Consulting**
+- **Run.ai / NVIDIA** (Run.ai validation)
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). LSF and PBS Pro contributors especially welcome — those require vendor licenses for local testing.
+
+## License
+
+Apache License 2.0 — see [LICENSE](LICENSE).

@@ -1,0 +1,431 @@
+# BAMMM SPLAT Format — Full Reference
+# This file documents every available field with brief inline annotations.
+# Not all fields are compatible; see SPEC.md for constraints.
+#
+# apiVersion: bammm.io/v1alpha1
+# kind: Job
+
+apiVersion: bammm.io/v1alpha1
+kind: Job
+
+metadata:
+  name: reference-job
+  labels:
+    team: mlops
+    experiment: bert-v2
+  annotations:
+    notes: "Full reference example — not meant to be submitted"
+  client_id: "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3"  # idempotency key
+
+spec:
+
+  # ── SCHEDULING ─────────────────────────────────────────────────────────────
+  schedule:
+    queue: gpu-batch                    # target queue / partition
+    partition: gpu-batch                # Slurm-friendly alias for queue
+    priority: 600                       # 0–1000 (500=normal, 600=slightly above)
+    priority_class: high-priority       # K8s PriorityClass (takes precedence for K8s schedulers)
+    account: project-nlp                # billing account / allocation
+    project: bert-research              # sub-account project
+    bank: allocation-123                # HPC bank (Flux)
+    qos: gpu-qos                        # quality-of-service class (Slurm: --qos)
+    walltime: PT4H                      # ISO 8601 duration; also accepts "4:00:00" or "14400"
+    walltime_min: PT1H                  # minimum acceptable runtime (Slurm backfill hint)
+    begin_after: "2026-06-01T08:00:00"  # defer start (ISO 8601)
+    deadline: "2026-06-02T00:00:00"     # hard kill-by
+    signal_before_end: "USR1@120"       # send USR1 120s before walltime expires (Slurm)
+    hold: false                         # submit in held state
+    reservation: june-reservation      # named advance reservation
+    exclusive: false                    # exclusive node access
+    exclusive_mode: node                # node | user | mcs | topo (Slurm)
+    oversubscribe: false
+
+  # ── RESOURCES (per-task canonical form) ────────────────────────────────────
+  resources:
+    nodes: 4                            # node count
+    tasks: 32                           # total tasks / MPI ranks
+    tasks_per_node: 8                   # tasks per node
+    tasks_per_socket: 4                 # tasks per NUMA socket (Slurm)
+    cpus_per_task: 4                    # CPUs per task
+    memory_per_task: "16Gi"             # memory per task; accepts "16G", "16384M", "16384"
+    memory_per_cpu: "4Gi"              # alternative: per-CPU (mutually exclusive with memory_per_task)
+    gpu:
+      count: 1                          # GPUs per task (float 0.5 for fractional)
+      type: a100                        # GPU model hint (advisory)
+      memory: "40Gi"                    # VRAM request
+      fraction: 1.0                     # Run.ai fractional GPU (0 < x ≤ 1)
+      mig_profile: ""                   # NVIDIA MIG profile e.g. "1g.10gb"
+      exclusive: true                   # exclusive GPU (LSF: mode=exclusive_process)
+    disk_per_task: "100Gi"             # local scratch disk
+    generic_resources:                  # Slurm --gres; HTCondor request_<name>; PBS custom chunk
+      fpga: 0
+      matlab_license: 0
+    limits:                             # K8s resource limits (defaults to = requests)
+      cpus_per_task: 8
+      memory_per_task: "32Gi"
+
+  # ── EXECUTION ──────────────────────────────────────────────────────────────
+  execution:
+    # Container mode (K8s-based schedulers: Armada, Volcano, Kueue, YuniKorn, Run.ai)
+    container:
+      image: "pytorch/pytorch:2.3-cuda12.1-cudnn8-runtime"
+      image_pull_policy: IfNotPresent
+      image_pull_secrets:
+        - registry-credentials
+      command: ["python"]
+      args: ["-m", "torch.distributed.run", "train.py", "--epochs", "100"]
+
+    # HPC bare-metal mode (Slurm, PBS, LSF, HTCondor, Flux)
+    # When both container and script are present, translators use whichever is
+    # appropriate for the target scheduler (script for HPC; container for K8s).
+    # For K8s schedulers without a container image, BAMMM wraps the script in
+    # a ConfigMap and uses a bash base image.
+    script: |
+      #!/bin/bash
+      module load cuda/12.1 pytorch/2.3
+      srun python train.py --epochs 100
+    shell: /bin/bash
+
+    working_dir: /scratch/bert-experiment
+
+    environment:
+      vars:
+        PYTHONPATH: /workspace
+        NCCL_DEBUG: INFO
+        OMP_NUM_THREADS: "4"
+        BAMMM_ARRAY_INDEX: ""           # populated per element for array jobs
+      secrets:
+        - name: WANDB_API_KEY
+          secret_name: wandb-secret
+          secret_key: api-key
+      config_maps:
+        - name: MODEL_CONFIG
+          config_map_name: bert-config
+          config_map_key: config.json
+      inherit_from_submitter: false
+
+    stdin: /dev/null
+
+  # ── MULTI-TASK (overrides execution/resources above when present) ───────────
+  tasks:
+    - name: master
+      replicas: 1
+      min_replicas: 1
+      resources:
+        cpus_per_task: 4
+        memory_per_task: "16Gi"
+        gpu:
+          count: 0
+      execution:
+        container:
+          image: "pytorch/pytorch:2.3-cuda12.1-cudnn8-runtime"
+          command: ["python", "coordinator.py"]
+      lifecycle:
+        max_retries: 2
+        policies:
+          - event: PodFailed
+            action: RestartTask
+            timeout: PT1M
+          - event: TaskCompleted
+            action: CompleteJob
+      placement:
+        node_selector:
+          node-role: coordinator
+
+    - name: worker
+      replicas: 8
+      min_replicas: 4             # gang threshold for this role
+      resources:
+        cpus_per_task: 8
+        memory_per_task: "32Gi"
+        gpu:
+          count: 4
+          type: a100
+      execution:
+        container:
+          image: "pytorch/pytorch:2.3-cuda12.1-cudnn8-runtime"
+          command: ["python", "-m", "torch.distributed.run", "train.py"]
+      lifecycle:
+        max_retries: 3
+        policies:
+          - event: PodEvicted
+            action: RestartTask
+      depends_on:
+        - name: master             # Volcano DependsOn (intra-job task ordering)
+
+  # ── GANG SCHEDULING ────────────────────────────────────────────────────────
+  gang:
+    min_available: 9               # all 1 master + 8 workers must start together
+    style: hard                    # reject if gang cannot form within timeout
+    timeout: PT10M                 # max wait for gang formation
+
+  # ── ARRAY JOBS ─────────────────────────────────────────────────────────────
+  array:
+    indices: "0-99"                # "0-99", "1-50:2" (step), "0-999%50" (throttle)
+    max_concurrent: 10             # max simultaneously running array elements
+
+  # ── DEPENDENCIES ───────────────────────────────────────────────────────────
+  dependencies:
+    - scheme: afterok
+      value: "data-prep-job"       # job name (LSF: native; others: resolved to ID)
+    - scheme: afterok
+      value: "42601"               # job ID
+    - scheme: afterany
+      value: "cleanup-job"
+    - scheme: singleton            # start after all jobs with same name+account finish
+      value: ""
+    - scheme: begin_time
+      value: "2026-06-01T08:00:00"
+    - scheme: afterok              # PBS on:N: start after N elements of array complete
+      value: "42600"
+      count: 50
+
+  # ── LIFECYCLE ──────────────────────────────────────────────────────────────
+  lifecycle:
+    max_retries: 3
+    requeue_on_failure: true
+    success_exit_codes: [0, 42]    # exit 42 = "soft success" for this job
+    ttl_after_finished: PT1H
+
+  # ── PLACEMENT ──────────────────────────────────────────────────────────────
+  placement:
+    node_selector:
+      cloud.google.com/gke-accelerator: nvidia-tesla-a100
+      node-type: on-demand
+    tolerations:
+      - key: "nvidia.com/gpu"
+        operator: Exists
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: topology.kubernetes.io/zone
+                  operator: In
+                  values: [us-central1-a, us-central1-b]
+    topology: scatter               # scatter | pack | free
+    group_by: rack                  # group within same network rack
+    constraint: "avx512&infiniband" # Slurm: --constraint; Flux: constraints.properties
+    prefer: nvlink                  # soft preference (Slurm: --prefer)
+    exclusive: false
+    node_pools:
+      - a100-pool                   # first choice
+      - h100-pool                   # fallback
+    mpi_mapping:
+      cpus: closest
+      gpus: closest
+      distribution: block
+
+  # ── OUTPUT ─────────────────────────────────────────────────────────────────
+  output:
+    stdout: "/scratch/logs/{job_name}-{job_id}.out"
+    stderr: "/scratch/logs/{job_name}-{job_id}.err"
+    merge_stderr: false
+    open_mode: truncate
+
+  # ── NOTIFICATIONS ──────────────────────────────────────────────────────────
+  notifications:
+    email: "researcher@example.com"
+    events:
+      - end
+      - fail
+      - time_limit_90
+
+  # ── FILE STAGING ───────────────────────────────────────────────────────────
+  file_staging:
+    inputs:
+      - src: "s3://my-datasets/bert/tokenized/"
+        dst: "/scratch/data/"
+      - src: "nfs-host:/shared/checkpoints/bert-base.pt"
+        dst: "/scratch/init-checkpoint.pt"
+    outputs:
+      - src: "/scratch/output/model.pt"
+        dst: "s3://my-models/bert-v2/model.pt"
+      - src: "/scratch/logs/"
+        dst: "s3://my-logs/bert-v2/{job_id}/"
+    embedded_files:
+      - name: train.py
+        content: |
+          import torch
+          # ... training code ...
+        encoding: utf-8
+        permissions: "0755"
+    transfer_policy: always
+    checkpoint_files:
+      - "/scratch/checkpoint.pt"
+      - "/scratch/optimizer.pt"
+    checkpoint_exit_code: 77       # exit 77 = checkpoint saved, requeue (HTCondor)
+
+  # ── VOLUMES (K8s schedulers) ───────────────────────────────────────────────
+  volumes:
+    - name: dataset
+      mount_path: /data
+      read_only: true
+      pvc: bert-dataset-pvc
+    - name: results
+      mount_path: /results
+      pvc: bert-results-pvc
+    - name: config
+      mount_path: /etc/config
+      config_map: bert-hyperparams
+    - name: scratch
+      mount_path: /scratch
+      empty_dir: true
+    - name: nfs-models
+      mount_path: /models
+      read_only: true
+      nfs:
+        server: nfs.internal
+        path: /exports/models
+
+  # ── WORKLOAD TYPE ──────────────────────────────────────────────────────────
+  workload_type: training            # training | interactive | inference | batch
+  distributed_framework: pytorch     # pytorch | tensorflow | mpi | horovod | xgboost | none
+
+  # ── EXTENSIONS: SCHEDULER-SPECIFIC PASSTHROUGH ─────────────────────────────
+  # Fields here take precedence over generic equivalents for their target scheduler.
+
+  extensions:
+
+    slurm:
+      mpi: pmix_v4
+      time_min: PT1H
+      wckey: ml-training
+      profile: [task, energy]
+      switches: 2
+      switches_max_wait: PT30M
+      kill_on_bad_exit: true
+      sockets_per_node: 2
+      cores_per_socket: 16
+      threads_per_core: 1
+      ntasks_per_socket: 4
+      cpus_per_gpu: 4
+      mem_per_gpu: "16Gi"
+      gpu_bind: closest
+      # het_components: [...]         # heterogeneous job — see SPEC.md
+
+    pbs:
+      place: "scatter:excl"           # full place expression
+      # mixed_chunks: "1:ncpus=16:mem=64gb+4:ncpus=8:mem=16gb:ngpus=2"
+      mpiprocs_per_chunk: 8
+      ompthreads_per_chunk: 4
+      stagein:
+        - "input.tar.gz@login01:/scratch/input.tar.gz"
+      stageout:
+        - "/scratch/output.tar.gz@login01:results/output.tar.gz"
+
+    lsf:
+      app_profile: gpu-training
+      service_class: ml-tier1
+      license_project: pytorch-licenses
+      rusage_string: "rusage[mem=16000:ngpus_excl_p=1:duration=3600]"
+      compute_unit:
+        type: rack
+        policy: pack
+        max_units: 2
+        exclusive: false
+      same_resource: [type, model]
+      autoresizable: false
+      pre_exec: "/usr/local/bin/setup-env.sh"
+      post_exec: "/usr/local/bin/cleanup.sh"
+
+    htcondor:
+      universe: docker
+      requirements: "(HasGPU =?= True) && (GPUMemoryMb >= 40000)"
+      rank: "TARGET.GPUMemoryMb / 1024.0"
+      periodic_hold: "(JobStatus == 1) && (time() - EnteredCurrentStatus > 86400)"
+      periodic_hold_reason: "Job idle for more than 24h"
+      periodic_release: "(HoldReasonCode == 3)"
+      checkpoint_exit_code: 77
+      concurrency_limits:
+        - "ml_gpu_licenses:4"
+      project_name: bert-training
+      accounting_group: ml.bert
+      batch_name: bert-sweep
+      log: "/scratch/condor-{job_id}.log"
+      max_materialize: 20
+      retry_request_memory: ["32Gi", "64Gi"]
+
+    flux:
+      bank: nlp-allocation
+      urgency: 14
+      preemptible_after: 300
+      symbolic_dependencies:
+        - scheme: string
+          value: tokenized-bert-dataset
+          type: in
+          scope: user
+      embedded_files:
+        train.py:
+          encoding: utf-8
+          data: |
+            import torch
+            # training code here
+      shell_options:
+        rlimit:
+          nofile: 65536
+        cpu-affinity: per-task
+        gpu-affinity: per-task
+      user_attributes:
+        experiment: bert-v2
+        sweep_id: "42"
+
+    armada:
+      job_set_id: bert-experiment-set-001
+      scheduler_name: default
+      namespace: ml-team
+      ingress:
+        - ports: [8080, 8443]
+          tls_enabled: true
+          annotations:
+            nginx.ingress.kubernetes.io/rewrite-target: /
+      services:
+        - type: Headless
+          ports: [29500]
+          name: nccl-workers
+
+    volcano:
+      min_success: 7                 # job complete when 7 of 8 workers succeed
+      max_retry: 5
+      ttl_seconds: 3600
+      running_estimate: PT3H
+      plugins:
+        - env
+        - svc
+        - pytorch
+      policies:
+        - event: TaskCompleted
+          action: CompleteJob
+        - event: PodEvicted
+          action: RestartTask
+          timeout: PT2M
+        - event: Unknown
+          action: RestartJob
+
+    kueue:
+      local_queue: ml-team-queue
+      workload_priority_class: ml-high-priority
+      max_execution_time: 14400
+      min_count: 4                   # elastic: admit with at least 4 pods
+      reclaim_pods:
+        - pod_set_name: worker
+          count: 2
+
+    yunikorn:
+      app_id: bert-training-001
+      disable_state_aware: false
+      gang_scheduling_style: Hard
+      gang_timeout: 600
+
+    runai:
+      project: nlp-team
+      department: research
+      interactive: false
+      large_shm: true
+      min_replicas: 4
+      max_replicas: 8
+      node_pools:
+        - a100-80gb-pool
+        - a100-40gb-pool
+      pod_group_policy: all

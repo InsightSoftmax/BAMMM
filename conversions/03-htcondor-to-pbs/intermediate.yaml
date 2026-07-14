@@ -1,0 +1,146 @@
+# SPLAT intermediate — produced by:
+#   bammm convert --from htcondor source.sub
+#
+# TRANSLATION NOTES (HTCondor → SPLAT):
+#
+# [AUTO] universe=docker + docker_image → execution.container.image
+# [AUTO] executable/arguments → execution.executable, execution.arguments
+#        (arguments use HTCondor $(var) syntax; BAMMM converts to {var} template syntax
+#         and preserves the parameter names from the queue statement)
+# [AUTO] request_cpus → resources.cpus_per_task
+# [AUTO] request_memory → resources.memory_per_task
+# [AUTO] request_disk → resources.disk_per_task
+# [AUTO] request_gpus=1 + require_gpus=(GlobalMemoryMb >= 24576) →
+#        resources.gpu.count=1 + resources.gpu.memory="24Gi"
+# [AUTO] gpus_minimum_capability=7.5 → extensions.htcondor.gpu_minimum_capability (advisory)
+# [AUTO] output/error path patterns → output.stdout/stderr with {job_id}/{array_index}
+# [AUTO] transfer_input_files → file_staging.inputs
+# [AUTO] transfer_output_files → file_staging.outputs
+# [AUTO] transfer_output_remaps → file_staging.output_remaps
+# [AUTO] when_to_transfer_output=ON_EXIT_OR_EVICT → file_staging.transfer_policy=always
+# [AUTO] max_retries=3 → lifecycle.max_retries=3
+# [AUTO] retry_request_memory → extensions.htcondor.retry_request_memory
+# [AUTO] +ProjectName → extensions.htcondor.project_name
+# [AUTO] +AccountingGroup → extensions.htcondor.accounting_group (+ schedule.account)
+# [AUTO] notification/notify_user → notifications.email + events
+# [AUTO] "queue ... from file" → array.indices="0-N" (N inferred from manifest line count)
+#        The three parameters (sample_id, bam_file, output_dir) become env vars per element.
+#
+# [HARD PROBLEM] requirements ClassAd expression:
+#   "(HasInfiniband =?= True) && (Disk >= 500*1024*1024) && (OpSysAndVer == "CentOS7" || ...) &&
+#    (Target.HasGATK4 =?= True || HasSingularity =?= True)"
+#   This expression references machine ClassAds that have NO equivalent in PBS.
+#   PBS cannot query arbitrary machine properties at job submission time.
+#   BAMMM extracts what it can:
+#     - disk >= 500GB → resources.disk_per_task="500Gi" (already covered by request_disk)
+#     - HasInfiniband → placement.constraint="infiniband" (advisory; depends on PBS site config)
+#     - OpSysAndVer → ignored (PBS does not filter by OS version)
+#     - HasGATK4 || HasSingularity → ignored (no PBS equivalent; user must ensure target nodes have it)
+#   The full expression is stored in extensions.htcondor.requirements for reference.
+#
+# [HARD PROBLEM] rank expression:
+#   "TARGET.Memory / 1024 + TARGET.GPUMemoryMb / 4096"
+#   HTCondor's rank sorts matching machines by this score. PBS has no equivalent preference
+#   mechanism — it places jobs on the first available qualifying nodes.
+#   The rank is stored in extensions.htcondor.rank and DROPPED for PBS output.
+#
+# [HARD PROBLEM] periodic_hold / periodic_release / periodic_remove:
+#   These are daemon-evaluated expressions that fire on timers. No PBS equivalent exists.
+#   PBS has a walltime limit (--l walltime) which covers the "running > 48h" case.
+#   BAMMM maps the 48h periodic_hold → schedule.walltime=PT48H (conservative).
+#   periodic_remove (idle > 7 days) → no PBS equivalent; dropped with warning.
+#   periodic_release → no PBS equivalent; dropped.
+#
+# [APPROXIMATION] retry_request_memory escalation (32G → 64G → 128G on eviction):
+#   PBS has no mechanism for automatic resource escalation on retry.
+#   Generated PBS script uses fixed max memory (131072M = the highest escalation value).
+#   This wastes memory on first attempts but ensures the job doesn't fail on the last try.
+#
+# [APPROXIMATION] queue ... from sample-manifest.txt (200 parametric jobs):
+#   PBS array job with PBS_ARRAY_INDEX 0-199.
+#   The sample manifest must be accessible from compute nodes.
+#   Each PBS element reads its parameters from the manifest file using its array index.
+
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  name: genomics-sweep-2026-06
+  annotations:
+    bammm.io/source-format: htcondor
+spec:
+  schedule:
+    queue: ""                          # HTCondor routes via requirements; PBS needs explicit queue
+                                       # WARN: set to your PBS GPU queue name
+    account: bio.variant-calling       # from +AccountingGroup
+    project: genomics-pipeline         # from +ProjectName
+    priority: 500
+    walltime: PT48H                    # derived from periodic_hold 172800s limit
+
+  resources:
+    tasks: 1
+    cpus_per_task: 8
+    memory_per_task: "128Gi"           # WARN: using max escalation value (retry_request_memory)
+                                       # to avoid under-allocation; original request was 32Gi
+    disk_per_task: "500Gi"             # max(request_disk=200G, requirements Disk>=500GB) = 500Gi
+    gpu:
+      count: 1
+      memory: "24Gi"                   # from require_gpus GlobalMemoryMb >= 24576
+
+  execution:
+    container:
+      image: broadinstitute/gatk:4.5.0.0
+      command: ["/scripts/run-variant-calling.sh"]
+      args: ["{sample_id}", "{bam_file}", "{output_dir}"]
+    executable: /scripts/run-variant-calling.sh
+    arguments: "{sample_id} {bam_file} {output_dir}"
+
+  array:
+    indices: "0-199"                   # 200 samples; BAMMM counts lines in sample-manifest.txt
+    max_concurrent: 0                  # no throttle specified in source
+
+  placement:
+    constraint: "infiniband"           # extracted from requirements HasInfiniband =?= True
+    # WARN: HasGATK4 || HasSingularity → cannot express in PBS; ensure target nodes have Singularity
+
+  file_staging:
+    inputs:
+      - src: /scripts/run-variant-calling.sh
+        dst: /scripts/run-variant-calling.sh
+      - src: /reference/hg38.fa
+        dst: /reference/hg38.fa
+      - src: /reference/hg38.fa.fai
+        dst: /reference/hg38.fa.fai
+      - src: /reference/known-sites.vcf.gz
+        dst: /reference/known-sites.vcf.gz
+    outputs:
+      - src: "{output_dir}/{sample_id}.vcf.gz"
+        dst: /results/{sample_id}/{sample_id}.vcf.gz
+      - src: "{output_dir}/{sample_id}.vcf.gz.tbi"
+        dst: /results/{sample_id}/{sample_id}.vcf.gz.tbi
+    transfer_policy: always
+
+  lifecycle:
+    max_retries: 3
+
+  output:
+    stdout: /scratch/logs/gatk-{job_id}-{array_index}.out
+    stderr: /scratch/logs/gatk-{job_id}-{array_index}.err
+
+  notifications:
+    email: pipeline@genomics.org
+    events: [end]
+
+  extensions:
+    htcondor:
+      universe: docker
+      requirements: "(HasInfiniband =?= True) && (Disk >= 500*1024*1024) && (OpSysAndVer == \"CentOS7\" || OpSysAndVer == \"AlmaLinux9\") && (Target.HasGATK4 =?= True || HasSingularity =?= True)"
+      rank: "TARGET.Memory / 1024 + TARGET.GPUMemoryMb / 4096"
+      periodic_hold: "(JobStatus == 2) && (time() - JobCurrentStartDate > 172800)"
+      periodic_hold_reason: "Exceeded 48-hour runtime limit"
+      periodic_release: "(HoldReasonCode == 3)"
+      periodic_remove: "(JobStatus == 1) && (time() - EnteredCurrentStatus > 604800)"
+      retry_request_memory: ["65536M", "131072M"]
+      project_name: genomics-pipeline
+      accounting_group: bio.variant-calling
+      log: /scratch/logs/gatk-{job_id}.log
+      batch_name: genomics-sweep-2026-06

@@ -1,25 +1,22 @@
-apiVersion: batch.unified.io/v1alpha1
-kind: BatchJob
+apiVersion: bammm.io/v1alpha1
+kind: Job
 metadata:
-  name: simple-example
+  name: hello-world
   labels:
     app: bammm-example
 spec:
-  queue: default
-  priorityClassName: normal
-  tasks:
-    - name: hello-world
-      replicas: 1
-      pod:
-        containers:
-          - name: main
-            image: busybox:latest
-            command: ["echo", "Hello from BAMMM!"]
-            resources:
-              requests:
-                cpu: "100m"
-                memory: "128Mi"
-              limits:
-                cpu: "200m"
-                memory: "256Mi"
-        restartPolicy: Never 
+  schedule:
+    queue: default
+    priority: 500
+    walltime: PT5M
+  resources:
+    tasks: 1
+    cpus_per_task: 1
+    memory_per_task: "128Mi"
+  execution:
+    container:
+      image: busybox:latest
+      command: ["echo", "Hello from BAMMM!"]
+    script: |
+      #!/bin/bash
+      echo "Hello from BAMMM!"

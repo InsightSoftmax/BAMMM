@@ -1,0 +1,105 @@
+# MPI job targeting HPC schedulers (Slurm, PBS, LSF, HTCondor parallel, Flux)
+# This job runs on bare-metal nodes with no container runtime required.
+# For K8s schedulers, BAMMM wraps the script in a ConfigMap + bash base image.
+
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  name: mpi-simulation
+  labels:
+    app: fluid-dynamics
+spec:
+  schedule:
+    queue: mpi-queue
+    account: proj-cfd
+    walltime: PT8H
+    walltime_min: PT2H              # Slurm backfill: accept as short as 2h in gaps
+    priority: 500
+  resources:
+    nodes: 8
+    tasks: 64                       # total MPI ranks
+    tasks_per_node: 8
+    tasks_per_socket: 4
+    cpus_per_task: 4                # OpenMP threads per rank
+    memory_per_task: "8Gi"
+    gpu:
+      count: 1
+      type: a100
+  execution:
+    script: |
+      #!/bin/bash
+      module load openmpi/4.1.5 cuda/12.1
+      export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-4}
+      srun ./cfd-solver --input input.cfg --output /scratch/results/
+    working_dir: /scratch/cfd-run
+    environment:
+      vars:
+        OMP_NUM_THREADS: "4"
+        OMPI_MCA_btl_openib_allow_ib: "1"
+      inherit_from_submitter: false
+    stdin: /dev/null
+  placement:
+    constraint: "infiniband&avx512"
+    topology: scatter
+    exclusive: true
+  output:
+    stdout: "/scratch/logs/cfd-{job_id}.out"
+    stderr: "/scratch/logs/cfd-{job_id}.err"
+  notifications:
+    email: "engineer@example.com"
+    events: [end, fail]
+  file_staging:
+    inputs:
+      - src: "/nfs/shared/cfd-inputs/input.cfg"
+        dst: "/scratch/cfd-run/input.cfg"
+    outputs:
+      - src: "/scratch/results/"
+        dst: "/nfs/shared/cfd-results/{job_id}/"
+  lifecycle:
+    max_retries: 1
+    requeue_on_failure: false
+
+  extensions:
+    slurm:
+      mpi: pmix_v4
+      switches: 2
+      switches_max_wait: PT20M
+      kill_on_bad_exit: true
+      sockets_per_node: 2
+      cores_per_socket: 16
+      threads_per_core: 1
+      ntasks_per_socket: 4
+      cpus_per_gpu: 4
+      mem_per_gpu: "16Gi"
+      gpu_bind: closest
+
+    pbs:
+      place: "scatter:excl"
+      mpiprocs_per_chunk: 8
+      ompthreads_per_chunk: 4
+      stagein:
+        - "input.cfg@login01:/scratch/cfd-run/input.cfg"
+      stageout:
+        - "/scratch/results/@login01:/nfs/shared/cfd-results/"
+
+    lsf:
+      rusage_string: "rusage[mem=8000:ngpus_excl_p=1] span[ptile=8]"
+      compute_unit:
+        type: rack
+        policy: pack
+        max_units: 2
+        exclusive: false
+      same_resource: [type]
+
+    htcondor:
+      universe: parallel
+      machine_count: 8
+      requirements: "(HasInfiniband =?= True) && (HasAVX512 =?= True)"
+      rank: "TARGET.Machine"
+
+    flux:
+      bank: cfd-allocation
+      urgency: 14
+      shell_options:
+        cpu-affinity: per-task
+        gpu-affinity: per-task
