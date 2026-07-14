@@ -40,10 +40,12 @@ func (q Quantity) String() string {
 	}
 }
 
+// MarshalJSON emits the quantity as its compact IEC string.
 func (q Quantity) MarshalJSON() ([]byte, error) {
 	return json.Marshal(q.String())
 }
 
+// UnmarshalJSON accepts an IEC/SI string or a bare integer (MiB).
 func (q *Quantity) UnmarshalJSON(data []byte) error {
 	var s string
 	if err := json.Unmarshal(data, &s); err == nil {

@@ -538,7 +538,7 @@ func parseGRES(s string) (*splat.GPURequest, error) {
 		}
 		gpu.Count = n
 	default:
-		return nil, fmt.Errorf("unrecognised gres format %q", s)
+		return nil, fmt.Errorf("unrecognized gres format %q", s)
 	}
 	return gpu, nil
 }
@@ -570,7 +570,7 @@ func parseArray(s string) (*splat.Array, error) {
 	return a, nil
 }
 
-// parseDependency parses --dependency=afterok:12345:67890,afterany:111
+// parseDependency parses --dependency=afterok:12345:67890,afterany:111.
 func parseDependency(s string) ([]splat.Dependency, error) {
 	var deps []splat.Dependency
 	for _, clause := range strings.Split(s, ",") {

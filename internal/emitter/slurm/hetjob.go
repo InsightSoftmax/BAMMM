@@ -179,15 +179,15 @@ func flattenNote(job *splat.Job) string {
 	b.WriteString("# ── ALTERNATIVE: flatten to a single allocation (any Slurm version) ───────────\n")
 	b.WriteString("# If your cluster does not support het-jobs, replace the header above with a\n")
 	b.WriteString("# single allocation sized to the largest role and assign roles by $SLURM_PROCID:\n")
-	b.WriteString(fmt.Sprintf("#   #SBATCH --nodes=%d\n", len(job.Spec.Tasks)))
+	fmt.Fprintf(&b, "#   #SBATCH --nodes=%d\n", len(job.Spec.Tasks))
 	if maxCPU > 0 {
-		b.WriteString(fmt.Sprintf("#   #SBATCH --cpus-per-task=%d\n", maxCPU))
+		fmt.Fprintf(&b, "#   #SBATCH --cpus-per-task=%d\n", maxCPU)
 	}
 	if maxMem != nil {
-		b.WriteString(fmt.Sprintf("#   #SBATCH --mem=%s\n", slurmMem(maxMem)))
+		fmt.Fprintf(&b, "#   #SBATCH --mem=%s\n", slurmMem(maxMem))
 	}
 	if maxGPU > 0 {
-		b.WriteString(fmt.Sprintf("#   #SBATCH --gres=gpu:%d\n", int(maxGPU+0.5)))
+		fmt.Fprintf(&b, "#   #SBATCH --gres=gpu:%d\n", int(maxGPU+0.5))
 	}
 	b.WriteString("#   # then branch on $SLURM_PROCID to launch driver (rank 0) vs workers.\n")
 	return b.String()

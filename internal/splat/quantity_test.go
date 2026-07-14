@@ -12,10 +12,10 @@ func TestQuantityParse(t *testing.T) {
 		{"128Gi", 128 * _GiB, "128Gi"},
 		{"4Mi", 4 * _MiB, "4Mi"},
 		{"1Ti", _TiB, "1Ti"},
-		{"1024Mi", _GiB, "1Gi"},    // normalises up to Gi
+		{"1024Mi", _GiB, "1Gi"},      // normalises up to Gi
 		{"4096", 4096 * _MiB, "4Gi"}, // bare int → MiB → normalises
-		{"16G", 16 * _GB, "14Mi"},  // SI decimal: 16*10^9 bytes → doesn't hit GiB boundary
-		{"1G", _GB, "953Mi"},       // 10^9 bytes, not 2^30
+		{"16G", 16 * _GB, "14Mi"},    // SI decimal: 16*10^9 bytes → doesn't hit GiB boundary
+		{"1G", _GB, "953Mi"},         // 10^9 bytes, not 2^30
 	}
 	// Recalculate expected string for SI cases since they don't hit IEC boundaries.
 	siFix := map[string]string{

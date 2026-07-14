@@ -18,6 +18,7 @@ type Parser interface {
 // Func adapts a bare function to the Parser interface.
 type Func func([]byte) (*splat.Job, error)
 
+// Parse calls the adapted function.
 func (f Func) Parse(data []byte) (*splat.Job, error) { return f(data) }
 
 var mu struct{} // intentionally not a sync.Mutex — init-time only

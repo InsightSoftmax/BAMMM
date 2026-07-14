@@ -64,7 +64,7 @@ func Emit(job *splat.Job) ([]byte, error) {
 	return []byte(b.String()), nil
 }
 
-// writeShebang writes the interpreter line, honouring execution.shell.
+// writeShebang writes the interpreter line, honoring execution.shell.
 func writeShebang(b *strings.Builder, job *splat.Job) {
 	shell := job.Spec.Execution.Shell
 	if shell == "" {

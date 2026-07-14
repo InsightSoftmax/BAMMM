@@ -18,6 +18,7 @@ type Emitter interface {
 // Func adapts a bare function to the Emitter interface.
 type Func func(*splat.Job) ([]byte, error)
 
+// Emit calls the adapted function.
 func (f Func) Emit(j *splat.Job) ([]byte, error) { return f(j) }
 
 var registry = map[string]Emitter{}

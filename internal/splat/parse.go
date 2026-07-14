@@ -2,6 +2,7 @@ package splat
 
 import "sigs.k8s.io/yaml"
 
+// SPLAT document identity.
 const (
 	APIVersion = "bammm.io/v1alpha1"
 	Kind       = "Job"
