@@ -35,7 +35,18 @@ cat job.sub | bammm convert --from htcondor --to pbs
 
 # Inspect the intermediate representation
 bammm convert --from slurm --to splat job.sh
+
+# Convert a whole directory in bulk (recurses, mirrors the tree into out/)
+bammm convert --from slurm --to kueue --input-dir jobs/ --output-dir out/
+
+# Or a glob of files (bulk runs require --output-dir)
+bammm convert --from slurm --to kueue jobs/*.sh --output-dir out/
 ```
+
+Bulk runs name each output after its source with the target's extension,
+continue past files that fail to convert, print a summary, and exit non-zero
+if any failed. Use `--pattern '*.sbatch'` to filter which files in `--input-dir`
+are converted, and `--recursive=false` to stay in the top directory.
 
 Wherever the translation is lossy, BAMMM tells you exactly what got dropped, what got approximated, and what's stuck in the `extensions.*` block waiting to be round-tripped back.
 
