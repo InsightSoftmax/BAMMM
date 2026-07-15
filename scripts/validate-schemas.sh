@@ -12,7 +12,9 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-KUBECONFORM="go run github.com/yannh/kubeconform/cmd/kubeconform@v0.8.0"
+# v0.7.0 is the newest release that builds with Go 1.24+ (our toolchain);
+# v0.8.0 requires Go 1.26. Override with $KUBECONFORM to use an installed binary.
+KUBECONFORM="${KUBECONFORM:-go run github.com/yannh/kubeconform/cmd/kubeconform@v0.7.0}"
 SCHEMA_DIR="testdata/schemas"
 OUT="$(mktemp -d)"
 trap 'rm -rf "$OUT"' EXIT
