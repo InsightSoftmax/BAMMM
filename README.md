@@ -71,29 +71,51 @@ Wherever the translation is lossy, BAMMM tells you exactly what got dropped, wha
 
 ## Supported schedulers
 
-| Scheduler | Type | Status |
-|---|---|---|
-| **Slurm** | HPC | Parser ✅ · Emitter 🚧 |
-| **Volcano** | K8s | 🚧 |
-| **Kueue** | K8s | 🚧 |
-| **Armada** | K8s | 🚧 |
-| **YuniKorn** | K8s | 🚧 |
-| **HTCondor** | HPC | 🚧 |
-| **OpenPBS** | HPC | 🚧 |
-| **Flux** | HPC | 🚧 |
-| **LSF** | HPC | Community 🚧 |
-| **Run.ai** | K8s | Partner 🚧 |
+✅ = available · 🚧 = planned
+
+| Scheduler | Type | Parser (`--from`) | Emitter (`--to`) |
+|---|---|---|---|
+| **Slurm** | HPC | ✅ | ✅ |
+| **Volcano** | K8s | ✅ | ✅ |
+| **Kueue** | K8s | ✅ | ✅ |
+| **Armada** | K8s | ✅ | ✅ |
+| **OpenPBS** | HPC | 🚧 | 🚧 |
+| **HTCondor** | HPC | 🚧 | 🚧 |
+| **Flux** | HPC | 🚧 | 🚧 |
+| **YuniKorn** | K8s | 🚧 | 🚧 |
+| **Run.ai** | K8s (Partner) | 🚧 | 🚧 |
+| **LSF** | HPC (Community) | 🚧 | 🚧 |
+
+Plus `splat` as both `--from` and `--to` for validation / round-tripping. Run `bammm formats` for the live list.
 
 ## Installation
 
+**From source** (requires Go 1.25+):
+
 ```sh
-# Homebrew (coming soon)
-brew install finos/tap/bammm
+go install github.com/InsightSoftmax/BAMMM/cmd/bammm@latest
+```
 
-# From source (requires Go 1.24+)
-go install github.com/finos/bammm/cmd/bammm@latest
+**Release binary — Linux** (`amd64`; use `bammm_linux_arm64.tar.gz` on ARM):
 
-# Or just grab a release binary from GitHub Releases
+```sh
+curl -sSL https://github.com/InsightSoftmax/BAMMM/releases/latest/download/bammm_linux_amd64.tar.gz \
+  | tar -xz bammm
+sudo install bammm /usr/local/bin/bammm
+```
+
+**Release binary — macOS** (Apple silicon; use `bammm_darwin_amd64.tar.gz` on Intel):
+
+```sh
+curl -sSL https://github.com/InsightSoftmax/BAMMM/releases/latest/download/bammm_darwin_arm64.tar.gz \
+  | tar -xz bammm
+sudo install bammm /usr/local/bin/bammm
+```
+
+**Homebrew** (coming soon):
+
+```sh
+brew install InsightSoftmax/tap/bammm
 ```
 
 ## SPLAT format quick start

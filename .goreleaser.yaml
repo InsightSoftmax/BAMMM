@@ -32,7 +32,8 @@ builds:
 archives:
   - id: bammm
     builds: [bammm]
-    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    # Version-less names so `releases/latest/download/<name>` URLs are stable.
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
     format_overrides:
       - goos: windows
         format: zip
