@@ -1,0 +1,204 @@
+# Kueue Workload + batch/v1 Job — produced by:
+#   bammm convert --from flux --to kueue source.json
+#
+# Kueue does not define the job itself — it queues existing Kubernetes Job objects.
+# BAMMM generates TWO objects:
+#   1. A batch/v1 Job (the actual workload)
+#   2. A Kueue LocalQueue label annotation on the Job (Kueue intercepts admission)
+#
+# TRANSLATION NOTES (SPLAT → Kueue):
+#
+# [AUTO] resources.cpus_per_task=32 → resources.requests.cpu: "32"
+# [AUTO] resources.memory_per_task=512Gi → resources.requests.memory: "512Gi"
+# [AUTO] resources.gpu.count=4 → resources.requests.nvidia.com/gpu: "4"
+# [AUTO] schedule.queue → kueue.x-k8s.io/queue-name annotation (LocalQueue name)
+# [AUTO] schedule.walltime=PT12H → activeDeadlineSeconds=43200
+# [AUTO] gang.min_available=8 → pod count=8; minAvailable expressed via PodGroup annotation
+#        NOTE: Kueue gang scheduling requires a PodGroupPolicy or use of JobSet.
+#              For batch/v1 Job, Kueue gang-schedules the entire parallelism at once.
+# [AUTO] placement.exclusive → nodeSelector taint (requires admin-managed node taint)
+# [AUTO] placement.node_selector → spec.template.spec.nodeSelector
+# [AUTO] file_staging.embedded_files[llm-config.yaml] → ConfigMap + volumeMount
+# [AUTO] execution.container.image → spec.template.spec.containers[0].image
+# [AUTO] execution.environment.vars → spec.template.spec.containers[0].env[]
+#
+# [DROPPED] dependencies (afterok:ƒ5oLkTLb AND string:tokenized-pile-dataset):
+#   Kueue has NO dependency mechanism. Both dependencies are DROPPED.
+#   WARN: This job will start immediately when admitted; ensure prerequisite jobs
+#   have completed and tokenized-pile-dataset is available before submitting.
+#   Use Argo Workflows or Airflow to sequence this job after its dependencies.
+#
+# [DROPPED] preemptible-after=600: Kueue has no per-job preemption delay.
+#   Preemption is controlled at the ClusterQueue level.
+#
+# [DROPPED] Socket topology (2 sockets × 16 cores):
+#   Kueue schedules based on total CPU count (32). NUMA topology is not preserved.
+#   If NUMA affinity matters, use TopologyAwareScheduling (Kueue ≥ v0.9) and
+#   create a Topology CRD that reflects your node's socket layout.
+#
+# [DROPPED] Flux symbolic dependency "tokenized-pile-dataset":
+#   No equivalent in Kueue or Kubernetes. User is responsible for ensuring
+#   the dataset is available before job admission.
+#
+# [DROPPED] extensions.flux.shell_options (cpu-affinity, gpu-affinity, rlimit):
+#   CPU/GPU affinity is not configurable at the Kubernetes pod level without
+#   a custom device plugin or topology manager. rlimit.nofile can be set via
+#   securityContext.sysctls but requires privileged access.
+#
+# REQUIRED MANUAL STEPS:
+#   1. Create LocalQueue "ml-batch" in the target namespace:
+#      kubectl apply -f local-queue.yaml (see below)
+#   2. Verify ClusterQueue has sufficient GPU quota for 8 × 4 = 32 GPUs
+#   3. Create PVC "llm-checkpoints-pvc" for checkpoint storage
+#   4. Create PVC "workspace-pvc" containing train_llm.py
+#   5. Add taint/toleration for exclusive GPU nodes if required
+#   6. Replace image with your actual training image
+#   7. Implement upstream workflow ordering (Argo/Airflow) for the dropped dependencies
+
+---
+# Object 1: batch/v1 Job (annotated for Kueue admission)
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: llm-pretraining
+  namespace: ml-team
+  labels:
+    bammm.io/source-format: flux
+    bammm.io/experiment-id: llm-run-42
+  annotations:
+    kueue.x-k8s.io/queue-name: ml-batch-local-queue
+    # WARN: dropped Flux dependencies:
+    #   afterok:ƒ5oLkTLb — implement externally
+    #   in:tokenized-pile-dataset — ensure dataset ready before submit
+spec:
+  parallelism: 8
+  completions: 8
+  completionMode: Indexed           # gives each pod a unique JOB_COMPLETION_INDEX (≈ node_rank)
+  activeDeadlineSeconds: 43200       # PT12H
+  backoffLimit: 0                    # Kueue manages retry at workload level
+  template:
+    metadata:
+      annotations:
+        # PodGroup for gang scheduling (requires scheduler-plugins or Kueue v0.9+)
+        scheduling.sigs.k8s.io/pod-group: llm-pretraining
+        scheduling.sigs.k8s.io/pod-group-min-available: "8"
+    spec:
+      nodeSelector:
+        feature.node.kubernetes.io/network-infiniband.capable: "true"
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+        - key: exclusive-gpu
+          operator: Exists
+          effect: NoSchedule
+      initContainers:
+        # Write embedded llm-config.yaml to a known path
+        - name: config-init
+          image: busybox:latest
+          command: ["sh", "-c", "cp /configs/llm-config.yaml /tmp/job-configs/llm-config.yaml"]
+          volumeMounts:
+            - name: llm-config
+              mountPath: /configs
+              readOnly: true
+            - name: job-configs
+              mountPath: /tmp/job-configs
+      containers:
+        - name: trainer
+          image: nvcr.io/nvidia/pytorch:24.01-py3
+          command: ["python", "-m", "torch.distributed.run"]
+          args:
+            - "--nproc_per_node=4"
+            - "--nnodes=8"
+            - "--node_rank=$(JOB_COMPLETION_INDEX)"
+            - "--rdzv_id=llm-pretraining-$(JOB_COMPLETION_INDEX)"
+            - "--rdzv_backend=c10d"
+            - "--rdzv_endpoint=$(MASTER_ADDR):29500"
+            - train_llm.py
+            - "--config=/tmp/job-configs/llm-config.yaml"
+            - "--checkpoint-dir=/checkpoints/llm-$(JOB_COMPLETION_INDEX)"
+          env:
+            - name: NCCL_DEBUG
+              value: INFO
+            - name: NCCL_SOCKET_IFNAME
+              value: ib0
+            - name: PYTHONPATH
+              value: /workspace
+            - name: TRANSFORMERS_CACHE
+              value: /scratch/hf-cache
+            - name: MASTER_PORT
+              value: "29500"
+            - name: MASTER_ADDR
+              # Head pod hostname (index 0) — using subdomain-based DNS
+              value: "llm-pretraining-0.llm-pretraining.ml-team.svc.cluster.local"
+            - name: JOB_COMPLETION_INDEX
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['batch.kubernetes.io/job-completion-index']
+          resources:
+            requests:
+              cpu: "32"
+              memory: 512Gi
+              nvidia.com/gpu: "4"
+            limits:
+              cpu: "32"
+              memory: 512Gi
+              nvidia.com/gpu: "4"
+          volumeMounts:
+            - name: workspace
+              mountPath: /workspace
+              readOnly: true
+            - name: checkpoints
+              mountPath: /checkpoints
+            - name: hf-cache
+              mountPath: /scratch/hf-cache
+            - name: job-configs
+              mountPath: /tmp/job-configs
+      volumes:
+        - name: llm-config
+          configMap:
+            name: llm-pretraining-config     # see ConfigMap below
+        - name: job-configs
+          emptyDir: {}
+        - name: workspace
+          persistentVolumeClaim:
+            claimName: workspace-pvc          # MANUAL: create with train_llm.py
+        - name: checkpoints
+          persistentVolumeClaim:
+            claimName: llm-checkpoints-pvc    # MANUAL: create
+        - name: hf-cache
+          emptyDir: {}
+      restartPolicy: Never
+
+---
+# Object 2: ConfigMap containing the embedded config file from the Flux jobspec
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: llm-pretraining-config
+  namespace: ml-team
+  labels:
+    bammm.io/source-format: flux
+    bammm.io/job: llm-pretraining
+data:
+  llm-config.yaml: |
+    model:
+      type: gpt2
+      layers: 48
+      hidden_size: 1600
+      num_heads: 25
+    training:
+      learning_rate: 0.0001
+      warmup_steps: 2000
+      max_steps: 100000
+
+---
+# Object 3 (reference): LocalQueue — must exist before submitting
+# kubectl apply -f this block once per namespace setup
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: LocalQueue
+metadata:
+  name: ml-batch-local-queue
+  namespace: ml-team
+spec:
+  clusterQueue: ml-gpu-cluster-queue   # MANUAL: must exist and have GPU quota

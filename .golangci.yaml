@@ -1,0 +1,49 @@
+version: "2"
+
+linters:
+  default: none
+  enable:
+    - errcheck       # unchecked errors
+    - govet          # go vet checks
+    - staticcheck    # SA, S, QF, ST checks
+    - revive         # opinionated Go style
+    - misspell       # common English misspellings
+    - godot          # period at end of comments
+    - noctx          # http calls without context
+    - bodyclose      # http response body not closed
+  settings:
+    errcheck:
+      # Writes to command stdout/stderr are fire-and-forget in a CLI.
+      exclude-functions:
+        - fmt.Fprint
+        - fmt.Fprintf
+        - fmt.Fprintln
+    revive:
+      rules:
+        - name: exported
+          arguments:
+            - disableStutteringCheck  # allow e.g. splat.SplatJob if ever needed
+        - name: unused-parameter
+        - name: error-return
+        - name: error-strings
+    godot:
+      scope: declarations
+      capital: false
+    misspell:
+      locale: US
+  exclusions:
+    rules:
+      # Test files get more latitude.
+      - path: "_test\\.go"
+        linters: [errcheck, godot]
+      # Generated files.
+      - path: "zz_generated"
+        linters: [staticcheck, revive, errcheck, godot, misspell]
+
+formatters:
+  enable:
+    - goimports      # import grouping / formatting
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0

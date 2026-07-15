@@ -1,0 +1,1194 @@
+{
+  "s-angheben__SpeciaRL__scripts__train__train_hetjob.sh": {
+    "repo": "s-angheben/SpeciaRL",
+    "path": "scripts/train/train_hetjob.sh",
+    "html_url": "https://github.com/s-angheben/SpeciaRL/blob/b18e45bfe74ba1cc38b3d6cbeb728a3b2242810d/scripts/train/train_hetjob.sh",
+    "sha": "3e8bf912b1b17437b36ce66a3226c5001f9ab051",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "saeyslab__hydra_hpc_example__src__dask_batchrunner__het_job.slurm": {
+    "repo": "saeyslab/hydra_hpc_example",
+    "path": "src/dask_batchrunner/het_job.slurm",
+    "html_url": "https://github.com/saeyslab/hydra_hpc_example/blob/c3ab8f5891414c156ea69e0b794172bf52b92f41/src/dask_batchrunner/het_job.slurm",
+    "sha": "b9abfe73b418ad507fee293fb58cbdf74f34716d",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "huggingface__inference-benchmarker__extra__slurm__vllm.slurm": {
+    "repo": "huggingface/inference-benchmarker",
+    "path": "extra/slurm/vllm.slurm",
+    "html_url": "https://github.com/huggingface/inference-benchmarker/blob/bad4f947ef5f34ef264d2451439ab90cf7cbd65c/extra/slurm/vllm.slurm",
+    "sha": "d6bfe5e4e03d3bd3c68f943c8591946e80b5ced2",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "RWTH-HPC__MMCP_2026_Artifact_Hybrid_Inference__Templates__Hybrid_2cpu.job": {
+    "repo": "RWTH-HPC/MMCP_2026_Artifact_Hybrid_Inference",
+    "path": "Templates/Hybrid_2cpu.job",
+    "html_url": "https://github.com/RWTH-HPC/MMCP_2026_Artifact_Hybrid_Inference/blob/5c4f168ea6f5616f9c43f8e9d7ccdaab20e11fb3/Templates/Hybrid_2cpu.job",
+    "sha": "73c29e7868b91f8184de7934f29e7135dacd9e3f",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "emiwar__julia-virtual-rodent__submit_mpi_small.sh": {
+    "repo": "emiwar/julia-virtual-rodent",
+    "path": "submit_mpi_small.sh",
+    "html_url": "https://github.com/emiwar/julia-virtual-rodent/blob/bfa87b351afe00c66df4b3e2fa9c669f311fef11/submit_mpi_small.sh",
+    "sha": "352ae875323c22af5d86cc5970cc6f1976729d72",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "O1af__HOPS__experiments__experiment_3__36_all_nodes_batch9__link_bench.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_3/36_all_nodes_batch9/link_bench.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_3/36_all_nodes_batch9/link_bench.slurm",
+    "sha": "df480fbc8c59159eb7aa8f5c5bb69e5f5df5e268",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1470780.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1470780.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1470780.slurm",
+    "sha": "7bae0660f56e939f544841306b7bcc20272db109",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_sapphirerapids__worker_64562461__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_sapphirerapids/worker_64562461/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_sapphirerapids/worker_64562461/jobscript.sh",
+    "sha": "105d9ebbb3527e882dc84ac4d47d378b2c87f4bb",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hpc-uk__build-instructions__apps__NEMO__submit-cce-ofi.ll": {
+    "repo": "hpc-uk/build-instructions",
+    "path": "apps/NEMO/submit-cce-ofi.ll",
+    "html_url": "https://github.com/hpc-uk/build-instructions/blob/bc7eb4851885280c62c9d05054056de152fcd4dd/apps/NEMO/submit-cce-ofi.ll",
+    "sha": "e9f91a37a75eb44edbe5fbb86b7a6c54cd12eb04",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "SMU-ODSRCI__LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems__BERT__BERT_Fine-Tuning_SBATCH_Scripts__bert_arithmetic_compression_training_10GPUs.sbatch": {
+    "repo": "SMU-ODSRCI/LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems",
+    "path": "BERT/BERT Fine-Tuning SBATCH Scripts/bert_arithmetic_compression_training_10GPUs.sbatch",
+    "html_url": "https://github.com/SMU-ODSRCI/LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems/blob/d8b21c2264b41081ee9b01db69b6b47d56cfec0a/BERT/BERT%20Fine-Tuning%20SBATCH%20Scripts/bert_arithmetic_compression_training_10GPUs.sbatch",
+    "sha": "efa0da4de4c0e564bd65c97341b1aeb06cfecbf3",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "SMU-ODSRCI__LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems__RoBERTa__RoBERTa_+_AC_Inference_SBATCH_Scripts__roberta_arithmetic_compression_14GPUs_CDF_.sbatch": {
+    "repo": "SMU-ODSRCI/LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems",
+    "path": "RoBERTa/RoBERTa + AC Inference SBATCH Scripts/roberta_arithmetic_compression_14GPUs_CDF_GPU_BATCHED_TFOFF_NO-DDP_TENSORIZED_TIMING_BLOCKS.sbatch",
+    "html_url": "https://github.com/SMU-ODSRCI/LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems/blob/d8b21c2264b41081ee9b01db69b6b47d56cfec0a/RoBERTa/RoBERTa%20%2B%20AC%20Inference%20SBATCH%20Scripts/roberta_arithmetic_compression_14GPUs_CDF_GPU_BATCHED_TFOFF_NO-DDP_TENSORIZED_TIMING_BLOCKS.sbatch",
+    "sha": "92c9664b14c49e96d6a2af0c2d384b1ed4880c69",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "Slim205__RL-Lean__tools__RL-STP-GPU__run_RL_steps.sh": {
+    "repo": "Slim205/RL-Lean",
+    "path": "tools/RL-STP-GPU/run_RL_steps.sh",
+    "html_url": "https://github.com/Slim205/RL-Lean/blob/cc56d845254c17da2588d223ad65e8054843d5ff/tools/RL-STP-GPU/run_RL_steps.sh",
+    "sha": "f02fca58596f714574784e81c7acd73b3f1a0d42",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "SMU-ODSRCI__LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems__RoBERTa__RoBERTa_Fine-Tuning_SBATCH_Scripts__roberta_arithmetic_compression_training_12GPU.sbatch": {
+    "repo": "SMU-ODSRCI/LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems",
+    "path": "RoBERTa/RoBERTa Fine-Tuning SBATCH Scripts/roberta_arithmetic_compression_training_12GPUs.sbatch",
+    "html_url": "https://github.com/SMU-ODSRCI/LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems/blob/d8b21c2264b41081ee9b01db69b6b47d56cfec0a/RoBERTa/RoBERTa%20Fine-Tuning%20SBATCH%20Scripts/roberta_arithmetic_compression_training_12GPUs.sbatch",
+    "sha": "83bf90f81754f5476a5895b1459f5a6172e654e2",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hpc-uk__build-instructions__apps__NEMO__submit-gcc-ucx.ll": {
+    "repo": "hpc-uk/build-instructions",
+    "path": "apps/NEMO/submit-gcc-ucx.ll",
+    "html_url": "https://github.com/hpc-uk/build-instructions/blob/bc7eb4851885280c62c9d05054056de152fcd4dd/apps/NEMO/submit-gcc-ucx.ll",
+    "sha": "ce4667a1bd979724a00e1ad18602707c2af234ca",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "Lumi-supercomputer__lumi-CPEtools__testscripts__CalcUA__hybrid_check__heterogeneous_testjob.slurm": {
+    "repo": "Lumi-supercomputer/lumi-CPEtools",
+    "path": "testscripts/CalcUA/hybrid_check/heterogeneous_testjob.slurm",
+    "html_url": "https://github.com/Lumi-supercomputer/lumi-CPEtools/blob/ca6c329fccc8a78c730a865ae9bf01244e43706e/testscripts/CalcUA/hybrid_check/heterogeneous_testjob.slurm",
+    "sha": "377650d2a7cd4be2255bc84109a78a6e2bff6414",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "SMU-ODSRCI__LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems__T5-Small__T5-Small_Fine-Tuning_SBATCH_Scripts__t5_small_arithmetic_compression_training_12.sbatch": {
+    "repo": "SMU-ODSRCI/LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems",
+    "path": "T5-Small/T5-Small Fine-Tuning SBATCH Scripts/t5_small_arithmetic_compression_training_12GPUs.sbatch",
+    "html_url": "https://github.com/SMU-ODSRCI/LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems/blob/d8b21c2264b41081ee9b01db69b6b47d56cfec0a/T5-Small/T5-Small%20Fine-Tuning%20SBATCH%20Scripts/t5_small_arithmetic_compression_training_12GPUs.sbatch",
+    "sha": "b166cf604f3f9dbec82e7a003b1dbe4a9d9a444f",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "Amii-Engineering__vllm-on-ray__vllm-on-ray.sh": {
+    "repo": "Amii-Engineering/vllm-on-ray",
+    "path": "vllm-on-ray.sh",
+    "html_url": "https://github.com/Amii-Engineering/vllm-on-ray/blob/f5bfe6169b5a810bf164bf7ece5e6fced6518897/vllm-on-ray.sh",
+    "sha": "c14747fb1d403e3ea4d19d199d2515a91c535fb6",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "austinleedavis__arcc-examples__dask__dask-slurm-batch.sh": {
+    "repo": "austinleedavis/arcc-examples",
+    "path": "dask/dask-slurm-batch.sh",
+    "html_url": "https://github.com/austinleedavis/arcc-examples/blob/b49447b5fb1d2f25495f758cd47cab0bc48f4e3d/dask/dask-slurm-batch.sh",
+    "sha": "b87320656ca16c90b42b8b6a68ddbcbfddd407e7",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hpc-uk__build-instructions__apps__NEMO__submit-cce-ucx.ll": {
+    "repo": "hpc-uk/build-instructions",
+    "path": "apps/NEMO/submit-cce-ucx.ll",
+    "html_url": "https://github.com/hpc-uk/build-instructions/blob/bc7eb4851885280c62c9d05054056de152fcd4dd/apps/NEMO/submit-cce-ucx.ll",
+    "sha": "5f6cbf57faf3dede99f52d2c19974d9fd9f934d1",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "SMU-ODSRCI__LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems__Llama-3.2-3B__Llama-3.2-3B_+_AC_Inference_SBATCH_Scripts__llama_3.2_3B_arithmetic_compress.sbatch": {
+    "repo": "SMU-ODSRCI/LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems",
+    "path": "Llama-3.2-3B/Llama-3.2-3B + AC Inference SBATCH Scripts/llama_3.2_3B_arithmetic_compression_14GPUs_CDF_GPU_BATCHED_TFOFF_NO-DDP_TENSORIZED_TIMING_BLOCKS.sbatch",
+    "html_url": "https://github.com/SMU-ODSRCI/LLM-Based-Text-Compression-with-Arithmetic-Coding-on-Distributed-GPU-Systems/blob/d8b21c2264b41081ee9b01db69b6b47d56cfec0a/Llama-3.2-3B/Llama-3.2-3B%20%2B%20AC%20Inference%20SBATCH%20Scripts/llama_3.2_3B_arithmetic_compression_14GPUs_CDF_GPU_BATCHED_TFOFF_NO-DDP_TENSORIZED_TIMING_BLOCKS.sbatch",
+    "sha": "87785db61cc07e2679128ff308726cc904afd8c4",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "rgodha24__stockfish-trainer__src__scripts__slurm_multinode_smoke.sbatch": {
+    "repo": "rgodha24/stockfish-trainer",
+    "path": "src/scripts/slurm_multinode_smoke.sbatch",
+    "html_url": "https://github.com/rgodha24/stockfish-trainer/blob/9513d94f320d58c04695bfbf76e2a005300942bd/src/scripts/slurm_multinode_smoke.sbatch",
+    "sha": "ebec714ab3e70b273fa62c8db0b780c0d1a032f0",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "BrieucB__korali__study.cases__CUP2D__swimmers__sbatch-compare-vracer-swimmer.lumi.sh": {
+    "repo": "BrieucB/korali",
+    "path": "study.cases/CUP2D/swimmers/sbatch-compare-vracer-swimmer.lumi.sh",
+    "html_url": "https://github.com/BrieucB/korali/blob/277aa2ad03e8d5df277a77438fa3d59db4c7cea4/study.cases/CUP2D/swimmers/sbatch-compare-vracer-swimmer.lumi.sh",
+    "sha": "76e0cf9f6da4c70ab94b57e109206b5cd4680940",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "netd-tud__artifacts-eurosp26-doc-privacy__05_ml_to_identify_dns_traffic__cross_validate_slurm.sh": {
+    "repo": "netd-tud/artifacts-eurosp26-doc-privacy",
+    "path": "05_ml_to_identify_dns_traffic/cross_validate_slurm.sh",
+    "html_url": "https://github.com/netd-tud/artifacts-eurosp26-doc-privacy/blob/9233b89a81421b926993b9c23edd1169f92c4873/05_ml_to_identify_dns_traffic/cross_validate_slurm.sh",
+    "sha": "ab567057b2558b81c4d114cd96f0a09185314620",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_sapphirerapids__worker_64562711__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_sapphirerapids/worker_64562711/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_sapphirerapids/worker_64562711/jobscript.sh",
+    "sha": "99c759b628c7c6544cb54fd22ad16eef34c3e234",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__NOC_Near_Present_Day__scripts__python__mkslurm_benchmark.sh": {
+    "repo": "NOC-MSM/NOC_Near_Present_Day",
+    "path": "scripts/python/mkslurm_benchmark",
+    "html_url": "https://github.com/NOC-MSM/NOC_Near_Present_Day/blob/69845052ae8293a4491a62032920cc9c1da262f8/scripts/python/mkslurm_benchmark",
+    "sha": "ebdffde1bad9b2e1c504d6729b2ea9fefbf281b9",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NatLabRockies__HPC__languages__python__openai_rllib__simple-example-gpu__gpu_trainer.sh": {
+    "repo": "NatLabRockies/HPC",
+    "path": "languages/python/openai_rllib/simple-example-gpu/gpu_trainer.sh",
+    "html_url": "https://github.com/NatLabRockies/HPC/blob/914f6da551424f6227e9bd65e0745b6686a6cbd8/languages/python/openai_rllib/simple-example-gpu/gpu_trainer.sh",
+    "sha": "599e242c1d822dddd46d1320a2b9cabc60ee4a67",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NatLabRockies__HPC__languages__python__openai_rllib__simple-example-gpu__gpu_trainer_optimized_tf.sh": {
+    "repo": "NatLabRockies/HPC",
+    "path": "languages/python/openai_rllib/simple-example-gpu/gpu_trainer_optimized_tf.sh",
+    "html_url": "https://github.com/NatLabRockies/HPC/blob/914f6da551424f6227e9bd65e0745b6686a6cbd8/languages/python/openai_rllib/simple-example-gpu/gpu_trainer_optimized_tf.sh",
+    "sha": "aa3bf1fd656833bc4d5242f31c1ff495f3192f85",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "francescoantici__SCRIPT-AI__job_scripts__47.sh": {
+    "repo": "francescoantici/SCRIPT-AI",
+    "path": "job_scripts/47",
+    "html_url": "https://github.com/francescoantici/SCRIPT-AI/blob/8c2ba497cd183022e4ae99082bb977bb6d9fde42/job_scripts/47",
+    "sha": "5c0e840f7681957dbbe8f33295ccee1069be23f1",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_icelake__worker_64577410__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_icelake/worker_64577410/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_icelake/worker_64577410/jobscript.sh",
+    "sha": "269cfa9f9bf07fc3dab52f026f2dbee3a081cc39",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__AMM75__NEMO__MISC__MOMTRD__opt_runscript3.slurm": {
+    "repo": "NOC-MSM/AMM75",
+    "path": "NEMO/MISC/MOMTRD/opt_runscript3.slurm",
+    "html_url": "https://github.com/NOC-MSM/AMM75/blob/799161aa7511f1df78f3c2f7c223f342dba7de8d/NEMO/MISC/MOMTRD/opt_runscript3.slurm",
+    "sha": "c3d156f2485b5ec2b954e570dd0793a6e74609e1",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "klust__lumi-CPEtools__testscripts__CalcUA__hybrid_check__heterogeneous_testjob.slurm": {
+    "repo": "klust/lumi-CPEtools",
+    "path": "testscripts/CalcUA/hybrid_check/heterogeneous_testjob.slurm",
+    "html_url": "https://github.com/klust/lumi-CPEtools/blob/ca6c329fccc8a78c730a865ae9bf01244e43706e/testscripts/CalcUA/hybrid_check/heterogeneous_testjob.slurm",
+    "sha": "377650d2a7cd4be2255bc84109a78a6e2bff6414",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "immerse-project__wp6.2-demonstrator__scripts__python__mkslurm_benchmark.sh": {
+    "repo": "immerse-project/wp6.2-demonstrator",
+    "path": "scripts/python/mkslurm_benchmark",
+    "html_url": "https://github.com/immerse-project/wp6.2-demonstrator/blob/fcf49f9df5c96b76a6e65ce7000de1eb26940bc1/scripts/python/mkslurm_benchmark",
+    "sha": "ebdffde1bad9b2e1c504d6729b2ea9fefbf281b9",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__RAPID-Evolution__scripts__python__mkslurm_benchmark.sh": {
+    "repo": "NOC-MSM/RAPID-Evolution",
+    "path": "scripts/python/mkslurm_benchmark",
+    "html_url": "https://github.com/NOC-MSM/RAPID-Evolution/blob/5aa916d411b004f4fba8d3fbdb3364072157e5e8/scripts/python/mkslurm_benchmark",
+    "sha": "ebdffde1bad9b2e1c504d6729b2ea9fefbf281b9",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__Wishbone__scripts__python__mkslurm_benchmark.sh": {
+    "repo": "NOC-MSM/Wishbone",
+    "path": "scripts/python/mkslurm_benchmark",
+    "html_url": "https://github.com/NOC-MSM/Wishbone/blob/1d4a40e360e9785641799f3c9bdc98cb764e8f99/scripts/python/mkslurm_benchmark",
+    "sha": "ebdffde1bad9b2e1c504d6729b2ea9fefbf281b9",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "converged-computing__fractale-experiments__jobspec-conversion__data__NREL__HPC__languages__python__openai_rllib__simple-example-gpu__gpu_trainer.sh": {
+    "repo": "converged-computing/fractale-experiments",
+    "path": "jobspec-conversion/data/NREL/HPC/languages/python/openai_rllib/simple-example-gpu/gpu_trainer.sh",
+    "html_url": "https://github.com/converged-computing/fractale-experiments/blob/c1e0b41a2eae038bedb9380f2511ca8f0b5c18f9/jobspec-conversion/data/NREL/HPC/languages/python/openai_rllib/simple-example-gpu/gpu_trainer.sh",
+    "sha": "599e242c1d822dddd46d1320a2b9cabc60ee4a67",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "emiwar__julia-virtual-rodent__submit_mpi.sh": {
+    "repo": "emiwar/julia-virtual-rodent",
+    "path": "submit_mpi.sh",
+    "html_url": "https://github.com/emiwar/julia-virtual-rodent/blob/bfa87b351afe00c66df4b3e2fa9c669f311fef11/submit_mpi.sh",
+    "sha": "1ca301d96f920df27e0828424bed9452e794926b",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1470796.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1470796.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1470796.slurm",
+    "sha": "0820a4fbd66365153b2c5af65b7e71b7de694d2b",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "openQSE__QFw__examples__qfw_supermarq.batch": {
+    "repo": "openQSE/QFw",
+    "path": "examples/qfw_supermarq.batch",
+    "html_url": "https://github.com/openQSE/QFw/blob/cf0911407d646a4435cde23274b8c1b17f8f5bcc/examples/qfw_supermarq.batch",
+    "sha": "051b1c7e9f42f00bbadf944cea9b6153ccd4b801",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "O1af__HOPS__experiments__experiment_2__31_all_nodes_zero_bubble_batch12__run.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_2/31_all_nodes_zero_bubble_batch12/run.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_2/31_all_nodes_zero_bubble_batch12/run.slurm",
+    "sha": "144d473a7ae6ef4f7a348c829383372d009ee3bd",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__NOC_Near_Present_Day__scripts__python__mkslurm_NPD_Anemone.sh": {
+    "repo": "NOC-MSM/NOC_Near_Present_Day",
+    "path": "scripts/python/mkslurm_NPD_Anemone",
+    "html_url": "https://github.com/NOC-MSM/NOC_Near_Present_Day/blob/69845052ae8293a4491a62032920cc9c1da262f8/scripts/python/mkslurm_NPD_Anemone",
+    "sha": "13d40f72064e06f2467b157e21a04d664d948152",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_sapphirerapids__worker_64563498__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_sapphirerapids/worker_64563498/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_sapphirerapids/worker_64563498/jobscript.sh",
+    "sha": "05164e26367ed4bfc89c863a26e9a19f15e00383",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "ursho2552__bern3d_tools__shared__runscripts__run_bern3d_f90_mpi_5het.sh": {
+    "repo": "ursho2552/bern3d_tools",
+    "path": "shared/runscripts/run_bern3d_f90_mpi_5het.sh",
+    "html_url": "https://github.com/ursho2552/bern3d_tools/blob/0245dd42dce3abc3f331630e14eec25e7aef5634/shared/runscripts/run_bern3d_f90_mpi_5het.sh",
+    "sha": "07f49178b9f892c3439a0fa5792f1953fc9169c4",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471019.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471019.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471019.slurm",
+    "sha": "247c883542195889aa9d99252899de109e0d6def",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "O1af__HOPS__experiments__experiment_3__31_pp5_layers15_h100_a10g_l4_a10g_l4__run.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_3/31_pp5_layers15_h100_a10g_l4_a10g_l4/run.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_3/31_pp5_layers15_h100_a10g_l4_a10g_l4/run.slurm",
+    "sha": "0d1401620634d17fde52130fcd9792aed7e64edd",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_sapphirerapids__worker_64563487__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_sapphirerapids/worker_64563487/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_sapphirerapids/worker_64563487/jobscript.sh",
+    "sha": "1f5f7a5557c3af58d267f6146fae3a880a573def",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "O1af__HOPS__experiments__experiment_3__29_pp5_seq1536_l4_a10g_h100_a10g_l4__link_bench.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_3/29_pp5_seq1536_l4_a10g_h100_a10g_l4/link_bench.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_3/29_pp5_seq1536_l4_a10g_h100_a10g_l4/link_bench.slurm",
+    "sha": "1b1aab779927b0497297628e6bb73309edcc19e6",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "klust__experiments-LUMI__Courses__intro-BE__07_slurm__slurm-heterogeneous-sbatch.slurm": {
+    "repo": "klust/experiments-LUMI",
+    "path": "Courses/intro-BE/07_slurm/slurm-heterogeneous-sbatch.slurm",
+    "html_url": "https://github.com/klust/experiments-LUMI/blob/ff229e207395ff2b74bd79c53abeed66bc55dabe/Courses/intro-BE/07_slurm/slurm-heterogeneous-sbatch.slurm",
+    "sha": "0f97b605cb2aacbab581d32236b30a1e94ca2397",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "O1af__HOPS__experiments__experiment_2__18_mixed_pp3_h100_a10g_l4__run.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_2/18_mixed_pp3_h100_a10g_l4/run.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_2/18_mixed_pp3_h100_a10g_l4/run.slurm",
+    "sha": "243569ad9e8dc21cf845ee9f32007a01d17c0d3b",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471366.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471366.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471366.slurm",
+    "sha": "2344e1ae6f39b6f75f94e9e42327d939b6b12724",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471344.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471344.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471344.slurm",
+    "sha": "02e21710470105490b88f07ec3ff116d7a89820e",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "rgodha24__stockfish-trainer__src__scripts__slurm_multinode_h100.sbatch": {
+    "repo": "rgodha24/stockfish-trainer",
+    "path": "src/scripts/slurm_multinode_h100.sbatch",
+    "html_url": "https://github.com/rgodha24/stockfish-trainer/blob/9513d94f320d58c04695bfbf76e2a005300942bd/src/scripts/slurm_multinode_h100.sbatch",
+    "sha": "1942de5b273a704529d0db504426e25ebcc1433f",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "JMMP-Group__AMM7_surge__NEMO_4.0.4_surge__cfgs__AMM7_SURGE__EXP_ERA5_DEMO__runscript.slurm": {
+    "repo": "JMMP-Group/AMM7_surge",
+    "path": "NEMO_4.0.4_surge/cfgs/AMM7_SURGE/EXP_ERA5_DEMO/runscript.slurm",
+    "html_url": "https://github.com/JMMP-Group/AMM7_surge/blob/196219f02c7e72c66427e41f771816b395113301/NEMO_4.0.4_surge/cfgs/AMM7_SURGE/EXP_ERA5_DEMO/runscript.slurm",
+    "sha": "15589bba9e10a5136338d69e82e166ea50596f8d",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "BorisRado__split_learning_algorithms__scripts__slurm__compare_train_fns.sh": {
+    "repo": "BorisRado/split_learning_algorithms",
+    "path": "scripts/slurm/compare_train_fns.sh",
+    "html_url": "https://github.com/BorisRado/split_learning_algorithms/blob/d200e7a385fdd579ab8c9d96d8be9f29b2070a6a/scripts/slurm/compare_train_fns.sh",
+    "sha": "0dbaf59f232d876705eccf2999df18d01b5b9685",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NVIDIA-NeMo__Run__test__core__execution__artifacts__het_slurm.sh": {
+    "repo": "NVIDIA-NeMo/Run",
+    "path": "test/core/execution/artifacts/het_slurm.sh",
+    "html_url": "https://github.com/NVIDIA-NeMo/Run/blob/1ad956ba08e40b5066dbb5c848d9bcdde8db0a75/test/core/execution/artifacts/het_slurm.sh",
+    "sha": "0529f35f8a35ff5590b63ab416eb69ef1d073dbd",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "MadryLab__trak__tests__test_jl_gpu_compatibility__test_jl_gpu_compatibility.sh": {
+    "repo": "MadryLab/trak",
+    "path": "tests/test_jl_gpu_compatibility/test_jl_gpu_compatibility.sh",
+    "html_url": "https://github.com/MadryLab/trak/blob/35f8446f05342f116b798fcd918a0718cac0d597/tests/test_jl_gpu_compatibility/test_jl_gpu_compatibility.sh",
+    "sha": "1d9a989ff53864f9cb71c03a9f7e0a5b2421c79b",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "klust__experiments-LUMI__Tests__lumi-CPEtools__LUMI-G__start_het_gpu_check_small_lumiG.slurm": {
+    "repo": "klust/experiments-LUMI",
+    "path": "Tests/lumi-CPEtools/LUMI-G/start_het_gpu_check_small_lumiG.slurm",
+    "html_url": "https://github.com/klust/experiments-LUMI/blob/ff229e207395ff2b74bd79c53abeed66bc55dabe/Tests/lumi-CPEtools/LUMI-G/start_het_gpu_check_small_lumiG.slurm",
+    "sha": "26fb8ee8d5c4a33df6a8a9e1436864c44d17971e",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "gjbex__Workflows-for-HPC__source-code__heterogeneous-jobs__dask__dask_distr_test.slurm": {
+    "repo": "gjbex/Workflows-for-HPC",
+    "path": "source-code/heterogeneous-jobs/dask/dask_distr_test.slurm",
+    "html_url": "https://github.com/gjbex/Workflows-for-HPC/blob/459e3634aa2d5977f5637c098954d7ec6de07d65/source-code/heterogeneous-jobs/dask/dask_distr_test.slurm",
+    "sha": "1f695cc09f9518ef981946a789f052598f2b7b78",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "ursho2552__bern3d_tools__nczip_wrapper__test_submission.sh": {
+    "repo": "ursho2552/bern3d_tools",
+    "path": "nczip_wrapper/test_submission.sh",
+    "html_url": "https://github.com/ursho2552/bern3d_tools/blob/0245dd42dce3abc3f331630e14eec25e7aef5634/nczip_wrapper/test_submission.sh",
+    "sha": "025f47dc82432358f5556827c0c2c25ad5ff8151",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__RAPID-Evolution__scripts__python__mkslurm_NPD_Anemone.sh": {
+    "repo": "NOC-MSM/RAPID-Evolution",
+    "path": "scripts/python/mkslurm_NPD_Anemone",
+    "html_url": "https://github.com/NOC-MSM/RAPID-Evolution/blob/5aa916d411b004f4fba8d3fbdb3364072157e5e8/scripts/python/mkslurm_NPD_Anemone",
+    "sha": "13d40f72064e06f2467b157e21a04d664d948152",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__Wishbone__scripts__python__mkslurm_NPD_Anemone.sh": {
+    "repo": "NOC-MSM/Wishbone",
+    "path": "scripts/python/mkslurm_NPD_Anemone",
+    "html_url": "https://github.com/NOC-MSM/Wishbone/blob/1d4a40e360e9785641799f3c9bdc98cb764e8f99/scripts/python/mkslurm_NPD_Anemone",
+    "sha": "13d40f72064e06f2467b157e21a04d664d948152",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "klust__experiments-LUMI__Courses__intro-BE__07_slurm__V1__slurm-heterogeneous-sbatch.slurm": {
+    "repo": "klust/experiments-LUMI",
+    "path": "Courses/intro-BE/07_slurm/V1/slurm-heterogeneous-sbatch.slurm",
+    "html_url": "https://github.com/klust/experiments-LUMI/blob/ff229e207395ff2b74bd79c53abeed66bc55dabe/Courses/intro-BE/07_slurm/V1/slurm-heterogeneous-sbatch.slurm",
+    "sha": "0f97b605cb2aacbab581d32236b30a1e94ca2397",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "klust__experiments-LUMI__Courses__intro-BE__07_slurm__Test1__slurm-heterogeneous-sbatch.slurm": {
+    "repo": "klust/experiments-LUMI",
+    "path": "Courses/intro-BE/07_slurm/Test1/slurm-heterogeneous-sbatch.slurm",
+    "html_url": "https://github.com/klust/experiments-LUMI/blob/ff229e207395ff2b74bd79c53abeed66bc55dabe/Courses/intro-BE/07_slurm/Test1/slurm-heterogeneous-sbatch.slurm",
+    "sha": "0f97b605cb2aacbab581d32236b30a1e94ca2397",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hamani115__hayrat-split-learning-setup__scripts__slurm__compare_train_fns.sh": {
+    "repo": "hamani115/hayrat-split-learning-setup",
+    "path": "scripts/slurm/compare_train_fns.sh",
+    "html_url": "https://github.com/hamani115/hayrat-split-learning-setup/blob/69d17701665fa371726219b87710ac1619f3adc4/scripts/slurm/compare_train_fns.sh",
+    "sha": "0dbaf59f232d876705eccf2999df18d01b5b9685",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hamani115__hybrid-sfl-2tier-fraud-detection-benchmark__scripts__slurm__compare_train_fns.sh": {
+    "repo": "hamani115/hybrid-sfl-2tier-fraud-detection-benchmark",
+    "path": "scripts/slurm/compare_train_fns.sh",
+    "html_url": "https://github.com/hamani115/hybrid-sfl-2tier-fraud-detection-benchmark/blob/01dce1e1b34a75d9a8569dfe8e668fe3ed9811dc/scripts/slurm/compare_train_fns.sh",
+    "sha": "0dbaf59f232d876705eccf2999df18d01b5b9685",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "agiachris__trak__tests__test_jl_gpu_compatibility__test_jl_gpu_compatibility.sh": {
+    "repo": "agiachris/trak",
+    "path": "tests/test_jl_gpu_compatibility/test_jl_gpu_compatibility.sh",
+    "html_url": "https://github.com/agiachris/trak/blob/ff2fdc840dfdb51607b029777f16892a657b3978/tests/test_jl_gpu_compatibility/test_jl_gpu_compatibility.sh",
+    "sha": "1d9a989ff53864f9cb71c03a9f7e0a5b2421c79b",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "monarin__divelite__slurm__hetjob.sh": {
+    "repo": "monarin/divelite",
+    "path": "slurm/hetjob.sh",
+    "html_url": "https://github.com/monarin/divelite/blob/7e245de72aed6ce8508f8f49e71ebd03ceab6476/slurm/hetjob.sh",
+    "sha": "2bdb7a2871b2eecb961e95152826917ce2dae1a5",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__AMM75__NEMO__MISC__MOMTRD__runscript.slurm": {
+    "repo": "NOC-MSM/AMM75",
+    "path": "NEMO/MISC/MOMTRD/runscript.slurm",
+    "html_url": "https://github.com/NOC-MSM/AMM75/blob/799161aa7511f1df78f3c2f7c223f342dba7de8d/NEMO/MISC/MOMTRD/runscript.slurm",
+    "sha": "4bf1dc8ae774b382a9edb42e704dd1d58e05afca",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__SRIL34__SRIL34_physics__EXTRA_TOOLS__NAMELISTS__SRIL34script239.slurm": {
+    "repo": "NOC-MSM/SRIL34",
+    "path": "SRIL34_physics/EXTRA_TOOLS/NAMELISTS/SRIL34script239.slurm",
+    "html_url": "https://github.com/NOC-MSM/SRIL34/blob/25ca5f69a553893b91f126f90b1e4c9323464473/SRIL34_physics/EXTRA_TOOLS/NAMELISTS/SRIL34script239.slurm",
+    "sha": "2f947d67c469c69c04e0bbab74637e2c822ff8ec",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "nesi__dask_demos__scripts__hyperparameters_search_mpi.sl": {
+    "repo": "nesi/dask_demos",
+    "path": "scripts/hyperparameters_search_mpi.sl",
+    "html_url": "https://github.com/nesi/dask_demos/blob/596fc5719c654fb49eae3cb6f3f3ee0a90cfb25a/scripts/hyperparameters_search_mpi.sl",
+    "sha": "46299a2593c9174a8e14f93f6f5641f4b870ee30",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "BrieucB__korali__study.cases__CUP2D__swimmers__sbatch-run-vracer-swimmer.lumi.sh": {
+    "repo": "BrieucB/korali",
+    "path": "study.cases/CUP2D/swimmers/sbatch-run-vracer-swimmer.lumi.sh",
+    "html_url": "https://github.com/BrieucB/korali/blob/277aa2ad03e8d5df277a77438fa3d59db4c7cea4/study.cases/CUP2D/swimmers/sbatch-run-vracer-swimmer.lumi.sh",
+    "sha": "4e5a0f6476a6da32c1147f2cf556de54e5640205",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "JMMP-Group__AMM7_surge__NEMO_4.0.4_surge__cfgs__AMM7_SURGE__EXPREF__runscript.slurm": {
+    "repo": "JMMP-Group/AMM7_surge",
+    "path": "NEMO_4.0.4_surge/cfgs/AMM7_SURGE/EXPREF/runscript.slurm",
+    "html_url": "https://github.com/JMMP-Group/AMM7_surge/blob/196219f02c7e72c66427e41f771816b395113301/NEMO_4.0.4_surge/cfgs/AMM7_SURGE/EXPREF/runscript.slurm",
+    "sha": "4b4c8b9402a8564428c3484ac28c7997b11165c7",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "ursho2552__bern3d_tools__shared__runscripts__run_bern3d_f90_mpi_4het.sh": {
+    "repo": "ursho2552/bern3d_tools",
+    "path": "shared/runscripts/run_bern3d_f90_mpi_4het.sh",
+    "html_url": "https://github.com/ursho2552/bern3d_tools/blob/0245dd42dce3abc3f331630e14eec25e7aef5634/shared/runscripts/run_bern3d_f90_mpi_4het.sh",
+    "sha": "4a8e6ceb5675f2feb859a11dfc32ff0d714f97bc",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "RWTH-HPC__AIxeleratorService__test__testAixeleratorServiceHetjob.sh": {
+    "repo": "RWTH-HPC/AIxeleratorService",
+    "path": "test/testAixeleratorServiceHetjob.sh",
+    "html_url": "https://github.com/RWTH-HPC/AIxeleratorService/blob/59bb19935e808e48812afdcc6482c51cda97fb61/test/testAixeleratorServiceHetjob.sh",
+    "sha": "52b1baa639dbe9941fcf2376b5d8ffa7c283b2ba",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "converged-computing__fractale-experiments__jobspec-conversion__data__nesi__dask_demos__scripts__hyperparameters_search_mpi.sl": {
+    "repo": "converged-computing/fractale-experiments",
+    "path": "jobspec-conversion/data/nesi/dask_demos/scripts/hyperparameters_search_mpi.sl",
+    "html_url": "https://github.com/converged-computing/fractale-experiments/blob/c1e0b41a2eae038bedb9380f2511ca8f0b5c18f9/jobspec-conversion/data/nesi/dask_demos/scripts/hyperparameters_search_mpi.sl",
+    "sha": "46299a2593c9174a8e14f93f6f5641f4b870ee30",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "ursho2552__bern3d_tools__shared__runscripts__run_bern3d_f90_mpi_6het.sh": {
+    "repo": "ursho2552/bern3d_tools",
+    "path": "shared/runscripts/run_bern3d_f90_mpi_6het.sh",
+    "html_url": "https://github.com/ursho2552/bern3d_tools/blob/0245dd42dce3abc3f331630e14eec25e7aef5634/shared/runscripts/run_bern3d_f90_mpi_6het.sh",
+    "sha": "5f102558f1d562a948e670b242721c5519c88cae",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "joergbenke__MESSy-IMPORT__job_run.sbatch": {
+    "repo": "joergbenke/MESSy-IMPORT",
+    "path": "job_run.sbatch",
+    "html_url": "https://github.com/joergbenke/MESSy-IMPORT/blob/b417538a93f8d1b85f8c084d2f8a3a50b6f771e1/job_run.sbatch",
+    "sha": "5a162246cc9694b8e20800252200be4537e252b3",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "jdha__ORCHESTRA__scripts__run__runscript_archer2.slurm": {
+    "repo": "jdha/ORCHESTRA",
+    "path": "scripts/run/runscript_archer2.slurm",
+    "html_url": "https://github.com/jdha/ORCHESTRA/blob/603ad9bff8742be43f6f1b6d2f62ca7a9dee39c9/scripts/run/runscript_archer2.slurm",
+    "sha": "5eee93e054269f1345585a1fbbe915caf208d972",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__eORCA1__EXP00__runscript.slurm": {
+    "repo": "NOC-MSM/eORCA1",
+    "path": "EXP00/runscript.slurm",
+    "html_url": "https://github.com/NOC-MSM/eORCA1/blob/d071597a513abe6ab6791e9ba7a21c68a046a613/EXP00/runscript.slurm",
+    "sha": "8229a194215cc9bc6cf04ba4a88c10fadcb225aa",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "gjbex__Python-for-HPC__source-code__dask__dask_distr_test.slurm": {
+    "repo": "gjbex/Python-for-HPC",
+    "path": "source-code/dask/dask_distr_test.slurm",
+    "html_url": "https://github.com/gjbex/Python-for-HPC/blob/efb8dcbb46c9ca1bc30f106cdf075c09908fd383/source-code/dask/dask_distr_test.slurm",
+    "sha": "5a84f408476053fcc889b1b2eae5ac2f00782dde",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "huggingface__inference-benchmarker__extra__slurm__tgi.slurm": {
+    "repo": "huggingface/inference-benchmarker",
+    "path": "extra/slurm/tgi.slurm",
+    "html_url": "https://github.com/huggingface/inference-benchmarker/blob/bad4f947ef5f34ef264d2451439ab90cf7cbd65c/extra/slurm/tgi.slurm",
+    "sha": "9c29d0aab3378c88085fa5d0b45f590d7d2ec317",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "tylern4__htcondor_workflow_scron__htcondor_worker_het.job": {
+    "repo": "tylern4/htcondor_workflow_scron",
+    "path": "htcondor_worker_het.job",
+    "html_url": "https://github.com/tylern4/htcondor_workflow_scron/blob/06c82293eff28d77104cc8e2d1dd6f93f4bdff10/htcondor_worker_het.job",
+    "sha": "8b6cc210e3963e537688be1c8214eed69deb1de1",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "gjbex__worker-ng__examples__dev__worker_1234_failures__jobscript.sh": {
+    "repo": "gjbex/worker-ng",
+    "path": "examples/dev/worker_1234_failures/jobscript.sh",
+    "html_url": "https://github.com/gjbex/worker-ng/blob/56744baad7922bcfaedcc908627396ea520730d2/examples/dev/worker_1234_failures/jobscript.sh",
+    "sha": "9f3e779e73c0d87fc1615132fa41ba880b4c2a16",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "netd-tud__artifacts-eurosp26-doc-privacy__05_ml_to_identify_dns_traffic__word2vec_slurm.sh": {
+    "repo": "netd-tud/artifacts-eurosp26-doc-privacy",
+    "path": "05_ml_to_identify_dns_traffic/word2vec_slurm.sh",
+    "html_url": "https://github.com/netd-tud/artifacts-eurosp26-doc-privacy/blob/9233b89a81421b926993b9c23edd1169f92c4873/05_ml_to_identify_dns_traffic/word2vec_slurm.sh",
+    "sha": "8f531468523d3807db036af2bb2cae0950a67222",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__SEAsia__RUN_DIRECTORIES__EXP_barotropicTide__submit.slurm": {
+    "repo": "NOC-MSM/SEAsia",
+    "path": "RUN_DIRECTORIES/EXP_barotropicTide/submit.slurm",
+    "html_url": "https://github.com/NOC-MSM/SEAsia/blob/2260db1461c7f2c3ec6e3b060149ef4762aac42c/RUN_DIRECTORIES/EXP_barotropicTide/submit.slurm",
+    "sha": "a71759afddf1133578b21558ddd6958156941200",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hpcuantwerpen__vsc-tutorial__testscripts__hybrid_check__heterogeneous_testjob.slurm": {
+    "repo": "hpcuantwerpen/vsc-tutorial",
+    "path": "testscripts/hybrid_check/heterogeneous_testjob.slurm",
+    "html_url": "https://github.com/hpcuantwerpen/vsc-tutorial/blob/038518555ac4390251242a4bd8b317daf9654a7e/testscripts/hybrid_check/heterogeneous_testjob.slurm",
+    "sha": "9ed8c79228d2ff3cab30a2748b57f682ec0ca6a9",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "martinschorb__volumealign__launchers__spark_slurm_template.sh": {
+    "repo": "martinschorb/volumealign",
+    "path": "launchers/spark_slurm_template.sh",
+    "html_url": "https://github.com/martinschorb/volumealign/blob/eaccb84612c03057a72b179be30eded0c99aba4a/launchers/spark_slurm_template.sh",
+    "sha": "9bdf29aded3dc58bff97769bae8e341725770136",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__SE-NEMO__scripts__exp__runscript_zps_gls_tide.slurm": {
+    "repo": "NOC-MSM/SE-NEMO",
+    "path": "scripts/exp/runscript_zps_gls_tide.slurm",
+    "html_url": "https://github.com/NOC-MSM/SE-NEMO/blob/7b1d8828292b3f3846e87e3944259e4bbd6c120a/scripts/exp/runscript_zps_gls_tide.slurm",
+    "sha": "a7c308b54b94f48567cd4c0ddf97c88da0627099",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "JMMP-Group__COW_AMM15__EXPREF__SLURMS__runnemo.slurm": {
+    "repo": "JMMP-Group/COW_AMM15",
+    "path": "EXPREF/SLURMS/runnemo.slurm",
+    "html_url": "https://github.com/JMMP-Group/COW_AMM15/blob/4185ba06bffdc0d73b8befe42e4971a5eedd2d61/EXPREF/SLURMS/runnemo.slurm",
+    "sha": "8779d0bc0e2062dea5766ae689aa777114e107cc",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__CO_AMM15_CHAMFER__CO9_AMM15__EXP_GLOSEA6_1993__runamm15_872.slurm": {
+    "repo": "NOC-MSM/CO_AMM15_CHAMFER",
+    "path": "CO9_AMM15/EXP_GLOSEA6_1993/runamm15_872.slurm",
+    "html_url": "https://github.com/NOC-MSM/CO_AMM15_CHAMFER/blob/5fd9b143c54d4b1f4c6422382235fbeff9eb0f7d/CO9_AMM15/EXP_GLOSEA6_1993/runamm15_872.slurm",
+    "sha": "8e87a92dcd5beb78385b70b4ae22a94a2dc68d37",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "klust__experiments-LUMI__Tests__lumi-CPEtools__LUMI-G__start_het_gpu_check_lumiG.slurm": {
+    "repo": "klust/experiments-LUMI",
+    "path": "Tests/lumi-CPEtools/LUMI-G/start_het_gpu_check_lumiG.slurm",
+    "html_url": "https://github.com/klust/experiments-LUMI/blob/ff229e207395ff2b74bd79c53abeed66bc55dabe/Tests/lumi-CPEtools/LUMI-G/start_het_gpu_check_lumiG.slurm",
+    "sha": "88eb0020a8266838f011710e81133907f01d07cb",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__MissAtl__scripts__exp__runscript_zps_gls_tide.slurm": {
+    "repo": "NOC-MSM/MissAtl",
+    "path": "scripts/exp/runscript_zps_gls_tide.slurm",
+    "html_url": "https://github.com/NOC-MSM/MissAtl/blob/97e16093c400112123223c1927b14a8e1aa17981/scripts/exp/runscript_zps_gls_tide.slurm",
+    "sha": "a7c308b54b94f48567cd4c0ddf97c88da0627099",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "gjbex__worker-ng__examples__dev__worker_1234__jobscript.sh": {
+    "repo": "gjbex/worker-ng",
+    "path": "examples/dev/worker_1234/jobscript.sh",
+    "html_url": "https://github.com/gjbex/worker-ng/blob/56744baad7922bcfaedcc908627396ea520730d2/examples/dev/worker_1234/jobscript.sh",
+    "sha": "d4069483d6961edd9f101e771c770c8c0e92f1ba",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__SRIL34__SRIL34_physics__EXTRA_TOOLS__NAMELISTS__SRIL34script88.slurm": {
+    "repo": "NOC-MSM/SRIL34",
+    "path": "SRIL34_physics/EXTRA_TOOLS/NAMELISTS/SRIL34script88.slurm",
+    "html_url": "https://github.com/NOC-MSM/SRIL34/blob/25ca5f69a553893b91f126f90b1e4c9323464473/SRIL34_physics/EXTRA_TOOLS/NAMELISTS/SRIL34script88.slurm",
+    "sha": "be27be485ba37aeb65985b131ca733fdc0c2833d",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "pmlmodelling__NEMO-benchmark-cfg__RUN__EXP00__runscript.slurm": {
+    "repo": "pmlmodelling/NEMO-benchmark-cfg",
+    "path": "RUN/EXP00/runscript.slurm",
+    "html_url": "https://github.com/pmlmodelling/NEMO-benchmark-cfg/blob/d790a456c28466fb59172de1caef2ba1d875fa44/RUN/EXP00/runscript.slurm",
+    "sha": "cf915a1a146a0b95507189c81142a66d04fef069",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "gjbex__slurm_examples__heterogeneous.slurm": {
+    "repo": "gjbex/slurm_examples",
+    "path": "heterogeneous.slurm",
+    "html_url": "https://github.com/gjbex/slurm_examples/blob/a689b0a250ad5962c1fec36ef051b4e1d113803c/heterogeneous.slurm",
+    "sha": "c49054028863ed0f5eb110391edebeb421895fef",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "netd-tud__artifacts-eurosp26-doc-privacy__06_evaluation__perm_importance_slurm.sh": {
+    "repo": "netd-tud/artifacts-eurosp26-doc-privacy",
+    "path": "06_evaluation/perm_importance_slurm.sh",
+    "html_url": "https://github.com/netd-tud/artifacts-eurosp26-doc-privacy/blob/9233b89a81421b926993b9c23edd1169f92c4873/06_evaluation/perm_importance_slurm.sh",
+    "sha": "c66b33af0cfd8080a5925daaa97129b2bf50fe7a",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__NOC_Near_Present_Day__scripts__python__mkslurm_NPD_Archer2.sh": {
+    "repo": "NOC-MSM/NOC_Near_Present_Day",
+    "path": "scripts/python/mkslurm_NPD_Archer2",
+    "html_url": "https://github.com/NOC-MSM/NOC_Near_Present_Day/blob/69845052ae8293a4491a62032920cc9c1da262f8/scripts/python/mkslurm_NPD_Archer2",
+    "sha": "b22927af2056b7512c2d32e78e8727c0ab0eb4a2",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__SEAsia__BUILD_CFG__DOMAIN__job_create_coords_template.slurm": {
+    "repo": "NOC-MSM/SEAsia",
+    "path": "BUILD_CFG/DOMAIN/job_create_coords_template.slurm",
+    "html_url": "https://github.com/NOC-MSM/SEAsia/blob/2260db1461c7f2c3ec6e3b060149ef4762aac42c/BUILD_CFG/DOMAIN/job_create_coords_template.slurm",
+    "sha": "d7fd5964ec23c0853b772c8e5abf8248324fa04b",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__ARC36__SCRIPTS__run__archer2__runscript.slurm": {
+    "repo": "NOC-MSM/ARC36",
+    "path": "SCRIPTS/run/archer2/runscript.slurm",
+    "html_url": "https://github.com/NOC-MSM/ARC36/blob/f9fd729874c4a5b944e02f57239a1716978a0527/SCRIPTS/run/archer2/runscript.slurm",
+    "sha": "c95d4a4415c2b1e2c8164e3af126a6828cdab1f3",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hpc-uk__build-instructions__apps__NEMO__submit-gcc-ofi.ll": {
+    "repo": "hpc-uk/build-instructions",
+    "path": "apps/NEMO/submit-gcc-ofi.ll",
+    "html_url": "https://github.com/hpc-uk/build-instructions/blob/bc7eb4851885280c62c9d05054056de152fcd4dd/apps/NEMO/submit-gcc-ofi.ll",
+    "sha": "c7ab2ad6dd5fb48062cceb67c85cff9c77184a7c",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "JMMP-Group__AMM7_surge__NEMO_4.0.4_surge__cfgs__AMM7_SURGE__EXP_NOWIND_DEMO__runscript.slurm": {
+    "repo": "JMMP-Group/AMM7_surge",
+    "path": "NEMO_4.0.4_surge/cfgs/AMM7_SURGE/EXP_NOWIND_DEMO/runscript.slurm",
+    "html_url": "https://github.com/JMMP-Group/AMM7_surge/blob/196219f02c7e72c66427e41f771816b395113301/NEMO_4.0.4_surge/cfgs/AMM7_SURGE/EXP_NOWIND_DEMO/runscript.slurm",
+    "sha": "b3893e51b93159b155fe75021a842c06ccc8c280",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "pletzer__nextsimroms_apptainer__examples__test_exchange__fake_ocean_ice__nesi_4x2.sl": {
+    "repo": "pletzer/nextsimroms_apptainer",
+    "path": "examples/test_exchange/fake_ocean_ice/nesi_4x2.sl",
+    "html_url": "https://github.com/pletzer/nextsimroms_apptainer/blob/a4480d9d5e756c96b6d56a2d5fa12e6632a280f0/examples/test_exchange/fake_ocean_ice/nesi_4x2.sl",
+    "sha": "bff8129384caedd86349c3fc630d960142f8df97",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__RAPID-Evolution__scripts__python__mkslurm_NPD_Archer2.sh": {
+    "repo": "NOC-MSM/RAPID-Evolution",
+    "path": "scripts/python/mkslurm_NPD_Archer2",
+    "html_url": "https://github.com/NOC-MSM/RAPID-Evolution/blob/5aa916d411b004f4fba8d3fbdb3364072157e5e8/scripts/python/mkslurm_NPD_Archer2",
+    "sha": "b22927af2056b7512c2d32e78e8727c0ab0eb4a2",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__Wishbone__scripts__python__mkslurm_NPD_Archer2.sh": {
+    "repo": "NOC-MSM/Wishbone",
+    "path": "scripts/python/mkslurm_NPD_Archer2",
+    "html_url": "https://github.com/NOC-MSM/Wishbone/blob/1d4a40e360e9785641799f3c9bdc98cb764e8f99/scripts/python/mkslurm_NPD_Archer2",
+    "sha": "b22927af2056b7512c2d32e78e8727c0ab0eb4a2",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "BorisRado__split_learning_algorithms__scripts__slurm__run_simulation.sh": {
+    "repo": "BorisRado/split_learning_algorithms",
+    "path": "scripts/slurm/run_simulation.sh",
+    "html_url": "https://github.com/BorisRado/split_learning_algorithms/blob/d200e7a385fdd579ab8c9d96d8be9f29b2070a6a/scripts/slurm/run_simulation.sh",
+    "sha": "de920707d66dff9215211aab84a3444849160442",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__SE-NEMO__scripts__exp__runscript_zps_gls.slurm": {
+    "repo": "NOC-MSM/SE-NEMO",
+    "path": "scripts/exp/runscript_zps_gls.slurm",
+    "html_url": "https://github.com/NOC-MSM/SE-NEMO/blob/7b1d8828292b3f3846e87e3944259e4bbd6c120a/scripts/exp/runscript_zps_gls.slurm",
+    "sha": "f737ac325f76a297af818750548338d528378530",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "Lumi-supercomputer__lumi-CPEtools__testscripts__LUMI__hybrid_check__heterogeneous_testjob.slurm": {
+    "repo": "Lumi-supercomputer/lumi-CPEtools",
+    "path": "testscripts/LUMI/hybrid_check/heterogeneous_testjob.slurm",
+    "html_url": "https://github.com/Lumi-supercomputer/lumi-CPEtools/blob/ca6c329fccc8a78c730a865ae9bf01244e43706e/testscripts/LUMI/hybrid_check/heterogeneous_testjob.slurm",
+    "sha": "ec6377e28c811c7d555f6821ecc0584150213c06",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "immerse-project__wp6.2-demonstrator__scripts__python__mkslurm_immerse.sh": {
+    "repo": "immerse-project/wp6.2-demonstrator",
+    "path": "scripts/python/mkslurm_immerse",
+    "html_url": "https://github.com/immerse-project/wp6.2-demonstrator/blob/fcf49f9df5c96b76a6e65ce7000de1eb26940bc1/scripts/python/mkslurm_immerse",
+    "sha": "e9f6f49192dbc2bc129b7a4325921ba4a61426eb",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "phamtrongthang123__CVExpectation__Computer_Vision_and_Deep_Learning__Deep_Learning_Fundamentals__Custom_loss_functions_and_training_loops__Slurm__Multinode_without_slurm_config__ba.sh": {
+    "repo": "phamtrongthang123/CVExpectation",
+    "path": "Computer Vision and Deep Learning/Deep Learning Fundamentals/Custom loss functions and training loops/Slurm/Multinode without slurm config/bash.sh",
+    "html_url": "https://github.com/phamtrongthang123/CVExpectation/blob/432d8e1d70c213caba89ac76724cf0159f561d44/Computer%20Vision%20and%20Deep%20Learning/Deep%20Learning%20Fundamentals/Custom%20loss%20functions%20and%20training%20loops/Slurm/Multinode%20without%20slurm%20config/bash.sh",
+    "sha": "fb44536d56e2ba4d7969155d442015dd5318cc13",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__NOC_Near_Present_Day__scripts__python__mkslurm_immerse.sh": {
+    "repo": "NOC-MSM/NOC_Near_Present_Day",
+    "path": "scripts/python/mkslurm_immerse",
+    "html_url": "https://github.com/NOC-MSM/NOC_Near_Present_Day/blob/69845052ae8293a4491a62032920cc9c1da262f8/scripts/python/mkslurm_immerse",
+    "sha": "f811751c511eaa528a7dbc8eca39dc903dba8ed5",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NVIDIA-NeMo__Run__test__core__execution__artifacts__ft_het_slurm.sh": {
+    "repo": "NVIDIA-NeMo/Run",
+    "path": "test/core/execution/artifacts/ft_het_slurm.sh",
+    "html_url": "https://github.com/NVIDIA-NeMo/Run/blob/1ad956ba08e40b5066dbb5c848d9bcdde8db0a75/test/core/execution/artifacts/ft_het_slurm.sh",
+    "sha": "df3ecb5b28cca74c41da14115f36f490ea9c1269",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hamani115__hayrat-split-learning-setup__scripts__slurm__run_simulation.sh": {
+    "repo": "hamani115/hayrat-split-learning-setup",
+    "path": "scripts/slurm/run_simulation.sh",
+    "html_url": "https://github.com/hamani115/hayrat-split-learning-setup/blob/69d17701665fa371726219b87710ac1619f3adc4/scripts/slurm/run_simulation.sh",
+    "sha": "de920707d66dff9215211aab84a3444849160442",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hamani115__hybrid-sfl-2tier-fraud-detection-benchmark__scripts__slurm__run_simulation.sh": {
+    "repo": "hamani115/hybrid-sfl-2tier-fraud-detection-benchmark",
+    "path": "scripts/slurm/run_simulation.sh",
+    "html_url": "https://github.com/hamani115/hybrid-sfl-2tier-fraud-detection-benchmark/blob/01dce1e1b34a75d9a8569dfe8e668fe3ed9811dc/scripts/slurm/run_simulation.sh",
+    "sha": "de920707d66dff9215211aab84a3444849160442",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__MissAtl__scripts__exp__runscript_zps_gls.slurm": {
+    "repo": "NOC-MSM/MissAtl",
+    "path": "scripts/exp/runscript_zps_gls.slurm",
+    "html_url": "https://github.com/NOC-MSM/MissAtl/blob/97e16093c400112123223c1927b14a8e1aa17981/scripts/exp/runscript_zps_gls.slurm",
+    "sha": "f737ac325f76a297af818750548338d528378530",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "klust__lumi-CPEtools__testscripts__LUMI__hybrid_check__heterogeneous_testjob.slurm": {
+    "repo": "klust/lumi-CPEtools",
+    "path": "testscripts/LUMI/hybrid_check/heterogeneous_testjob.slurm",
+    "html_url": "https://github.com/klust/lumi-CPEtools/blob/ca6c329fccc8a78c730a865ae9bf01244e43706e/testscripts/LUMI/hybrid_check/heterogeneous_testjob.slurm",
+    "sha": "ec6377e28c811c7d555f6821ecc0584150213c06",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__RAPID-Evolution__scripts__python__mkslurm_immerse.sh": {
+    "repo": "NOC-MSM/RAPID-Evolution",
+    "path": "scripts/python/mkslurm_immerse",
+    "html_url": "https://github.com/NOC-MSM/RAPID-Evolution/blob/5aa916d411b004f4fba8d3fbdb3364072157e5e8/scripts/python/mkslurm_immerse",
+    "sha": "f811751c511eaa528a7dbc8eca39dc903dba8ed5",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "NOC-MSM__Wishbone__scripts__python__mkslurm_immerse.sh": {
+    "repo": "NOC-MSM/Wishbone",
+    "path": "scripts/python/mkslurm_immerse",
+    "html_url": "https://github.com/NOC-MSM/Wishbone/blob/1d4a40e360e9785641799f3c9bdc98cb764e8f99/scripts/python/mkslurm_immerse",
+    "sha": "f811751c511eaa528a7dbc8eca39dc903dba8ed5",
+    "stars": 0,
+    "query": "#SBATCH hetjob"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_icelake__worker_64578155__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_icelake/worker_64578155/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_icelake/worker_64578155/jobscript.sh",
+    "sha": "fe26c1a388d9465c4d63377ede1d72c4c17422e3",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:sh"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_icelake__worker_64579900__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_icelake/worker_64579900/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_icelake/worker_64579900/jobscript.sh",
+    "sha": "a4132348b6f55d562fab76d023895c82dba9bab8",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:sh"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_sapphirerapids__worker_64562574__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_sapphirerapids/worker_64562574/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_sapphirerapids/worker_64562574/jobscript.sh",
+    "sha": "c0e8e380c9eb35c66b97fbff542e417a3f6c7f3e",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:sh"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_sapphirerapids__worker_64562524__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_sapphirerapids/worker_64562524/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_sapphirerapids/worker_64562524/jobscript.sh",
+    "sha": "3c696fae91a0389e5e033e4d371fee5c4e91ffbb",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:sh"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_icelake__worker_64578711__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_icelake/worker_64578711/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_icelake/worker_64578711/jobscript.sh",
+    "sha": "9fdb0df628bd330f0ea50cf159800f0fee19b3e9",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:sh"
+  },
+  "ursho2552__bern3d_tools__shared__runscripts__run_bern3d_f90_mpi_3het.sh": {
+    "repo": "ursho2552/bern3d_tools",
+    "path": "shared/runscripts/run_bern3d_f90_mpi_3het.sh",
+    "html_url": "https://github.com/ursho2552/bern3d_tools/blob/0245dd42dce3abc3f331630e14eec25e7aef5634/shared/runscripts/run_bern3d_f90_mpi_3het.sh",
+    "sha": "a087ac12423712a76498468aa65cc5ccaa3d70a2",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:sh"
+  },
+  "O1af__HOPS__experiments__experiment_3__28_pp5_batch10_h100_l4_a10g_a10g_l4__run.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_3/28_pp5_batch10_h100_l4_a10g_a10g_l4/run.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_3/28_pp5_batch10_h100_l4_a10g_a10g_l4/run.slurm",
+    "sha": "dc509a993aab0e7356ea630eaa452abaa960e371",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471137.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471137.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471137.slurm",
+    "sha": "0ce2ceb6b9feae2bbef182eb1389b6e360f9be69",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "O1af__HOPS__experiments__experiment_3__26_pp5_l4_h100_a10g_l4_a10g__run.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_3/26_pp5_l4_h100_a10g_l4_a10g/run.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_3/26_pp5_l4_h100_a10g_l4_a10g/run.slurm",
+    "sha": "06e17acd4fa1f2c4ac6181b216ec20d8954f97d4",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1470774.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1470774.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1470774.slurm",
+    "sha": "0dd7ace4a9492316286189757b09a2f424edd1f3",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "O1af__HOPS__experiments__experiment_2__19_mixed_pp3_l4_a10g_h100__run.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_2/19_mixed_pp3_l4_a10g_h100/run.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_2/19_mixed_pp3_l4_a10g_h100/run.slurm",
+    "sha": "b03abd0e7337568c9884c81eb30880d6585912f1",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471354.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471354.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471354.slurm",
+    "sha": "3114d36543d9481958a09299688e6401a663bfbc",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471364.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471364.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471364.slurm",
+    "sha": "2da12db5ac505bbf066667cf2e31c7c2acfda3a5",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471047.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471047.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471047.slurm",
+    "sha": "2bf99827f5b9a1e1243678891e1749db769581d0",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "O1af__HOPS__experiments__experiment_2__18_mixed_pp3_h100_a10g_l4__link_bench.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_2/18_mixed_pp3_h100_a10g_l4/link_bench.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_2/18_mixed_pp3_h100_a10g_l4/link_bench.slurm",
+    "sha": "3275e5b0180046ec04f6addd56282a4a201554c1",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "O1af__HOPS__experiments__experiment_2__30_all_nodes_gpipe_batch12__link_bench.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_2/30_all_nodes_gpipe_batch12/link_bench.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_2/30_all_nodes_gpipe_batch12/link_bench.slurm",
+    "sha": "81419faaed633b9cd6bfa9741f14dd7bc7406b67",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "klust__experiments-LUMI__Tests__lumi-CPEtools__LUMI-G__start_het_lumiG.slurm": {
+    "repo": "klust/experiments-LUMI",
+    "path": "Tests/lumi-CPEtools/LUMI-G/start_het_lumiG.slurm",
+    "html_url": "https://github.com/klust/experiments-LUMI/blob/ff229e207395ff2b74bd79c53abeed66bc55dabe/Tests/lumi-CPEtools/LUMI-G/start_het_lumiG.slurm",
+    "sha": "c6b36b4d85915135a1bc906a0478065f42280aac",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_sapphirerapids__worker_64562482__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_sapphirerapids/worker_64562482/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_sapphirerapids/worker_64562482/jobscript.sh",
+    "sha": "d3f95ea6c6a8f7902357c65be924b22d372f7fa1",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:sh"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_icelake__worker_64577854__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_icelake/worker_64577854/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_icelake/worker_64577854/jobscript.sh",
+    "sha": "a888cf4ffe873fac57c870d484d8aba155189e98",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:sh"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_icelake__worker_64580693__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_icelake/worker_64580693/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_icelake/worker_64580693/jobscript.sh",
+    "sha": "51c38a77a17ae968f44bb076944f717a5ecc68e6",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:sh"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_icelake__worker_64577453__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_icelake/worker_64577453/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_icelake/worker_64577453/jobscript.sh",
+    "sha": "de8183ad613be1b44e6b370da89ecf41117f5e38",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:sh"
+  },
+  "hpcleuven__htc-techniques__examples__dgemm__worker_sapphirerapids__worker_64562686__jobscript.sh": {
+    "repo": "hpcleuven/htc-techniques",
+    "path": "examples/dgemm/worker_sapphirerapids/worker_64562686/jobscript.sh",
+    "html_url": "https://github.com/hpcleuven/htc-techniques/blob/7876ff33f04859400373136db884cede62f3ee75/examples/dgemm/worker_sapphirerapids/worker_64562686/jobscript.sh",
+    "sha": "89dc9197b82bec5b1f7ac3de799f7137b88e89a3",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:sh"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471053.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471053.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471053.slurm",
+    "sha": "2a18fee0b2cd10967c9f45da0d7651c047db373c",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471356.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471356.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471356.slurm",
+    "sha": "22951c85995f651f9b8a229fd48ed69ed0c64a97",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471330.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471330.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471330.slurm",
+    "sha": "21a9dac488f5181fe3189a9b9aed9e8b935e8d44",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471131.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471131.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471131.slurm",
+    "sha": "1f61cc0a526062dab5cadd7254d7b525ea49b6d9",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "TemplierPaul__Compute__archive__old__pando__pando_1471342.slurm": {
+    "repo": "TemplierPaul/Compute",
+    "path": "archive/old/pando/pando_1471342.slurm",
+    "html_url": "https://github.com/TemplierPaul/Compute/blob/7cd444b8c6d3e0d708f2eef955f7a9fefdc7b5b6/archive/old/pando/pando_1471342.slurm",
+    "sha": "144c97b04363b1c9023cae988743a6b3c1f257ae",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "O1af__HOPS__experiments__experiment_3__32_pp5_uneven_first5_last4__link_bench.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_3/32_pp5_uneven_first5_last4/link_bench.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_3/32_pp5_uneven_first5_last4/link_bench.slurm",
+    "sha": "3ef22253ee18a9fcaba42932e14fe0267e586add",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "O1af__HOPS__experiments__experiment_3__27_pp5_a10g_h100_l4_a10g_l4__link_bench.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_3/27_pp5_a10g_h100_l4_a10g_l4/link_bench.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_3/27_pp5_a10g_h100_l4_a10g_l4/link_bench.slurm",
+    "sha": "ee11f8f665026a3c80d7add37f119575510a0ab8",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "O1af__HOPS__experiments__experiment_3__26_pp5_l4_h100_a10g_l4_a10g__link_bench.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_3/26_pp5_l4_h100_a10g_l4_a10g/link_bench.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_3/26_pp5_l4_h100_a10g_l4_a10g/link_bench.slurm",
+    "sha": "d02bebf90776adee3226b152f9ced23647610089",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "O1af__HOPS__experiments__experiment_3__25_pp5_h100_l4_a10g_l4_a10g__link_bench.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_3/25_pp5_h100_l4_a10g_l4_a10g/link_bench.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_3/25_pp5_h100_l4_a10g_l4_a10g/link_bench.slurm",
+    "sha": "6aeac524bdbb62eae32522aa2c568c8283eb80ce",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  },
+  "O1af__HOPS__experiments__experiment_3__24_mixed_l4_h100_a10g_h100_pp4__link_bench.slurm": {
+    "repo": "O1af/HOPS",
+    "path": "experiments/experiment_3/24_mixed_l4_h100_a10g_h100_pp4/link_bench.slurm",
+    "html_url": "https://github.com/O1af/HOPS/blob/b4f8ea976fa7303aabf49b7588e962347feee95a/experiments/experiment_3/24_mixed_l4_h100_a10g_h100_pp4/link_bench.slurm",
+    "sha": "dacffdeea8295317ec91f056e9f23576e4709d30",
+    "stars": 0,
+    "query": "#SBATCH hetjob extension:slurm"
+  }
+}

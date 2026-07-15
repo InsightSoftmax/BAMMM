@@ -1,0 +1,178 @@
+# SPLAT intermediate — produced by:
+#   bammm convert --from volcano source.yaml
+#
+# TRANSLATION NOTES (Volcano → SPLAT):
+#
+# [AUTO] spec.queue → schedule.queue
+# [AUTO] spec.priorityClassName → schedule.priority_class
+# [AUTO] spec.minAvailable=7 → gang.min_available=7
+# [AUTO] spec.maxRetry=3 → lifecycle.max_retries=3
+# [AUTO] spec.ttlSecondsAfterFinished → lifecycle.ttl_after_finished
+# [AUTO] tasks[chief+worker+ps] → spec.tasks[] with name/replicas/resources
+# [AUTO] GPU: nvidia.com/gpu: "4" → resources.gpu.count=4
+# [AUTO] volumes (PVC) → spec.volumes[] with pvc references
+# [AUTO] policies[PodEvicted→RestartJob, TaskCompleted→CompleteJob] →
+#        extensions.volcano.policies (no generic equivalent for conditional completion logic)
+# [AUTO] plugins[tensorflow] → distributed_framework: tensorflow + extensions.volcano.plugins
+#
+# [STRUCTURAL PROBLEM] The parameter-server architecture (chief + worker + ps) has NO
+#   equivalent in HPC schedulers. HPC knows only "N homogeneous tasks" or "het-jobs"
+#   (Slurm only). Options for Slurm output:
+#     A) Flatten to het-job: --nodes for gpu ranks + separate --nodes for CPU ps ranks
+#        (Slurm-specific; not portable to PBS/LSF/HTCondor)
+#     B) Single-task job: ignore ps/chief distinction; all ranks run same script,
+#        use TF_CONFIG env var to differentiate role at runtime
+#   BAMMM chooses option B (portable) with a WARNING. Option A preserved in extensions.slurm.
+#
+# [WARN] Container image tensorflow/tensorflow:2.14.0-gpu → Slurm needs Singularity/Apptainer.
+#        Generated script wraps with: singularity exec docker://tensorflow/tensorflow:2.14.0-gpu
+#        If Singularity is unavailable, user must install TensorFlow natively.
+#
+# [WARN] /data/imagenet and /models/resnet50 are K8s PVC mount paths.
+#        On HPC, these must be real filesystem paths (NFS, Lustre, etc.).
+#        BAMMM annotates them; user must update paths for their HPC filesystem.
+#
+# [WARN] Volcano lifecycle policy "TaskCompleted → CompleteJob" has no Slurm equivalent.
+#        Slurm jobs end when all tasks exit. If some workers finish early, the job
+#        continues until all complete or walltime expires.
+#
+# [WARN] Gang scheduling (minAvailable=7) has no direct Slurm equivalent.
+#        Slurm gang-schedules at the node level (--nodes guarantee all-or-nothing).
+#        The generated Slurm script uses --nodes=7 to approximate this.
+
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  name: tf-resnet-training
+  annotations:
+    bammm.io/source-format: volcano
+    bammm.io/source-namespace: ml-team
+spec:
+  schedule:
+    queue: ml-gpu
+    priority_class: high-priority
+    priority: 700               # high-priority → 700/1000 normalized
+  resources:
+    # Computed from the largest task (chief/worker): 8 CPU, 32Gi, 4 GPU
+    nodes: 7                    # 1 chief + 4 workers + 2 ps
+    tasks: 7                    # one pod per task (see translation note above)
+    cpus_per_task: 8            # max across task types (ps uses 4; using 8 for compatibility)
+    memory_per_task: "32Gi"     # max across task types (ps uses 16Gi; using 32Gi)
+    gpu:
+      count: 4                  # chief/worker GPUs; ps gets 0 (see tasks block)
+
+  distributed_framework: tensorflow
+
+  # Multi-task preserved for K8s round-trip
+  tasks:
+    - name: chief
+      replicas: 1
+      resources:
+        cpus_per_task: 8
+        memory_per_task: "32Gi"
+        gpu:
+          count: 4
+      execution:
+        container:
+          image: tensorflow/tensorflow:2.14.0-gpu
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              python /app/train_resnet.py \
+                --task_type=chief \
+                --num_epochs=50 --batch_size=256 --learning_rate=0.1 \
+                --data_dir=/data/imagenet --model_dir=/models/resnet50
+          environment:
+            vars:
+              TF_CPP_MIN_LOG_LEVEL: "2"
+              PYTHONPATH: /app
+      lifecycle:
+        policies:
+          - event: TaskCompleted
+            action: CompleteJob
+
+    - name: worker
+      replicas: 4
+      resources:
+        cpus_per_task: 8
+        memory_per_task: "32Gi"
+        gpu:
+          count: 4
+      execution:
+        container:
+          image: tensorflow/tensorflow:2.14.0-gpu
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              python /app/train_resnet.py \
+                --task_type=worker \
+                --num_epochs=50 --batch_size=256 --learning_rate=0.1 \
+                --data_dir=/data/imagenet --model_dir=/models/resnet50
+          environment:
+            vars:
+              TF_CPP_MIN_LOG_LEVEL: "2"
+              PYTHONPATH: /app
+
+    - name: ps
+      replicas: 2
+      resources:
+        cpus_per_task: 4
+        memory_per_task: "16Gi"
+        gpu:
+          count: 0
+      execution:
+        container:
+          image: tensorflow/tensorflow:2.14.0-gpu
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              python /app/train_resnet.py \
+                --task_type=ps \
+                --num_epochs=50 --batch_size=256 --learning_rate=0.1 \
+                --data_dir=/data/imagenet --model_dir=/models/resnet50
+
+  gang:
+    min_available: 7
+    style: hard
+
+  lifecycle:
+    max_retries: 3
+    ttl_after_finished: PT2H
+
+  volumes:
+    - name: data
+      mount_path: /data
+      read_only: true
+      pvc: imagenet-pvc
+    - name: models
+      mount_path: /models
+      pvc: model-store-pvc
+
+  extensions:
+    volcano:
+      plugins: [env, svc, tensorflow]
+      min_success: 1            # job complete when chief finishes
+      policies:
+        - event: PodEvicted
+          action: RestartJob
+        - event: TaskCompleted
+          action: CompleteJob
+
+    slurm:
+      # Het-job option (Option A): preserves ps/worker distinction natively
+      # Requires Slurm ≥ 20.11 and the het-job feature enabled on the cluster.
+      het_components:
+        - resources:
+            nodes: 5            # 1 chief + 4 workers (GPU nodes)
+            tasks_per_node: 1
+            cpus_per_task: 8
+            memory_per_task: "32Gi"
+          schedule:
+            constraint: "gpu"
+        - resources:
+            nodes: 2            # 2 ps (CPU-only nodes)
+            tasks_per_node: 1
+            cpus_per_task: 4
+            memory_per_task: "16Gi"
+          schedule:
+            constraint: "cpu"

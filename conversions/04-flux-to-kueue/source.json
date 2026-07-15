@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "resources": [
+    {
+      "type": "node",
+      "count": 8,
+      "exclusive": true,
+      "with": [
+        {
+          "type": "slot",
+          "count": 1,
+          "label": "task",
+          "with": [
+            {
+              "type": "socket",
+              "count": 2,
+              "with": [
+                {
+                  "type": "core",
+                  "count": 16
+                }
+              ]
+            },
+            {
+              "type": "gpu",
+              "count": 4,
+              "unit": ""
+            },
+            {
+              "type": "memory",
+              "count": 512,
+              "unit": "GiB"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "torch.distributed.run",
+        "--nproc_per_node=4",
+        "--nnodes=8",
+        "--rdzv_id=job-${FLUX_JOB_ID}",
+        "--rdzv_backend=c10d",
+        "--rdzv_endpoint=${FLUX_URI}",
+        "train_llm.py",
+        "--config=/tmp/job-configs/llm-config.yaml",
+        "--checkpoint-dir=/checkpoints/llm-${FLUX_JOB_ID}"
+      ],
+      "slot": "task",
+      "count": {
+        "per_slot": 1
+      },
+      "distribution": "block"
+    }
+  ],
+  "attributes": {
+    "system": {
+      "duration": 43200.0,
+      "cwd": "/home/user/llm-experiment",
+      "queue": "ml-batch",
+      "bank": "llm-allocation",
+      "project": "foundation-models",
+      "environment": {
+        "NCCL_DEBUG": "INFO",
+        "NCCL_SOCKET_IFNAME": "ib0",
+        "PYTHONPATH": "/workspace",
+        "TRANSFORMERS_CACHE": "/scratch/hf-cache"
+      },
+      "job": {
+        "name": "llm-pretraining"
+      },
+      "dependencies": [
+        {
+          "scheme": "afterok",
+          "value": "ƒ5oLkTLb"
+        },
+        {
+          "scheme": "string",
+          "value": "tokenized-pile-dataset",
+          "type": "in",
+          "scope": "user"
+        }
+      ],
+      "constraints": {
+        "properties": ["infiniband-hdr", "avx512"]
+      },
+      "files": {
+        "llm-config.yaml": {
+          "encoding": "utf-8",
+          "data": "model:\n  type: gpt2\n  layers: 48\n  hidden_size: 1600\n  num_heads: 25\ntraining:\n  learning_rate: 0.0001\n  warmup_steps: 2000\n  max_steps: 100000\n",
+          "size": 177
+        }
+      },
+      "preemptible-after": 600.0,
+      "shell": {
+        "options": {
+          "cpu-affinity": "per-task",
+          "gpu-affinity": "per-task",
+          "rlimit": {
+            "nofile": 65536
+          }
+        }
+      }
+    },
+    "user": {
+      "experiment-id": "llm-run-42",
+      "notes": "GPT-2 XL pretraining on The Pile"
+    }
+  }
+}

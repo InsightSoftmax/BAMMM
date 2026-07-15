@@ -1,57 +1,48 @@
-apiVersion: batch.unified.io/v1alpha1
-kind: BatchJob
+# AWS Batch example
+# AWS Batch is not one of the primary SPLAT target schedulers (it has its own
+# submission API), but BAMMM can generate an AWS Batch job definition JSON
+# from this SPLAT spec. The aws_batch extension block carries AWS-specific
+# fields with no generic equivalent.
+#
+# Note: AWS Batch jobs run in containers on EC2; the container image is required.
+
+apiVersion: bammm.io/v1alpha1
+kind: Job
 metadata:
   name: aws-batch-example
   labels:
     app: bammm-example
 spec:
-  queue: aws-batch-queue
-  priorityClassName: normal
-  schedulingSpec:
-    maxRetry: 3
-    timeout: PT1H
-  tasks:
-    - name: batch-task
-      replicas: 1
-      pod:
-        containers:
-          - name: main
-            image: amazon/amazon-ecs-sample:latest
-            command: ["sh", "-c"]
-            args:
-              - |
-                echo "Running on AWS Batch"
-                echo "Job ID: $AWS_BATCH_JOB_ID"
-                echo "Job Queue: $AWS_BATCH_JQ_NAME"
-                echo "Job Definition: $AWS_BATCH_JOB_DEFINITION"
-                sleep 300
-            resources:
-              requests:
-                cpu: "1"
-                memory: "2Gi"
-              limits:
-                cpu: "2"
-                memory: "4Gi"
-        restartPolicy: Never
-  override:
-    awsBatch:
-      jobDefinition: "bammm-job-definition:1"
-      jobQueue: "bammm-job-queue"
-      jobName: "bammm-example-job"
-      containerOverrides:
-        - name: main
-          command: ["sh", "-c", "echo 'Custom AWS Batch command' && sleep 300"]
-          resourceRequirements:
-            - type: "VCPU"
-              value: "2"
-            - type: "MEMORY"
-              value: "4096"
-      parameters:
-        input_file: "s3://my-bucket/input/data.txt"
-        output_file: "s3://my-bucket/output/result.txt"
-      retryStrategy:
-        attempts: 3
-        evaluateOnExit:
-          - action: "RETRY"
-            onExitCode: "1"
-            onReason: ".*" 
+  schedule:
+    queue: aws-batch-queue
+    priority: 500
+    walltime: PT1H
+  resources:
+    tasks: 1
+    cpus_per_task: 2
+    memory_per_task: "4Gi"
+  lifecycle:
+    max_retries: 3
+  execution:
+    container:
+      image: "amazon/amazon-ecs-sample:latest"
+      command: ["sh", "-c"]
+      args:
+        - |
+          echo "Running on AWS Batch"
+          echo "Job ID: ${AWS_BATCH_JOB_ID}"
+          echo "Job Queue: ${AWS_BATCH_JQ_NAME}"
+          sleep 300
+      environment:
+        vars:
+          INPUT_FILE: "s3://my-bucket/input/data.txt"
+          OUTPUT_FILE: "s3://my-bucket/output/result.txt"
+  output:
+    stdout: "/tmp/job.out"
+    stderr: "/tmp/job.err"
+
+  extensions:
+    # AWS Batch does not fit cleanly into any single extension namespace since it
+    # is a cloud-managed service, not a cluster scheduler. These fields are used
+    # when BAMMM targets AWS Batch output format.
+    slurm: {}     # placeholder — BAMMM will warn: "AWS Batch target ignores slurm extensions"

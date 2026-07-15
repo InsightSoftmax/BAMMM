@@ -1,0 +1,124 @@
+# Distributed PyTorch training job targeting K8s schedulers
+# Works with: Armada, Volcano, Kueue, YuniKorn, Run.ai
+# For HPC schedulers, BAMMM generates a Singularity-wrapped version of the script.
+
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  name: bert-finetuning
+  labels:
+    team: nlp
+    model: bert-large
+spec:
+  schedule:
+    queue: ml-gpu-queue
+    priority: 600
+    priority_class: high-priority
+    account: nlp-project
+    walltime: PT6H
+  resources:
+    nodes: 4
+    tasks: 4                       # 1 worker per node
+    cpus_per_task: 32
+    memory_per_task: "128Gi"
+    gpu:
+      count: 8
+      type: h100
+      memory: "80Gi"
+  distributed_framework: pytorch
+  workload_type: training
+  tasks:
+    - name: worker
+      replicas: 4
+      resources:
+        cpus_per_task: 32
+        memory_per_task: "128Gi"
+        gpu:
+          count: 8
+          type: h100
+      execution:
+        container:
+          image: "nvcr.io/nvidia/pytorch:24.01-py3"
+          command: ["torchrun"]
+          args:
+            - "--nproc_per_node=8"
+            - "--nnodes=4"
+            - "--node_rank=$(BAMMM_TASK_INDEX)"
+            - "--master_addr=$(MASTER_ADDR)"
+            - "--master_port=29500"
+            - "train.py"
+            - "--model=bert-large-uncased"
+            - "--epochs=10"
+          environment:
+            vars:
+              NCCL_DEBUG: INFO
+              NCCL_IB_DISABLE: "0"
+  gang:
+    min_available: 4
+    style: hard
+    timeout: PT10M
+  placement:
+    node_selector:
+      cloud.google.com/gke-accelerator: nvidia-h100-80gb
+      node-type: on-demand
+    tolerations:
+      - key: "nvidia.com/gpu"
+        operator: Exists
+        effect: NoSchedule
+    node_pools:
+      - h100-pool
+      - a100-80gb-pool             # fallback
+  volumes:
+    - name: dataset
+      mount_path: /data
+      read_only: true
+      pvc: bert-dataset-pvc
+    - name: checkpoints
+      mount_path: /checkpoints
+      pvc: bert-checkpoints-pvc
+    - name: scratch
+      mount_path: /tmp/scratch
+      empty_dir: true
+  lifecycle:
+    max_retries: 2
+    requeue_on_failure: true
+    ttl_after_finished: PT2H
+  output:
+    stdout: "/checkpoints/logs/{job_id}.out"
+    stderr: "/checkpoints/logs/{job_id}.err"
+
+  extensions:
+    volcano:
+      plugins: [env, svc, pytorch]
+      min_success: 4
+      policies:
+        - event: PodEvicted
+          action: RestartTask
+        - event: TaskCompleted
+          action: CompleteJob
+      ttl_seconds: 7200
+
+    kueue:
+      local_queue: ml-team-gpu-queue
+      workload_priority_class: ml-training
+      max_execution_time: 21600
+      min_count: 2                 # admit with at least 2 workers (elastic)
+
+    yunikorn:
+      app_id: bert-finetuning-001
+      gang_scheduling_style: Hard
+      gang_timeout: 600
+
+    armada:
+      job_set_id: bert-experiment-set
+      services:
+        - type: Headless
+          ports: [29500]
+          name: nccl-rendezvous
+
+    runai:
+      project: nlp-team
+      department: research
+      large_shm: true
+      node_pools: [h100-pool, a100-80gb-pool]
+      pod_group_policy: all

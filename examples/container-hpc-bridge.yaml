@@ -1,0 +1,114 @@
+# Container + HPC bridge example
+# This job specifies BOTH a container image and a bare-metal script.
+# BAMMM selects the appropriate one for the target scheduler:
+#   - K8s schedulers → use container.image
+#   - HPC schedulers with Singularity → wrap container.image in `singularity exec`
+#   - HPC schedulers without container support → use script directly
+#
+# This pattern is ideal for jobs that need to run on both cloud (K8s) and
+# on-premise HPC clusters with the same SPLAT spec.
+
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  name: genomics-pipeline
+  labels:
+    workflow: variant-calling
+spec:
+  schedule:
+    queue: genomics
+    account: bio-research
+    walltime: PT12H
+    priority: 500
+  resources:
+    nodes: 1
+    tasks: 1
+    cpus_per_task: 16
+    memory_per_task: "64Gi"
+    disk_per_task: "500Gi"
+  execution:
+    # K8s schedulers will use this:
+    container:
+      image: "broadinstitute/gatk:4.5.0.0"
+      command: ["bash", "/pipeline/run-variant-calling.sh"]
+      args: ["--sample", "$(SAMPLE_ID)", "--reference", "/data/hg38.fa"]
+
+    # HPC schedulers will use this (or wrap the container with Singularity):
+    script: |
+      #!/bin/bash
+      module load singularity/3.9 || true
+
+      # If Singularity is available, run the container image
+      if command -v singularity &>/dev/null; then
+        singularity exec \
+          --bind /scratch:/scratch \
+          --bind /nfs/reference:/data:ro \
+          docker://broadinstitute/gatk:4.5.0.0 \
+          bash /pipeline/run-variant-calling.sh \
+            --sample "${SAMPLE_ID}" \
+            --reference /data/hg38.fa
+      else
+        # Fallback: run native tools
+        gatk HaplotypeCaller \
+          --input "${SAMPLE_ID}.bam" \
+          --reference /data/hg38.fa \
+          --output "${SAMPLE_ID}.vcf.gz"
+      fi
+
+    working_dir: /scratch/genomics
+    environment:
+      vars:
+        SAMPLE_ID: "NA12878"
+        TMPDIR: /scratch/tmp
+
+  placement:
+    node_selector:
+      node-type: high-memory
+    constraint: "avx2"
+    exclusive: false
+
+  output:
+    stdout: "/scratch/logs/genomics-{job_id}.out"
+    stderr: "/scratch/logs/genomics-{job_id}.err"
+
+  file_staging:
+    inputs:
+      - src: "s3://my-genomics/samples/NA12878.bam"
+        dst: "/scratch/genomics/NA12878.bam"
+      - src: "s3://my-genomics/samples/NA12878.bam.bai"
+        dst: "/scratch/genomics/NA12878.bam.bai"
+    outputs:
+      - src: "/scratch/genomics/NA12878.vcf.gz"
+        dst: "s3://my-genomics/results/NA12878.vcf.gz"
+
+  volumes:
+    - name: reference
+      mount_path: /data
+      read_only: true
+      nfs:
+        server: nfs.genomics.internal
+        path: /exports/reference/hg38
+    - name: scratch
+      mount_path: /scratch
+      empty_dir: true
+
+  notifications:
+    email: "bioinformatician@example.com"
+    events: [end, fail]
+
+  lifecycle:
+    max_retries: 1
+    ttl_after_finished: PT4H
+
+  extensions:
+    slurm:
+      time_min: PT2H
+      gres_flags: "enforce-binding"
+
+    pbs:
+      place: "pack:shared"
+      stagein:
+        - "NA12878.bam@storage01:/scratch/genomics/NA12878.bam"
+
+    lsf:
+      rusage_string: "rusage[mem=64000:scratch=500000]"

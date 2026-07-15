@@ -1,0 +1,159 @@
+# SPLAT intermediate — produced by:
+#   bammm convert --from armada source.yaml
+#
+# TRANSLATION NOTES (Armada → SPLAT):
+#
+# [AUTO] queue → schedule.queue
+# [AUTO] jobSetId → extensions.armada.job_set_id (no generic equivalent)
+# [AUTO] jobs[].priority (highest across jobs) → schedule.priority (normalized: 75 → 675/1000)
+# [AUTO] jobs[].namespace → extensions.armada.namespace
+# [AUTO] jobs[].labels → metadata.labels (merged across jobs; conflicts resolved by driver)
+# [AUTO] jobs[].annotations (non-Armada) → metadata.annotations
+# [AUTO] Armada gang annotations (gang-id, gang-cardinality, gang-minimum-job-size)
+#        → gang.min_available=2
+# [AUTO] jobs[].podSpec.containers[].image → execution.container.image (driver image used)
+# [AUTO] resources: driver (4 CPU, 16Gi, 1 GPU) + compute (32 CPU, 128Gi, 4 GPU)
+#        → spec.tasks[] with separate resource blocks
+# [AUTO] jobs[].externalJobUri → metadata.annotations["bammm.io/external-uri"]
+# [AUTO] podSpec.priorityClassName → schedule.priority_class
+# [AUTO] podSpec.tolerations → placement.tolerations
+#
+# [STRUCTURAL PROBLEM] The Armada model submits TWO separate jobs linked by gang annotations.
+#   They are in the same jobSet but are otherwise independent K8s pods.
+#   For Slurm, BAMMM maps this to a Slurm het-job (--het-group, two components).
+#   This is the only clean HPC equivalent of heterogeneous multi-role execution.
+#   NOTE: Het-jobs require Slurm ≥ 20.11. If not available, BAMMM uses a single
+#   allocation with the max resources (32 CPU, 128Gi, 4 GPU) and the script handles
+#   role assignment by SLURM_PROCID — same approximation as conversion 02.
+#
+# [HARD PROBLEM] Armada ingress (port 9090 with Prometheus scraping):
+#   There is no HPC equivalent of K8s Ingress. On a Slurm cluster, exposing a port
+#   requires manual firewall rules or a tunnel.
+#   BAMMM generates a note in the script; the port is dropped from the Slurm job.
+#
+# [HARD PROBLEM] Armada headless service for pod-to-pod communication:
+#   The compute pod is reachable at "mc-sim-compute.physics-team.svc.cluster.local:8080".
+#   In Slurm, pod-to-pod communication uses hostnames from $SLURM_JOB_NODELIST.
+#   BAMMM replaces the DNS-based address with a Slurm hostname lookup.
+#
+# [HARD PROBLEM] jobSetId grouping:
+#   Armada job sets enable collective cancel/monitor operations across all jobs in the set.
+#   Slurm has no equivalent of a named job group; BAMMM uses --comment and --wckey
+#   to tag the jobs with the jobSetId for manual tracking.
+#
+# [HARD PROBLEM] Armada multi-cluster pool routing:
+#   Armada places jobs on any available cluster in a pool. In Slurm, the user must
+#   specify a cluster explicitly. BAMMM cannot know which cluster to target.
+#   The generated script targets the current/default cluster.
+#
+# [APPROXIMATION] Container image → Singularity wrapper (cern/mc-simulator:3.2.1-cuda)
+# [APPROXIMATION] ConfigMap "mc-sim-config" → file must be copied to compute node manually
+#   or mounted via a shared filesystem path.
+# [APPROXIMATION] S3 output path (s3://physics-results/...) → Slurm nodes need AWS credentials
+#   and the awscli/s3fs tool. BAMMM generates an aws s3 cp command in the post step.
+
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  name: mc-simulation-batch-2026-06
+  labels:
+    app: monte-carlo-sim
+    experiment: higgs-cross-section
+  annotations:
+    bammm.io/source-format: armada
+    bammm.io/external-uri: "https://jira.example.com/browse/SIM-4521"
+spec:
+  schedule:
+    queue: research-simulations
+    priority: 675               # Armada priority 75.0 → normalized 675/1000
+    priority_class: high
+
+  tasks:
+    - name: driver
+      replicas: 1
+      resources:
+        cpus_per_task: 4
+        memory_per_task: "16Gi"
+        gpu:
+          count: 1
+      execution:
+        container:
+          image: cern/mc-simulator:3.2.1-cuda
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              echo "Driver starting on $(hostname)"
+              /opt/simulator/driver \
+                --config /etc/sim/config.yaml \
+                --workers "{compute_hostname}:8080" \
+                --events 1000000 \
+                --output s3://physics-results/higgs/run-{job_id}/
+          environment:
+            vars:
+              CUDA_VISIBLE_DEVICES: "0"
+      placement:
+        tolerations:
+          - key: simulation-node
+            operator: Exists
+            effect: NoSchedule
+
+    - name: compute
+      replicas: 1
+      resources:
+        cpus_per_task: 32
+        memory_per_task: "128Gi"
+        gpu:
+          count: 4
+      execution:
+        container:
+          image: cern/mc-simulator:3.2.1-cuda
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              echo "Compute worker starting on $(hostname)"
+              /opt/simulator/worker --port 8080 --gpus 4 --threads 32
+      placement:
+        tolerations:
+          - key: simulation-node
+            operator: Exists
+            effect: NoSchedule
+
+  gang:
+    min_available: 2
+    style: hard
+
+  extensions:
+    armada:
+      job_set_id: mc-simulation-batch-2026-06
+      namespace: physics-team
+      scheduler_name: default
+      ingress:
+        - ports: [9090]
+          tls_enabled: false
+          annotations:
+            nginx.ingress.kubernetes.io/rewrite-target: /
+            prometheus.io/scrape: "true"
+      services:
+        - type: Headless
+          ports: [8080]
+          name: mc-sim-compute
+
+    slurm:
+      # Het-job configuration for Slurm ≥ 20.11
+      het_components:
+        - resources:
+            nodes: 1
+            tasks_per_node: 1
+            cpus_per_task: 4
+            memory_per_task: "16Gi"
+          schedule:
+            constraint: "simulation-node"
+          # driver pod
+        - resources:
+            nodes: 1
+            tasks_per_node: 1
+            cpus_per_task: 32
+            memory_per_task: "128Gi"
+          schedule:
+            constraint: "simulation-node"
+          # compute pod

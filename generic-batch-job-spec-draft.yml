@@ -1,0 +1,79 @@
+# This file has been moved to examples/multi-task-job.yaml
+# Please use the examples in the examples/ directory for reference
+
+apiVersion: batch.unified.io/v1alpha1
+kind: BatchJob
+metadata:
+  name: example-job
+
+spec:
+  queue: default
+  priorityClassName: high-priority
+  schedulerName: yunikorn           # For Kubernetes-based schedulers
+  schedulingSpec:
+    minAvailable: 3
+    maxRetry: 2
+    timeout: PT1H
+
+  # Flux‑specific
+  duration: PT1H                   # job runtime limit
+  cwd: /workdir
+  environment:
+    VAR1: value1
+    VAR2: value2
+  files:
+    - path: config.json
+      data: |
+        { "param": true }
+      perms: 0o600
+  flags: ["waitable"]
+
+  # Task definitions (same earlier structure)
+  tasks:
+    - name: compute
+      replicas: 2
+      pod:
+        containers:
+          - name: worker
+            image: image:latest
+            command: ["do", "work"]
+            resources:
+              requests:
+                cpu: "1"
+                memory: "1Gi"
+              limits:
+                cpu: "2"
+                memory: "2Gi"
+        restartPolicy: OnFailure
+
+  array:
+    size: 5
+    maxParallelism: 2
+
+  dependencies:
+    - type: afterok
+      job: compute
+
+  notifications:
+    email: user@example.com
+    onEvents: ["BEGIN","END","FAIL"]
+
+  nodeSelector:
+    kubernetes.io/os: linux
+
+  override:
+    ﬂux:
+      nodes: 2
+      ntasks: 4
+      coresPerTask: 1
+      gpusPerTask: 0
+    yunikorn:
+      labels:
+        yunikorn.apache.org/app-id: "app-123"
+        ray.io/gang-scheduling-enabled: "true"
+      annotations:
+        some-operator: "enabled"
+    awsBatch:
+      …
+    slurm:
+      …
