@@ -71,6 +71,7 @@ type Resources struct {
 	Tasks            int             `json:"tasks,omitempty" yaml:"tasks,omitempty"`
 	TasksPerNode     int             `json:"tasksPerNode,omitempty" yaml:"tasksPerNode,omitempty"`
 	TasksPerSocket   int             `json:"tasksPerSocket,omitempty" yaml:"tasksPerSocket,omitempty"`
+	TasksPerCore     int             `json:"tasksPerCore,omitempty" yaml:"tasksPerCore,omitempty"`
 	CPUsPerTask      int             `json:"cpusPerTask,omitempty" yaml:"cpusPerTask,omitempty"`
 	MemoryPerTask    *Quantity       `json:"memoryPerTask,omitempty" yaml:"memoryPerTask,omitempty"`
 	MemoryPerCPU     *Quantity       `json:"memoryPerCpu,omitempty" yaml:"memoryPerCpu,omitempty"`

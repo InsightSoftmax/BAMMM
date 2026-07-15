@@ -280,7 +280,7 @@ func apply(job *splat.Job, flag, value string) error {
 			return fmt.Errorf("ntasks: %w", err)
 		}
 		r.Tasks = n
-	case "ntasks-per-node":
+	case "ntasks-per-node", "tasks-per-node": // --tasks-per-node is a Slurm alias
 		n, err := strconv.Atoi(value)
 		if err != nil {
 			return fmt.Errorf("ntasks-per-node: %w", err)
@@ -292,6 +292,12 @@ func apply(job *splat.Job, flag, value string) error {
 			return fmt.Errorf("ntasks-per-socket: %w", err)
 		}
 		r.TasksPerSocket = n
+	case "ntasks-per-core":
+		n, err := strconv.Atoi(value)
+		if err != nil {
+			return fmt.Errorf("ntasks-per-core: %w", err)
+		}
+		r.TasksPerCore = n
 	case "cpus-per-task", "c":
 		n, err := strconv.Atoi(value)
 		if err != nil {
@@ -338,7 +344,7 @@ func apply(job *splat.Job, flag, value string) error {
 			return err
 		}
 		r.GPU = gpu
-	case "gpus-per-node":
+	case "gpus-per-node", "gpus-per-task":
 		gpu, err := parseGRES("gpu:" + value)
 		if err != nil {
 			return err
@@ -408,7 +414,7 @@ func apply(job *splat.Job, flag, value string) error {
 		setSlurm(job, "burst_buffer_file", value)
 	case "licenses", "L":
 		setSlurm(job, "licenses", value)
-	case "clusters", "M":
+	case "clusters", "cluster", "M":
 		setSlurm(job, "clusters", value)
 	case "comment":
 		if job.Metadata.Annotations == nil {

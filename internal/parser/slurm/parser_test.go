@@ -328,3 +328,36 @@ func sbatchScript(directives ...string) string {
 	b.WriteString("\necho done\n")
 	return b.String()
 }
+
+func TestParse_HardenedDirectives(t *testing.T) {
+	script := []byte("#!/bin/bash\n" +
+		"#SBATCH --job-name=h\n" +
+		"#SBATCH --tasks-per-node=4\n" + // Slurm alias for --ntasks-per-node
+		"#SBATCH --ntasks-per-core=1\n" +
+		"#SBATCH --gpus-per-task=2\n" +
+		"#SBATCH --cluster=frontier\n" +
+		"echo hi\n")
+	job, err := slurm.Parse(script)
+	if err != nil {
+		t.Fatalf("Parse: %v", err)
+	}
+	r := job.Spec.Resources
+	if r.TasksPerNode != 4 {
+		t.Errorf("tasks-per-node alias: got %d want 4", r.TasksPerNode)
+	}
+	if r.TasksPerCore != 1 {
+		t.Errorf("ntasks-per-core: got %d want 1", r.TasksPerCore)
+	}
+	if r.GPU == nil || r.GPU.Count != 2 {
+		t.Errorf("gpus-per-task: got %v want 2", r.GPU)
+	}
+	if job.Spec.Extensions.Slurm["clusters"] != "frontier" {
+		t.Errorf("cluster alias: got %v", job.Spec.Extensions.Slurm["clusters"])
+	}
+	// None of these should have leaked to extensions as unknown flags.
+	for _, k := range []string{"tasks_per_node", "ntasks_per_core", "gpus_per_task", "cluster"} {
+		if _, ok := job.Spec.Extensions.Slurm[k]; ok {
+			t.Errorf("directive %q leaked to extensions", k)
+		}
+	}
+}
