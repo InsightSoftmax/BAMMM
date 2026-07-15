@@ -36,6 +36,7 @@ func newRootCmd() *cobra.Command {
 		SilenceUsage: true,
 	}
 	root.AddCommand(newConvertCmd())
+	root.AddCommand(newValidateCmd())
 	root.AddCommand(newFormatsCmd())
 	return root
 }
