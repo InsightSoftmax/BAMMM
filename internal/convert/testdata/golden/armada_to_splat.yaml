@@ -1,0 +1,102 @@
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  annotations:
+    bammm.io/external-uri: https://jira.example.com/browse/SIM-4521
+    bammm.io/source-format: armada
+  labels:
+    app: monte-carlo-sim
+    experiment: higgs-cross-section
+  name: mc-simulation-batch-2026-06
+spec:
+  execution:
+    environment: {}
+  extensions:
+    armada:
+      gang_id: mc-sim-gang-001
+      ingress:
+      - annotations:
+          nginx.ingress.kubernetes.io/rewrite-target: /
+          prometheus.io/scrape: "true"
+        clientId: mc-sim-driver-a94a8fe5
+        ports:
+        - 9090
+      job_set_id: mc-simulation-batch-2026-06
+      namespace: physics-team
+      priority: 75
+      scheduler_name: default
+      services:
+      - clientId: mc-sim-compute-b94a8fe5
+        name: mc-sim-compute
+        ports:
+        - 8080
+        type: Headless
+  gang:
+    minAvailable: 2
+    style: hard
+  lifecycle: {}
+  output: {}
+  placement: {}
+  resources: {}
+  schedule:
+    priority: 75
+    priorityClass: high
+    queue: research-simulations
+  tasks:
+  - execution:
+      container:
+        args:
+        - |
+          echo "Driver pod starting on $(hostname)"
+          /opt/simulator/driver \
+            --config /etc/sim/config.yaml \
+            --workers "mc-sim-compute.physics-team.svc.cluster.local:8080" \
+            --events 1000000 \
+            --output s3://physics-results/higgs/run-$JOB_ID/
+        command:
+        - /bin/bash
+        - -c
+        environment: {}
+        image: cern/mc-simulator:3.2.1-cuda
+      environment:
+        vars:
+          CUDA_VISIBLE_DEVICES: "0"
+    name: driver
+    placement:
+      tolerations:
+      - effect: NoSchedule
+        key: simulation-node
+        operator: Exists
+    replicas: 1
+    resources:
+      cpusPerTask: 4
+      gpu:
+        count: 1
+      memoryPerTask: 16Gi
+  - execution:
+      container:
+        args:
+        - |
+          echo "Compute pod starting on $(hostname)"
+          /opt/simulator/worker \
+            --port 8080 \
+            --gpus 4 \
+            --threads 32
+        command:
+        - /bin/bash
+        - -c
+        environment: {}
+        image: cern/mc-simulator:3.2.1-cuda
+      environment: {}
+    name: compute
+    placement:
+      tolerations:
+      - effect: NoSchedule
+        key: simulation-node
+        operator: Exists
+    replicas: 1
+    resources:
+      cpusPerTask: 32
+      gpu:
+        count: 4
+      memoryPerTask: 128Gi

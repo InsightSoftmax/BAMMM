@@ -34,6 +34,12 @@ func Convert(input []byte, from, to string) ([]byte, error) {
 	return emit(job, to)
 }
 
+// Parse converts source bytes into a SPLAT job without emitting, so callers
+// (e.g. the coverage reporter) can inspect the intermediate representation.
+func Parse(input []byte, from string) (*splat.Job, error) {
+	return parse(input, from)
+}
+
 func parse(input []byte, from string) (*splat.Job, error) {
 	if from == "splat" {
 		return splat.Parse(input)

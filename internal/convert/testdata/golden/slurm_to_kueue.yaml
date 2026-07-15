@@ -1,0 +1,92 @@
+apiVersion: v1
+data:
+  job.sh: |-
+    #!/bin/bash
+
+    module load cuda/12.1 python/3.11 openmpi/4.1.5
+
+    export OMP_NUM_THREADS=6
+    export NCCL_DEBUG=INFO
+    export NCCL_IB_DISABLE=0
+    export MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+    export MASTER_PORT=29500
+
+    echo "Job ID: $SLURM_JOB_ID"
+    echo "Nodes: $SLURM_JOB_NODELIST"
+    echo "Master: $MASTER_ADDR"
+
+    srun python -m torch.distributed.run \
+        --nproc_per_node=8 \
+        --nnodes=$SLURM_NNODES \
+        --node_rank=$SLURM_NODEID \
+        --master_addr=$MASTER_ADDR \
+        --master_port=$MASTER_PORT \
+        /workspace/train.py \
+            --model bert-large-uncased \
+            --dataset /scratch/data/squad \
+            --output-dir /scratch/checkpoints/bert-$SLURM_JOB_ID \
+            --epochs 5 \
+            --batch-size 32
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    bammm.io/job: bert-finetune
+  name: bert-finetune-script
+  namespace: default
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  labels:
+    bammm.io/source-format: slurm
+    kueue.x-k8s.io/queue-name: gpu-hpc
+  name: bert-finetune
+  namespace: default
+spec:
+  activeDeadlineSeconds: 28800
+  backoffLimit: 0
+  completionMode: Indexed
+  completions: 32
+  parallelism: 32
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - command:
+        - /bin/bash
+        - /bammm/job.sh
+        image: ubuntu:22.04
+        name: main
+        resources:
+          limits:
+            cpu: "6"
+            memory: 48Gi
+            nvidia.com/gpu: "2"
+          requests:
+            cpu: "6"
+            memory: 48Gi
+            nvidia.com/gpu: "2"
+        volumeMounts:
+        - mountPath: /bammm
+          name: bammm-script
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+      - configMap:
+          name: bert-finetune-script
+        name: bammm-script
+status: {}
+---
+# Reference LocalQueue — must exist before submitting the Job above.
+# Create the backing ClusterQueue with appropriate quota, then:
+#   kubectl apply -f - <<'EOF'
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: LocalQueue
+metadata:
+  name: gpu-hpc
+  namespace: default
+spec:
+  clusterQueue: gpu-hpc-cluster-queue # MANUAL: must exist and have quota

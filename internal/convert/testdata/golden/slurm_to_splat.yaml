@@ -1,0 +1,68 @@
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  annotations:
+    bammm.io/source-format: slurm
+  name: bert-finetune
+spec:
+  execution:
+    environment: {}
+    script: |-
+      #!/bin/bash
+
+      module load cuda/12.1 python/3.11 openmpi/4.1.5
+
+      export OMP_NUM_THREADS=6
+      export NCCL_DEBUG=INFO
+      export NCCL_IB_DISABLE=0
+      export MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+      export MASTER_PORT=29500
+
+      echo "Job ID: $SLURM_JOB_ID"
+      echo "Nodes: $SLURM_JOB_NODELIST"
+      echo "Master: $MASTER_ADDR"
+
+      srun python -m torch.distributed.run \
+          --nproc_per_node=8 \
+          --nnodes=$SLURM_NNODES \
+          --node_rank=$SLURM_NODEID \
+          --master_addr=$MASTER_ADDR \
+          --master_port=$MASTER_PORT \
+          /workspace/train.py \
+              --model bert-large-uncased \
+              --dataset /scratch/data/squad \
+              --output-dir /scratch/checkpoints/bert-$SLURM_JOB_ID \
+              --epochs 5 \
+              --batch-size 32
+  extensions:
+    slurm:
+      signal_before_end: USR1@120
+      time_min: "02:00:00"
+  lifecycle: {}
+  notifications:
+    email: researcher@university.edu
+    events:
+    - end
+    - fail
+  output:
+    stderr: /scratch/logs/bert-{job_id}.err
+    stdout: /scratch/logs/bert-{job_id}.out
+  placement:
+    constraint: infiniband&avx512
+  resources:
+    cpusPerTask: 6
+    gpu:
+      count: 2
+      type: a100
+    memoryPerCpu: 8Gi
+    nodes: 4
+    tasks: 32
+    tasksPerNode: 8
+  schedule:
+    account: nlp-research
+    partition: gpu-hpc
+    qos: gpu-qos
+    queue: gpu-hpc
+    signalBeforeEnd: USR1@120
+    walltime: "08:00:00"
+    walltimeMin: "02:00:00"

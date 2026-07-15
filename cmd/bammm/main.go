@@ -42,7 +42,7 @@ func newRootCmd() *cobra.Command {
 
 func newConvertCmd() *cobra.Command {
 	var from, to, inputFile, inputDir, outputDir, pattern string
-	var recursive bool
+	var recursive, report bool
 
 	cmd := &cobra.Command{
 		Use:   "convert [file...]",
@@ -69,21 +69,29 @@ Use --from splat / --to splat to validate or round-trip without converting.`,
 				return err
 			}
 
+			var runErr error
 			if !batch {
-				return convertSingle(cmd, items, inputFile, from, to, outputDir)
+				runErr = convertSingle(cmd, items, inputFile, from, to, outputDir)
+			} else if outputDir == "" {
+				return fmt.Errorf("--output-dir is required when converting multiple files or --input-dir")
+			} else {
+				res, err := runBatch(items, from, to, outputDir, cmd.ErrOrStderr())
+				if err != nil {
+					return err
+				}
+				if len(res.failures) > 0 {
+					runErr = fmt.Errorf("%d of %d file(s) failed to convert", len(res.failures), res.converted+len(res.failures))
+				}
 			}
 
-			if outputDir == "" {
-				return fmt.Errorf("--output-dir is required when converting multiple files or --input-dir")
+			if report {
+				if len(items) == 0 {
+					fmt.Fprintln(cmd.ErrOrStderr(), "--report needs file inputs (not stdin); skipping report")
+				} else {
+					writeReport(cmd.OutOrStdout(), items, from)
+				}
 			}
-			res, err := runBatch(items, from, to, outputDir, cmd.ErrOrStderr())
-			if err != nil {
-				return err
-			}
-			if len(res.failures) > 0 {
-				return fmt.Errorf("%d of %d file(s) failed to convert", len(res.failures), res.converted+len(res.failures))
-			}
-			return nil
+			return runErr
 		},
 	}
 
@@ -94,6 +102,7 @@ Use --from splat / --to splat to validate or round-trip without converting.`,
 	cmd.Flags().StringVarP(&outputDir, "output-dir", "o", "", "write outputs here (required for bulk); mirrors the input tree")
 	cmd.Flags().StringVar(&pattern, "pattern", "", "filename glob to filter --input-dir (e.g. '*.sbatch')")
 	cmd.Flags().BoolVar(&recursive, "recursive", true, "recurse into subdirectories of --input-dir")
+	cmd.Flags().BoolVar(&report, "report", false, "print a SPLAT field-coverage report over the inputs")
 	_ = cmd.MarkFlagRequired("from")
 	_ = cmd.MarkFlagRequired("to")
 	return cmd
@@ -159,8 +168,7 @@ func newFormatsCmd() *cobra.Command {
 			fmt.Fprintln(w, "  splat  (pass-through; valid for both --from and --to)")
 			fmt.Fprintln(w)
 			fmt.Fprintln(w, "Planned:", strings.Join([]string{
-				"slurm", "pbs", "lsf", "htcondor", "flux",
-				"volcano", "kueue", "armada", "yunikorn", "runai",
+				"pbs", "lsf", "htcondor", "flux", "yunikorn", "runai",
 			}, ", "))
 		},
 	}
