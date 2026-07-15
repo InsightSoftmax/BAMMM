@@ -4,15 +4,14 @@ package armada
 
 import (
 	"fmt"
-	"sort"
 	"strconv"
 
 	corev1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/api/resource"
 	"sigs.k8s.io/yaml"
 
 	armadatypes "github.com/InsightSoftmax/BAMMM/internal/armada"
 	"github.com/InsightSoftmax/BAMMM/internal/emitter"
+	"github.com/InsightSoftmax/BAMMM/internal/k8senc"
 	"github.com/InsightSoftmax/BAMMM/internal/splat"
 )
 
@@ -115,19 +114,19 @@ func podSpec(job *splat.Job, task splat.Task) (*corev1.PodSpec, error) {
 		c.Image = exec.Container.Image
 		c.Command = exec.Container.Command
 		c.Args = exec.Container.Args
-		c.Env = envVars(exec.Container.Environment)
+		c.Env = k8senc.EnvVars(exec.Container.Environment)
 		if c.Env == nil {
-			c.Env = envVars(exec.Environment)
+			c.Env = k8senc.EnvVars(exec.Environment)
 		}
 	case exec.Script != "":
 		c.Command = []string{"/bin/bash", "-c"}
 		c.Args = []string{exec.Script}
-		c.Env = envVars(exec.Environment)
+		c.Env = k8senc.EnvVars(exec.Environment)
 	default:
 		return nil, fmt.Errorf("armada: task %q has no container image or script", task.Name)
 	}
 
-	if req := resourceRequirements(task.Resources); req != nil {
+	if req := k8senc.ResourceRequirements(task.Resources); req != nil {
 		c.Resources = *req
 	}
 
@@ -140,35 +139,11 @@ func podSpec(job *splat.Job, task splat.Task) (*corev1.PodSpec, error) {
 	}
 	if task.Placement != nil && len(task.Placement.Tolerations) > 0 {
 		var tol []corev1.Toleration
-		if err := convertVia(task.Placement.Tolerations, &tol); err == nil {
+		if err := k8senc.ConvertVia(task.Placement.Tolerations, &tol); err == nil {
 			pod.Tolerations = tol
 		}
 	}
 	return pod, nil
-}
-
-func resourceRequirements(r *splat.Resources) *corev1.ResourceRequirements {
-	if r == nil {
-		return nil
-	}
-	reqs := corev1.ResourceList{}
-	if r.CPUsPerTask > 0 {
-		reqs[corev1.ResourceCPU] = *resource.NewQuantity(int64(r.CPUsPerTask), resource.DecimalSI)
-	}
-	if r.MemoryPerTask != nil {
-		reqs[corev1.ResourceMemory] = *resource.NewQuantity(r.MemoryPerTask.Bytes(), resource.BinarySI)
-	}
-	if r.GPU != nil && r.GPU.Count > 0 {
-		reqs["nvidia.com/gpu"] = *resource.NewQuantity(int64(r.GPU.Count+0.5), resource.DecimalSI)
-	}
-	if len(reqs) == 0 {
-		return nil
-	}
-	limits := corev1.ResourceList{}
-	for k, v := range reqs {
-		limits[k] = v
-	}
-	return &corev1.ResourceRequirements{Requests: reqs, Limits: limits}
 }
 
 func jobLabels(job *splat.Job, task splat.Task) map[string]string {
@@ -234,22 +209,6 @@ func priority(job *splat.Job, ext map[string]interface{}) float64 {
 	return float64(job.Spec.Schedule.Priority)
 }
 
-func envVars(env splat.Environment) []corev1.EnvVar {
-	if len(env.Vars) == 0 {
-		return nil
-	}
-	keys := make([]string, 0, len(env.Vars))
-	for k := range env.Vars {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-	out := make([]corev1.EnvVar, 0, len(keys))
-	for _, k := range keys {
-		out = append(out, corev1.EnvVar{Name: k, Value: env.Vars[k]})
-	}
-	return out
-}
-
 // ── Extension helpers ──────────────────────────────────────────────────────
 
 func armadaExt(job *splat.Job) map[string]interface{} {
@@ -272,7 +231,7 @@ func ingressExt(ext map[string]interface{}) []armadatypes.Ingress {
 		return nil
 	}
 	var out []armadatypes.Ingress
-	if err := convertVia(v, &out); err != nil {
+	if err := k8senc.ConvertVia(v, &out); err != nil {
 		return nil
 	}
 	return out
@@ -284,7 +243,7 @@ func servicesExt(ext map[string]interface{}) []armadatypes.Service {
 		return nil
 	}
 	var out []armadatypes.Service
-	if err := convertVia(v, &out); err != nil {
+	if err := k8senc.ConvertVia(v, &out); err != nil {
 		return nil
 	}
 	return out
@@ -303,15 +262,4 @@ func floatValue(v interface{}) (float64, bool) {
 	default:
 		return 0, false
 	}
-}
-
-// convertVia re-materializes a loosely-typed value (e.g. map[string]interface{}
-// from a YAML round-trip, or a concrete struct from the in-memory path) into the
-// destination type by marshaling through YAML.
-func convertVia(src interface{}, dst interface{}) error {
-	data, err := yaml.Marshal(src)
-	if err != nil {
-		return err
-	}
-	return yaml.Unmarshal(data, dst)
 }

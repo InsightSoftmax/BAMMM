@@ -39,9 +39,11 @@ jobs:
       resources:
         limits:
           cpu: "6"
+          memory: 48Gi
           nvidia.com/gpu: "2"
         requests:
           cpu: "6"
+          memory: 48Gi
           nvidia.com/gpu: "2"
     restartPolicy: Never
 queue: gpu-hpc

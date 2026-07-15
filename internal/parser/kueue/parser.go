@@ -11,6 +11,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"sigs.k8s.io/yaml"
 
+	"github.com/InsightSoftmax/BAMMM/internal/k8senc"
 	"github.com/InsightSoftmax/BAMMM/internal/parser"
 	"github.com/InsightSoftmax/BAMMM/internal/splat"
 )
@@ -132,29 +133,21 @@ func applyPodSpec(job *splat.Job, pod *corev1.PodSpec, configMaps map[string]map
 	if wd := c.WorkingDir; wd != "" {
 		job.Spec.Execution.WorkingDir = wd
 	}
-	if env := envMap(c.Env); len(env) > 0 {
+	if env := k8senc.EnvMap(c.Env); len(env) > 0 {
 		job.Spec.Execution.Environment.Vars = env
 	}
 }
 
 func applyResources(job *splat.Job, c *corev1.Container) {
-	r := &job.Spec.Resources
-	reqs := c.Resources.Requests
-	if reqs == nil {
-		reqs = c.Resources.Limits
-	}
-	if reqs == nil {
+	r := k8senc.ResourcesFromContainer(c)
+	if r == nil {
 		return
 	}
-	if cpu, ok := reqs[corev1.ResourceCPU]; ok {
-		r.CPUsPerTask = int(cpu.Value())
-	}
-	if mem, ok := reqs[corev1.ResourceMemory]; ok {
-		r.MemoryPerTask = splat.QuantityOf(mem.Value())
-	}
-	if gpu, ok := reqs["nvidia.com/gpu"]; ok {
-		r.GPU = &splat.GPURequest{Count: float64(gpu.Value())}
-	}
+	// Merge per-container resources without clobbering fields (e.g. Tasks)
+	// already derived from the Job spec.
+	job.Spec.Resources.CPUsPerTask = r.CPUsPerTask
+	job.Spec.Resources.MemoryPerTask = r.MemoryPerTask
+	job.Spec.Resources.GPU = r.GPU
 }
 
 // scriptFromConfigMap returns the embedded script if the container executes one
@@ -190,23 +183,6 @@ func scriptFromConfigMap(c *corev1.Container, pod *corev1.PodSpec, configMaps ma
 		}
 	}
 	return ""
-}
-
-func envMap(env []corev1.EnvVar) map[string]string {
-	if len(env) == 0 {
-		return nil
-	}
-	out := map[string]string{}
-	for _, e := range env {
-		if e.ValueFrom != nil {
-			continue // field/secret refs have no plain-string equivalent
-		}
-		out[e.Name] = e.Value
-	}
-	if len(out) == 0 {
-		return nil
-	}
-	return out
 }
 
 // splitDocs splits a YAML stream into individual documents on "---" separators,

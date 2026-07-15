@@ -156,6 +156,9 @@ func directives(job *splat.Job) []string {
 	if r.TasksPerSocket != 0 {
 		add("ntasks-per-socket", strconv.Itoa(r.TasksPerSocket))
 	}
+	if r.TasksPerCore != 0 {
+		add("ntasks-per-core", strconv.Itoa(r.TasksPerCore))
+	}
 	if r.CPUsPerTask != 0 {
 		add("cpus-per-task", strconv.Itoa(r.CPUsPerTask))
 	}
