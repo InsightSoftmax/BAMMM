@@ -9,6 +9,21 @@ import (
 	"github.com/InsightSoftmax/BAMMM/internal/splat"
 )
 
+// Extension returns the conventional output file extension (with leading dot)
+// for the given target format. Used to name files in bulk conversion.
+func Extension(format string) string {
+	switch format {
+	case "slurm", "pbs", "lsf":
+		return ".sh"
+	case "htcondor":
+		return ".sub"
+	case "flux":
+		return ".json"
+	default: // splat, kueue, armada, volcano, yunikorn, runai
+		return ".yaml"
+	}
+}
+
 // Convert translates job spec bytes from one scheduler format to another.
 // Use "splat" as from/to for SPLAT pass-through (useful for validation).
 func Convert(input []byte, from, to string) ([]byte, error) {
