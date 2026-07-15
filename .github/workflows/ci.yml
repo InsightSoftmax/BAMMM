@@ -68,3 +68,15 @@ jobs:
         run: go build ./...
       - name: go vet
         run: go vet ./...
+
+  schema:
+    name: Schema validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: kubeconform (Tier 2)
+        run: make validate-schemas

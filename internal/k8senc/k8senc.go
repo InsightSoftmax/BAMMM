@@ -127,3 +127,51 @@ func ConvertVia(src, dst interface{}) error {
 	}
 	return yaml.Unmarshal(data, dst)
 }
+
+// MarshalClean marshals a Kubernetes object to YAML, stripping the empty-value
+// noise that k8s.io/api types always emit — a null "creationTimestamp", an
+// empty "status", and any "metadata" left empty afterwards. This keeps output
+// readable and valid against strict CRD schemas (some trim ObjectMeta and
+// forbid unknown fields, so a stray creationTimestamp fails validation).
+func MarshalClean(obj interface{}) ([]byte, error) {
+	data, err := yaml.Marshal(obj)
+	if err != nil {
+		return nil, err
+	}
+	var root interface{}
+	if err := yaml.Unmarshal(data, &root); err != nil {
+		return nil, err
+	}
+	return yaml.Marshal(pruneNoise(root))
+}
+
+func pruneNoise(v interface{}) interface{} {
+	switch t := v.(type) {
+	case map[string]interface{}:
+		for k, val := range t {
+			t[k] = pruneNoise(val)
+		}
+		if ts, ok := t["creationTimestamp"]; ok && ts == nil {
+			delete(t, "creationTimestamp")
+		}
+		if st, ok := t["status"]; ok && isEmptyMap(st) {
+			delete(t, "status")
+		}
+		if md, ok := t["metadata"]; ok && isEmptyMap(md) {
+			delete(t, "metadata")
+		}
+		return t
+	case []interface{}:
+		for i := range t {
+			t[i] = pruneNoise(t[i])
+		}
+		return t
+	default:
+		return v
+	}
+}
+
+func isEmptyMap(v interface{}) bool {
+	m, ok := v.(map[string]interface{})
+	return ok && len(m) == 0
+}

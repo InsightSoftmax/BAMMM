@@ -1,7 +1,6 @@
 apiVersion: batch.volcano.sh/v1alpha1
 kind: Job
 metadata:
-  creationTimestamp: null
   labels:
     app: monte-carlo-sim
     experiment: higgs-cross-section
@@ -16,8 +15,6 @@ spec:
   - name: driver
     replicas: 1
     template:
-      metadata:
-        creationTimestamp: null
       spec:
         containers:
         - args:
@@ -53,8 +50,6 @@ spec:
   - name: compute
     replicas: 1
     template:
-      metadata:
-        creationTimestamp: null
       spec:
         containers:
         - args:

@@ -29,7 +29,6 @@ data:
             --batch-size 32
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
   labels:
     bammm.io/job: bert-finetune
   name: bert-finetune-script
@@ -38,7 +37,6 @@ metadata:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  creationTimestamp: null
   labels:
     bammm.io/source-format: slurm
     kueue.x-k8s.io/queue-name: gpu-hpc
@@ -51,8 +49,6 @@ spec:
   completions: 32
   parallelism: 32
   template:
-    metadata:
-      creationTimestamp: null
     spec:
       containers:
       - command:
@@ -78,7 +74,6 @@ spec:
       - configMap:
           name: bert-finetune-script
         name: bammm-script
-status: {}
 ---
 # Reference LocalQueue — must exist before submitting the Job above.
 # Create the backing ClusterQueue with appropriate quota, then:

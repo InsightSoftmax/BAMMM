@@ -1,7 +1,6 @@
 apiVersion: batch.volcano.sh/v1alpha1
 kind: Job
 metadata:
-  creationTimestamp: null
   name: bert-finetune
   namespace: default
 spec:
@@ -12,8 +11,6 @@ spec:
   - name: main
     replicas: 1
     template:
-      metadata:
-        creationTimestamp: null
       spec:
         containers:
         - args:

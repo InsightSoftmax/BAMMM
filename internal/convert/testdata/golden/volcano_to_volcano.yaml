@@ -1,7 +1,6 @@
 apiVersion: batch.volcano.sh/v1alpha1
 kind: Job
 metadata:
-  creationTimestamp: null
   name: tf-resnet-training
   namespace: ml-team
 spec:
@@ -27,8 +26,6 @@ spec:
   - name: chief
     replicas: 1
     template:
-      metadata:
-        creationTimestamp: null
       spec:
         containers:
         - args:
@@ -80,8 +77,6 @@ spec:
   - name: worker
     replicas: 4
     template:
-      metadata:
-        creationTimestamp: null
       spec:
         containers:
         - args:
@@ -133,8 +128,6 @@ spec:
   - name: ps
     replicas: 2
     template:
-      metadata:
-        creationTimestamp: null
       spec:
         containers:
         - args:
