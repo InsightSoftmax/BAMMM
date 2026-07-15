@@ -11,16 +11,15 @@ package kueue
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
 
 	"github.com/InsightSoftmax/BAMMM/internal/emitter"
+	"github.com/InsightSoftmax/BAMMM/internal/k8senc"
 	"github.com/InsightSoftmax/BAMMM/internal/splat"
 )
 
@@ -148,11 +147,11 @@ func buildContainer(jobName string, job *splat.Job, scriptCM bool) (corev1.Conta
 		c.Image = e.Container.Image
 		c.Command = e.Container.Command
 		c.Args = e.Container.Args
-		c.Env = envVars(e.Container.Environment)
+		c.Env = k8senc.EnvVars(e.Container.Environment)
 	case scriptCM:
 		c.Image = defaultImage
 		c.Command = []string{"/bin/bash", scriptMountDir + "/" + scriptFileName}
-		c.Env = envVars(e.Environment)
+		c.Env = k8senc.EnvVars(e.Environment)
 		c.VolumeMounts = []corev1.VolumeMount{{
 			Name:      "bammm-script",
 			MountPath: scriptMountDir,
@@ -169,7 +168,7 @@ func buildContainer(jobName string, job *splat.Job, scriptCM bool) (corev1.Conta
 	case e.Executable != "":
 		c.Image = defaultImage
 		c.Command = append([]string{e.Executable}, splitArgs(e.Arguments)...)
-		c.Env = envVars(e.Environment)
+		c.Env = k8senc.EnvVars(e.Environment)
 	default:
 		return corev1.Container{}, nil, fmt.Errorf("kueue: job has no container image, script, or executable to run")
 	}
@@ -177,48 +176,10 @@ func buildContainer(jobName string, job *splat.Job, scriptCM bool) (corev1.Conta
 	if e.WorkingDir != "" {
 		c.WorkingDir = e.WorkingDir
 	}
-	if req := resourceRequirements(job); req != nil {
+	if req := k8senc.ResourceRequirements(&job.Spec.Resources); req != nil {
 		c.Resources = *req
 	}
 	return c, volumes, nil
-}
-
-func resourceRequirements(job *splat.Job) *corev1.ResourceRequirements {
-	r := job.Spec.Resources
-	reqs := corev1.ResourceList{}
-	if r.CPUsPerTask > 0 {
-		reqs[corev1.ResourceCPU] = *resource.NewQuantity(int64(r.CPUsPerTask), resource.DecimalSI)
-	}
-	if mem := memoryPerTask(&r); mem != nil {
-		reqs[corev1.ResourceMemory] = *mem
-	}
-	if r.GPU != nil && r.GPU.Count > 0 {
-		reqs["nvidia.com/gpu"] = *resource.NewQuantity(int64(r.GPU.Count+0.5), resource.DecimalSI)
-	}
-	if len(reqs) == 0 {
-		return nil
-	}
-	// Batch jobs are typically guaranteed QoS: mirror requests into limits.
-	limits := corev1.ResourceList{}
-	for k, v := range reqs {
-		limits[k] = v
-	}
-	return &corev1.ResourceRequirements{Requests: reqs, Limits: limits}
-}
-
-// memoryPerTask returns the per-pod memory, deriving it from mem-per-cpu ×
-// cpus-per-task when only the per-CPU figure is present.
-func memoryPerTask(r *splat.Resources) *resource.Quantity {
-	if r.MemoryPerTask != nil {
-		return resource.NewQuantity(r.MemoryPerTask.Bytes(), resource.BinarySI)
-	}
-	if r.MemoryPerCPU != nil && r.CPUsPerTask > 0 {
-		return resource.NewQuantity(r.MemoryPerCPU.Bytes()*int64(r.CPUsPerTask), resource.BinarySI)
-	}
-	if r.MemoryPerCPU != nil {
-		return resource.NewQuantity(r.MemoryPerCPU.Bytes(), resource.BinarySI)
-	}
-	return nil
 }
 
 func scriptConfigMap(name, namespace string, job *splat.Job) *corev1.ConfigMap {
@@ -231,22 +192,6 @@ func scriptConfigMap(name, namespace string, job *splat.Job) *corev1.ConfigMap {
 		},
 		Data: map[string]string{scriptFileName: job.Spec.Execution.Script},
 	}
-}
-
-func envVars(env splat.Environment) []corev1.EnvVar {
-	if len(env.Vars) == 0 {
-		return nil
-	}
-	keys := make([]string, 0, len(env.Vars))
-	for k := range env.Vars {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-	out := make([]corev1.EnvVar, 0, len(keys))
-	for _, k := range keys {
-		out = append(out, corev1.EnvVar{Name: k, Value: env.Vars[k]})
-	}
-	return out
 }
 
 // replicaCount picks the pod parallelism: gang minimum, else task count, else 1.

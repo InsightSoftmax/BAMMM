@@ -11,6 +11,7 @@ import (
 	"sigs.k8s.io/yaml"
 
 	armadatypes "github.com/InsightSoftmax/BAMMM/internal/armada"
+	"github.com/InsightSoftmax/BAMMM/internal/k8senc"
 	"github.com/InsightSoftmax/BAMMM/internal/parser"
 	"github.com/InsightSoftmax/BAMMM/internal/splat"
 )
@@ -80,7 +81,7 @@ func taskFromJob(aj *armadatypes.Job, index int) splat.Task {
 	}
 	c := aj.PodSpec.Containers[0]
 
-	task.Resources = resourcesFromContainer(&c)
+	task.Resources = k8senc.ResourcesFromContainer(&c)
 
 	exec := &splat.Execution{
 		Container: &splat.ContainerExecution{
@@ -89,7 +90,7 @@ func taskFromJob(aj *armadatypes.Job, index int) splat.Task {
 			Args:    c.Args,
 		},
 	}
-	if env := envMap(c.Env); len(env) > 0 {
+	if env := k8senc.EnvMap(c.Env); len(env) > 0 {
 		exec.Environment.Vars = env
 	}
 	task.Execution = exec
@@ -108,27 +109,6 @@ func taskName(aj *armadatypes.Job, index int) string {
 		return aj.ClientID
 	}
 	return fmt.Sprintf("task-%d", index)
-}
-
-func resourcesFromContainer(c *corev1.Container) *splat.Resources {
-	reqs := c.Resources.Requests
-	if reqs == nil {
-		reqs = c.Resources.Limits
-	}
-	if reqs == nil {
-		return nil
-	}
-	r := &splat.Resources{}
-	if cpu, ok := reqs[corev1.ResourceCPU]; ok {
-		r.CPUsPerTask = int(cpu.Value())
-	}
-	if mem, ok := reqs[corev1.ResourceMemory]; ok {
-		r.MemoryPerTask = splat.QuantityOf(mem.Value())
-	}
-	if gpu, ok := reqs["nvidia.com/gpu"]; ok {
-		r.GPU = &splat.GPURequest{Count: float64(gpu.Value())}
-	}
-	return r
 }
 
 // commonLabels returns labels present with the same value across all jobs
@@ -202,23 +182,6 @@ func applyExtensions(job *splat.Job, req *armadatypes.Request, rawPriority float
 	if len(ext) > 0 {
 		job.Spec.Extensions.Armada = ext
 	}
-}
-
-func envMap(env []corev1.EnvVar) map[string]string {
-	if len(env) == 0 {
-		return nil
-	}
-	out := map[string]string{}
-	for _, e := range env {
-		if e.ValueFrom != nil {
-			continue
-		}
-		out[e.Name] = e.Value
-	}
-	if len(out) == 0 {
-		return nil
-	}
-	return out
 }
 
 func tolerations(ts []corev1.Toleration) []interface{} {
