@@ -56,6 +56,17 @@ of potential translation loss):
 bammm convert --from slurm --to splat --input-dir corpus/slurm --output-dir out/ --report
 ```
 
+### Validating specs
+
+`bammm validate` checks that specs parse (and, with `--to`, convert) without
+emitting anything — handy for CI gates and for checking a whole corpus:
+
+```sh
+bammm validate --from slurm job.sh                 # does it parse?
+bammm validate --from slurm --to kueue job.sh       # does it parse AND convert?
+bammm validate --from slurm --input-dir corpus/slurm  # bulk; exits non-zero if any fail
+```
+
 Wherever the translation is lossy, BAMMM tells you exactly what got dropped, what got approximated, and what's stuck in the `extensions.*` block waiting to be round-tripped back.
 
 ## Supported schedulers
