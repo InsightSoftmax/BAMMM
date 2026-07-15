@@ -1,0 +1,60 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: bert-finetune
+  namespace: default
+spec:
+  minAvailable: 1
+  queue: gpu-hpc
+  schedulerName: volcano
+  tasks:
+  - name: main
+    replicas: 1
+    template:
+      metadata:
+        creationTimestamp: null
+      spec:
+        containers:
+        - args:
+          - |-
+            #!/bin/bash
+
+            module load cuda/12.1 python/3.11 openmpi/4.1.5
+
+            export OMP_NUM_THREADS=6
+            export NCCL_DEBUG=INFO
+            export NCCL_IB_DISABLE=0
+            export MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+            export MASTER_PORT=29500
+
+            echo "Job ID: $SLURM_JOB_ID"
+            echo "Nodes: $SLURM_JOB_NODELIST"
+            echo "Master: $MASTER_ADDR"
+
+            srun python -m torch.distributed.run \
+                --nproc_per_node=8 \
+                --nnodes=$SLURM_NNODES \
+                --node_rank=$SLURM_NODEID \
+                --master_addr=$MASTER_ADDR \
+                --master_port=$MASTER_PORT \
+                /workspace/train.py \
+                    --model bert-large-uncased \
+                    --dataset /scratch/data/squad \
+                    --output-dir /scratch/checkpoints/bert-$SLURM_JOB_ID \
+                    --epochs 5 \
+                    --batch-size 32
+          command:
+          - /bin/bash
+          - -c
+          name: main
+          resources:
+            limits:
+              cpu: "6"
+              memory: 48Gi
+              nvidia.com/gpu: "2"
+            requests:
+              cpu: "6"
+              memory: 48Gi
+              nvidia.com/gpu: "2"
+        restartPolicy: Never

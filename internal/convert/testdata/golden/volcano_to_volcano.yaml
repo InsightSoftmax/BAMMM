@@ -1,0 +1,175 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: tf-resnet-training
+  namespace: ml-team
+spec:
+  maxRetry: 3
+  minAvailable: 7
+  plugins:
+    env: []
+    svc: []
+    tensorflow:
+    - --port=2222
+    - --worker=worker
+    - --ps=ps
+    - --chief=chief
+  policies:
+  - action: RestartJob
+    event: PodEvicted
+  - action: CompleteJob
+    event: TaskCompleted
+  priorityClassName: high-priority
+  queue: ml-gpu
+  schedulerName: volcano
+  tasks:
+  - name: chief
+    replicas: 1
+    template:
+      metadata:
+        creationTimestamp: null
+      spec:
+        containers:
+        - args:
+          - |
+            python /app/train_resnet.py \
+              --task_type=chief \
+              --num_epochs=50 \
+              --batch_size=256 \
+              --learning_rate=0.1 \
+              --data_dir=/data/imagenet \
+              --model_dir=/models/resnet50
+          command:
+          - /bin/bash
+          - -c
+          env:
+          - name: PYTHONPATH
+            value: /app
+          - name: TF_CPP_MIN_LOG_LEVEL
+            value: "2"
+          image: tensorflow/tensorflow:2.14.0-gpu
+          name: chief
+          resources:
+            limits:
+              cpu: "8"
+              memory: 32Gi
+              nvidia.com/gpu: "4"
+            requests:
+              cpu: "8"
+              memory: 32Gi
+              nvidia.com/gpu: "4"
+          volumeMounts:
+          - mountPath: /data
+            name: data
+            readOnly: true
+          - mountPath: /models
+            name: models
+        restartPolicy: Never
+        tolerations:
+        - effect: NoSchedule
+          key: nvidia.com/gpu
+          operator: Exists
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: imagenet-pvc
+        - name: models
+          persistentVolumeClaim:
+            claimName: model-store-pvc
+  - name: worker
+    replicas: 4
+    template:
+      metadata:
+        creationTimestamp: null
+      spec:
+        containers:
+        - args:
+          - |
+            python /app/train_resnet.py \
+              --task_type=worker \
+              --num_epochs=50 \
+              --batch_size=256 \
+              --learning_rate=0.1 \
+              --data_dir=/data/imagenet \
+              --model_dir=/models/resnet50
+          command:
+          - /bin/bash
+          - -c
+          env:
+          - name: PYTHONPATH
+            value: /app
+          - name: TF_CPP_MIN_LOG_LEVEL
+            value: "2"
+          image: tensorflow/tensorflow:2.14.0-gpu
+          name: worker
+          resources:
+            limits:
+              cpu: "8"
+              memory: 32Gi
+              nvidia.com/gpu: "4"
+            requests:
+              cpu: "8"
+              memory: 32Gi
+              nvidia.com/gpu: "4"
+          volumeMounts:
+          - mountPath: /data
+            name: data
+            readOnly: true
+          - mountPath: /models
+            name: models
+        restartPolicy: Never
+        tolerations:
+        - effect: NoSchedule
+          key: nvidia.com/gpu
+          operator: Exists
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: imagenet-pvc
+        - name: models
+          persistentVolumeClaim:
+            claimName: model-store-pvc
+  - name: ps
+    replicas: 2
+    template:
+      metadata:
+        creationTimestamp: null
+      spec:
+        containers:
+        - args:
+          - |
+            python /app/train_resnet.py \
+              --task_type=ps \
+              --num_epochs=50 \
+              --batch_size=256 \
+              --learning_rate=0.1 \
+              --data_dir=/data/imagenet \
+              --model_dir=/models/resnet50
+          command:
+          - /bin/bash
+          - -c
+          image: tensorflow/tensorflow:2.14.0-gpu
+          name: ps
+          resources:
+            limits:
+              cpu: "4"
+              memory: 16Gi
+            requests:
+              cpu: "4"
+              memory: 16Gi
+          volumeMounts:
+          - mountPath: /data
+            name: data
+            readOnly: true
+          - mountPath: /models
+            name: models
+        restartPolicy: Never
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: imagenet-pvc
+        - name: models
+          persistentVolumeClaim:
+            claimName: model-store-pvc
+  ttlSecondsAfterFinished: 7200

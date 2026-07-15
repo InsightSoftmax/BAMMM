@@ -1,0 +1,133 @@
+apiVersion: bammm.io/v1alpha1
+kind: Job
+metadata:
+  annotations:
+    bammm.io/namespace: ml-team
+    bammm.io/source-format: volcano
+  name: tf-resnet-training
+spec:
+  execution:
+    environment: {}
+  extensions:
+    volcano:
+      plugins:
+        env: []
+        svc: []
+        tensorflow:
+        - --port=2222
+        - --worker=worker
+        - --ps=ps
+        - --chief=chief
+      policies:
+      - action: RestartJob
+        event: PodEvicted
+      - action: CompleteJob
+        event: TaskCompleted
+      scheduler_name: volcano
+  gang:
+    minAvailable: 7
+    style: hard
+  lifecycle:
+    maxRetries: 3
+    ttlAfterFinished: "02:00:00"
+  output: {}
+  placement: {}
+  resources: {}
+  schedule:
+    priorityClass: high-priority
+    queue: ml-gpu
+  tasks:
+  - execution:
+      container:
+        args:
+        - |
+          python /app/train_resnet.py \
+            --task_type=chief \
+            --num_epochs=50 \
+            --batch_size=256 \
+            --learning_rate=0.1 \
+            --data_dir=/data/imagenet \
+            --model_dir=/models/resnet50
+        command:
+        - /bin/bash
+        - -c
+        environment: {}
+        image: tensorflow/tensorflow:2.14.0-gpu
+      environment:
+        vars:
+          PYTHONPATH: /app
+          TF_CPP_MIN_LOG_LEVEL: "2"
+    name: chief
+    placement:
+      tolerations:
+      - effect: NoSchedule
+        key: nvidia.com/gpu
+        operator: Exists
+    replicas: 1
+    resources:
+      cpusPerTask: 8
+      gpu:
+        count: 4
+      memoryPerTask: 32Gi
+  - execution:
+      container:
+        args:
+        - |
+          python /app/train_resnet.py \
+            --task_type=worker \
+            --num_epochs=50 \
+            --batch_size=256 \
+            --learning_rate=0.1 \
+            --data_dir=/data/imagenet \
+            --model_dir=/models/resnet50
+        command:
+        - /bin/bash
+        - -c
+        environment: {}
+        image: tensorflow/tensorflow:2.14.0-gpu
+      environment:
+        vars:
+          PYTHONPATH: /app
+          TF_CPP_MIN_LOG_LEVEL: "2"
+    name: worker
+    placement:
+      tolerations:
+      - effect: NoSchedule
+        key: nvidia.com/gpu
+        operator: Exists
+    replicas: 4
+    resources:
+      cpusPerTask: 8
+      gpu:
+        count: 4
+      memoryPerTask: 32Gi
+  - execution:
+      container:
+        args:
+        - |
+          python /app/train_resnet.py \
+            --task_type=ps \
+            --num_epochs=50 \
+            --batch_size=256 \
+            --learning_rate=0.1 \
+            --data_dir=/data/imagenet \
+            --model_dir=/models/resnet50
+        command:
+        - /bin/bash
+        - -c
+        environment: {}
+        image: tensorflow/tensorflow:2.14.0-gpu
+      environment: {}
+    name: ps
+    replicas: 2
+    resources:
+      cpusPerTask: 4
+      memoryPerTask: 16Gi
+  volumes:
+  - mountPath: /data
+    name: data
+    pvc: imagenet-pvc
+    readOnly: true
+  - mountPath: /models
+    name: models
+    pvc: model-store-pvc

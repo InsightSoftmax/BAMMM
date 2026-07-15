@@ -48,6 +48,14 @@ continue past files that fail to convert, print a summary, and exit non-zero
 if any failed. Use `--pattern '*.sbatch'` to filter which files in `--input-dir`
 are converted, and `--recursive=false` to stay in the top directory.
 
+Add `--report` to any run to print a coverage report — how many sources use
+each SPLAT field, and how much falls into `extensions.*` passthrough (a signal
+of potential translation loss):
+
+```sh
+bammm convert --from slurm --to splat --input-dir corpus/slurm --output-dir out/ --report
+```
+
 Wherever the translation is lossy, BAMMM tells you exactly what got dropped, what got approximated, and what's stuck in the `extensions.*` block waiting to be round-tripped back.
 
 ## Supported schedulers
