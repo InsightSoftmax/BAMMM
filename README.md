@@ -168,13 +168,26 @@ The full list is in [SPEC.md § Known Lossy Translations](SPEC.md#known-lossy-tr
 ## Development
 
 ```sh
-make build    # → bin/bammm
-make test     # go test -race ./...
-make lint     # golangci-lint
-make check    # lint + test
+make build             # → bin/bammm
+make test              # go test -race ./...
+make lint              # golangci-lint
+make check             # lint + test
+make validate-schemas  # kubeconform Tier 2 schema validation
 ```
 
-Requires Go 1.24+. For the Python corpus scraper: `uv` (not pip).
+Requires Go 1.25+.
+
+### Corpus
+
+Real-world job specs for testing are scraped from GitHub into
+`testdata/corpus/<scheduler>/` (gitignored; only manifests are tracked). The
+scraper is config-driven — one entry per scheduler — and runs under `uv`:
+
+```sh
+export GITHUB_TOKEN=ghp_...
+uv run scripts/corpus/fetch_corpus.py --list       # supported schedulers
+make corpus SCHED=slurm                             # scrape a corpus
+```
 
 See [CLAUDE.md](CLAUDE.md) for architecture decisions, the build plan, and notes for contributors.
 
