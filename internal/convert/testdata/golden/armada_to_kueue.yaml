@@ -1,0 +1,95 @@
+apiVersion: jobset.x-k8s.io/v1alpha2
+kind: JobSet
+metadata:
+  labels:
+    app: monte-carlo-sim
+    bammm.io/source-format: armada
+    experiment: higgs-cross-section
+    kueue.x-k8s.io/queue-name: research-simulations
+  name: mc-simulation-batch-2026-06
+  namespace: default
+spec:
+  replicatedJobs:
+  - name: driver
+    replicas: 1
+    template:
+      spec:
+        backoffLimit: 0
+        template:
+          spec:
+            containers:
+            - args:
+              - |
+                echo "Driver pod starting on $(hostname)"
+                /opt/simulator/driver \
+                  --config /etc/sim/config.yaml \
+                  --workers "mc-sim-compute.physics-team.svc.cluster.local:8080" \
+                  --events 1000000 \
+                  --output s3://physics-results/higgs/run-$JOB_ID/
+              command:
+              - /bin/bash
+              - -c
+              env:
+              - name: CUDA_VISIBLE_DEVICES
+                value: "0"
+              image: cern/mc-simulator:3.2.1-cuda
+              name: driver
+              resources:
+                limits:
+                  cpu: "4"
+                  memory: 16Gi
+                  nvidia.com/gpu: "1"
+                requests:
+                  cpu: "4"
+                  memory: 16Gi
+                  nvidia.com/gpu: "1"
+            restartPolicy: Never
+            tolerations:
+            - effect: NoSchedule
+              key: simulation-node
+              operator: Exists
+  - name: compute
+    replicas: 1
+    template:
+      spec:
+        backoffLimit: 0
+        template:
+          spec:
+            containers:
+            - args:
+              - |
+                echo "Compute pod starting on $(hostname)"
+                /opt/simulator/worker \
+                  --port 8080 \
+                  --gpus 4 \
+                  --threads 32
+              command:
+              - /bin/bash
+              - -c
+              image: cern/mc-simulator:3.2.1-cuda
+              name: compute
+              resources:
+                limits:
+                  cpu: "32"
+                  memory: 128Gi
+                  nvidia.com/gpu: "4"
+                requests:
+                  cpu: "32"
+                  memory: 128Gi
+                  nvidia.com/gpu: "4"
+            restartPolicy: Never
+            tolerations:
+            - effect: NoSchedule
+              key: simulation-node
+              operator: Exists
+---
+# Reference LocalQueue — must exist before submitting the Job above.
+# Create the backing ClusterQueue with appropriate quota, then:
+#   kubectl apply -f - <<'EOF'
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: LocalQueue
+metadata:
+  name: research-simulations
+  namespace: default
+spec:
+  clusterQueue: research-simulations-cluster-queue # MANUAL: must exist and have quota

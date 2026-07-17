@@ -1,7 +1,7 @@
 # BAMMM: Batch Automatic Magic Multiplexing Mechanism
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![CI](https://github.com/finos/bammm/actions/workflows/ci.yml/badge.svg)](https://github.com/finos/bammm/actions/workflows/ci.yml)
+[![CI](https://github.com/InsightSoftmax/BAMMM/actions/workflows/ci.yml/badge.svg)](https://github.com/InsightSoftmax/BAMMM/actions/workflows/ci.yml)
 [![Status](https://img.shields.io/badge/Status-Early%20Development-orange.svg)]()
 
 ---

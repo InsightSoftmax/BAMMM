@@ -1,0 +1,178 @@
+apiVersion: jobset.x-k8s.io/v1alpha2
+kind: JobSet
+metadata:
+  labels:
+    bammm.io/source-format: volcano
+    kueue.x-k8s.io/queue-name: ml-gpu
+  name: tf-resnet-training
+  namespace: ml-team
+spec:
+  replicatedJobs:
+  - name: chief
+    replicas: 1
+    template:
+      spec:
+        backoffLimit: 3
+        template:
+          spec:
+            containers:
+            - args:
+              - |
+                python /app/train_resnet.py \
+                  --task_type=chief \
+                  --num_epochs=50 \
+                  --batch_size=256 \
+                  --learning_rate=0.1 \
+                  --data_dir=/data/imagenet \
+                  --model_dir=/models/resnet50
+              command:
+              - /bin/bash
+              - -c
+              env:
+              - name: PYTHONPATH
+                value: /app
+              - name: TF_CPP_MIN_LOG_LEVEL
+                value: "2"
+              image: tensorflow/tensorflow:2.14.0-gpu
+              name: chief
+              resources:
+                limits:
+                  cpu: "8"
+                  memory: 32Gi
+                  nvidia.com/gpu: "4"
+                requests:
+                  cpu: "8"
+                  memory: 32Gi
+                  nvidia.com/gpu: "4"
+              volumeMounts:
+              - mountPath: /data
+                name: data
+                readOnly: true
+              - mountPath: /models
+                name: models
+            restartPolicy: Never
+            tolerations:
+            - effect: NoSchedule
+              key: nvidia.com/gpu
+              operator: Exists
+            volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: imagenet-pvc
+            - name: models
+              persistentVolumeClaim:
+                claimName: model-store-pvc
+  - name: worker
+    replicas: 1
+    template:
+      spec:
+        backoffLimit: 3
+        completionMode: Indexed
+        completions: 4
+        parallelism: 4
+        template:
+          spec:
+            containers:
+            - args:
+              - |
+                python /app/train_resnet.py \
+                  --task_type=worker \
+                  --num_epochs=50 \
+                  --batch_size=256 \
+                  --learning_rate=0.1 \
+                  --data_dir=/data/imagenet \
+                  --model_dir=/models/resnet50
+              command:
+              - /bin/bash
+              - -c
+              env:
+              - name: PYTHONPATH
+                value: /app
+              - name: TF_CPP_MIN_LOG_LEVEL
+                value: "2"
+              image: tensorflow/tensorflow:2.14.0-gpu
+              name: worker
+              resources:
+                limits:
+                  cpu: "8"
+                  memory: 32Gi
+                  nvidia.com/gpu: "4"
+                requests:
+                  cpu: "8"
+                  memory: 32Gi
+                  nvidia.com/gpu: "4"
+              volumeMounts:
+              - mountPath: /data
+                name: data
+                readOnly: true
+              - mountPath: /models
+                name: models
+            restartPolicy: Never
+            tolerations:
+            - effect: NoSchedule
+              key: nvidia.com/gpu
+              operator: Exists
+            volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: imagenet-pvc
+            - name: models
+              persistentVolumeClaim:
+                claimName: model-store-pvc
+  - name: ps
+    replicas: 1
+    template:
+      spec:
+        backoffLimit: 3
+        completionMode: Indexed
+        completions: 2
+        parallelism: 2
+        template:
+          spec:
+            containers:
+            - args:
+              - |
+                python /app/train_resnet.py \
+                  --task_type=ps \
+                  --num_epochs=50 \
+                  --batch_size=256 \
+                  --learning_rate=0.1 \
+                  --data_dir=/data/imagenet \
+                  --model_dir=/models/resnet50
+              command:
+              - /bin/bash
+              - -c
+              image: tensorflow/tensorflow:2.14.0-gpu
+              name: ps
+              resources:
+                limits:
+                  cpu: "4"
+                  memory: 16Gi
+                requests:
+                  cpu: "4"
+                  memory: 16Gi
+              volumeMounts:
+              - mountPath: /data
+                name: data
+                readOnly: true
+              - mountPath: /models
+                name: models
+            restartPolicy: Never
+            volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: imagenet-pvc
+            - name: models
+              persistentVolumeClaim:
+                claimName: model-store-pvc
+---
+# Reference LocalQueue — must exist before submitting the Job above.
+# Create the backing ClusterQueue with appropriate quota, then:
+#   kubectl apply -f - <<'EOF'
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: LocalQueue
+metadata:
+  name: ml-gpu
+  namespace: ml-team
+spec:
+  clusterQueue: ml-gpu-cluster-queue # MANUAL: must exist and have quota

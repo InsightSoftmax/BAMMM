@@ -117,6 +117,34 @@ func EnvMap(env []corev1.EnvVar) map[string]string {
 	return out
 }
 
+// AttachVolumes wires job-level SPLAT volumes onto a pod and mounts them into
+// the container. Shared by the Volcano and Kueue/JobSet emitters.
+func AttachVolumes(pod *corev1.PodSpec, c *corev1.Container, volumes []splat.Volume) {
+	for _, v := range volumes {
+		src := corev1.VolumeSource{}
+		switch {
+		case v.PVC != "":
+			src.PersistentVolumeClaim = &corev1.PersistentVolumeClaimVolumeSource{ClaimName: v.PVC}
+		case v.ConfigMap != "":
+			src.ConfigMap = &corev1.ConfigMapVolumeSource{LocalObjectReference: corev1.LocalObjectReference{Name: v.ConfigMap}}
+		case v.Secret != "":
+			src.Secret = &corev1.SecretVolumeSource{SecretName: v.Secret}
+		case v.HostPath != "":
+			src.HostPath = &corev1.HostPathVolumeSource{Path: v.HostPath}
+		case v.EmptyDir:
+			src.EmptyDir = &corev1.EmptyDirVolumeSource{}
+		default:
+			continue
+		}
+		pod.Volumes = append(pod.Volumes, corev1.Volume{Name: v.Name, VolumeSource: src})
+		c.VolumeMounts = append(c.VolumeMounts, corev1.VolumeMount{
+			Name:      v.Name,
+			MountPath: v.MountPath,
+			ReadOnly:  v.ReadOnly,
+		})
+	}
+}
+
 // ConvertVia re-materializes a loosely-typed value (e.g. map[string]interface{}
 // from a YAML round-trip, or a concrete struct) into dst by marshaling through
 // YAML.

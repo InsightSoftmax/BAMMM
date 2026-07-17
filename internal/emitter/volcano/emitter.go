@@ -136,7 +136,7 @@ func podSpec(job *splat.Job, task splat.Task) (*corev1.PodSpec, error) {
 	}
 
 	pod := &corev1.PodSpec{RestartPolicy: corev1.RestartPolicyNever}
-	attachVolumes(pod, &c, job.Spec.Volumes)
+	k8senc.AttachVolumes(pod, &c, job.Spec.Volumes)
 	pod.Containers = []corev1.Container{c}
 
 	if task.Placement != nil && len(task.Placement.Tolerations) > 0 {
@@ -146,34 +146,6 @@ func podSpec(job *splat.Job, task splat.Task) (*corev1.PodSpec, error) {
 		}
 	}
 	return pod, nil
-}
-
-// attachVolumes wires job-level SPLAT volumes onto the pod and mounts them into
-// the container.
-func attachVolumes(pod *corev1.PodSpec, c *corev1.Container, volumes []splat.Volume) {
-	for _, v := range volumes {
-		src := corev1.VolumeSource{}
-		switch {
-		case v.PVC != "":
-			src.PersistentVolumeClaim = &corev1.PersistentVolumeClaimVolumeSource{ClaimName: v.PVC}
-		case v.ConfigMap != "":
-			src.ConfigMap = &corev1.ConfigMapVolumeSource{LocalObjectReference: corev1.LocalObjectReference{Name: v.ConfigMap}}
-		case v.Secret != "":
-			src.Secret = &corev1.SecretVolumeSource{SecretName: v.Secret}
-		case v.HostPath != "":
-			src.HostPath = &corev1.HostPathVolumeSource{Path: v.HostPath}
-		case v.EmptyDir:
-			src.EmptyDir = &corev1.EmptyDirVolumeSource{}
-		default:
-			continue
-		}
-		pod.Volumes = append(pod.Volumes, corev1.Volume{Name: v.Name, VolumeSource: src})
-		c.VolumeMounts = append(c.VolumeMounts, corev1.VolumeMount{
-			Name:      v.Name,
-			MountPath: v.MountPath,
-			ReadOnly:  v.ReadOnly,
-		})
-	}
 }
 
 func taskName(task splat.Task) string {

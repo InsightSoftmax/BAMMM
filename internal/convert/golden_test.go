@@ -40,10 +40,12 @@ var goldenCases = []goldenCase{
 	{"volcano_to_splat", "volcano", "splat", "conversions/02-volcano-to-slurm/source.yaml"},
 	{"volcano_to_slurm", "volcano", "slurm", "conversions/02-volcano-to-slurm/source.yaml"},
 	{"volcano_to_volcano", "volcano", "volcano", "conversions/02-volcano-to-slurm/source.yaml"},
+	{"volcano_to_kueue", "volcano", "kueue", "conversions/02-volcano-to-slurm/source.yaml"},
 
 	{"armada_to_splat", "armada", "splat", "conversions/05-armada-to-slurm/source.yaml"},
 	{"armada_to_slurm", "armada", "slurm", "conversions/05-armada-to-slurm/source.yaml"},
 	{"armada_to_volcano", "armada", "volcano", "conversions/05-armada-to-slurm/source.yaml"},
+	{"armada_to_kueue", "armada", "kueue", "conversions/05-armada-to-slurm/source.yaml"},
 }
 
 func TestGolden(t *testing.T) {

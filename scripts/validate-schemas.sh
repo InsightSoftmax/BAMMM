@@ -20,12 +20,14 @@ OUT="$(mktemp -d)"
 trap 'rm -rf "$OUT"' EXIT
 
 # from:to:source-file — explicit list of conversions that produce valid K8s
-# manifests. Kueue targets only single-role jobs (batch/v1 Job has one pod
-# template), so multi-role sources (volcano/armada) are emitted to Volcano only.
+# manifests. Single-role sources emit a batch/v1 Job to Kueue; multi-role
+# sources emit a JobSet to Kueue and a vcjob to Volcano.
 CONVERSIONS=(
   "slurm:kueue:conversions/01-slurm-to-volcano/source.sh"
   "slurm:volcano:conversions/01-slurm-to-volcano/source.sh"
+  "volcano:kueue:conversions/02-volcano-to-slurm/source.yaml"
   "volcano:volcano:conversions/02-volcano-to-slurm/source.yaml"
+  "armada:kueue:conversions/05-armada-to-slurm/source.yaml"
   "armada:volcano:conversions/05-armada-to-slurm/source.yaml"
 )
 
