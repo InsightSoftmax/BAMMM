@@ -46,6 +46,12 @@ func Emit(job *splat.Job) ([]byte, error) {
 	}
 	namespace := namespaceFor(job)
 
+	// Multi-role jobs can't fit one batch/v1 Job (one pod template); emit a
+	// JobSet with a replicatedJob per role, which Kueue admits natively.
+	if len(job.Spec.Tasks) > 0 {
+		return emitJobSet(name, namespace, job)
+	}
+
 	var docs [][]byte
 
 	// ── ConfigMap for an embedded HPC script (HPC → container path) ──────────
@@ -78,7 +84,9 @@ func Emit(job *splat.Job) ([]byte, error) {
 	return bytes(docs), nil
 }
 
-func buildJob(name, namespace string, job *splat.Job, scriptCM bool) (*batchv1.Job, error) {
+// admissionLabels builds the object labels shared by the Job and JobSet paths:
+// the source-format marker, the Kueue queue-name label, and any user labels.
+func admissionLabels(job *splat.Job) map[string]string {
 	labels := map[string]string{}
 	for k, v := range job.Metadata.Labels {
 		labels[k] = v
@@ -89,7 +97,11 @@ func buildJob(name, namespace string, job *splat.Job, scriptCM bool) (*batchv1.J
 	if q := queueName(job); q != "" {
 		labels[queueNameLabel] = q
 	}
+	return labels
+}
 
+func buildJob(name, namespace string, job *splat.Job, scriptCM bool) (*batchv1.Job, error) {
+	labels := admissionLabels(job)
 	parallelism := replicaCount(job)
 	container, volumes, err := buildContainer(name, job, scriptCM)
 	if err != nil {
