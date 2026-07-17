@@ -35,6 +35,10 @@ tidy:
 vuln:
 	go run golang.org/x/vuln/cmd/govulncheck@latest ./...
 
+## validate-schemas: emit K8s conversions and validate them with kubeconform
+validate-schemas:
+	./scripts/validate-schemas.sh
+
 ## check: lint + test (what CI runs)
 check: lint test
 

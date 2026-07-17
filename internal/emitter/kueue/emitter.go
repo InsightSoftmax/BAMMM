@@ -16,7 +16,6 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"sigs.k8s.io/yaml"
 
 	"github.com/InsightSoftmax/BAMMM/internal/emitter"
 	"github.com/InsightSoftmax/BAMMM/internal/k8senc"
@@ -247,7 +246,7 @@ spec:
 }
 
 func marshalObject(obj interface{}) ([]byte, error) {
-	out, err := yaml.Marshal(obj)
+	out, err := k8senc.MarshalClean(obj)
 	if err != nil {
 		return nil, fmt.Errorf("kueue: marshal: %w", err)
 	}
