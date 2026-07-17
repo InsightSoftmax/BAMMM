@@ -1,4 +1,4 @@
-.PHONY: build test lint tidy check install clean help
+.PHONY: build test lint tidy vuln check install clean help validate-schemas corpus
 
 BINARY     := bammm
 CMD        := ./cmd/bammm
@@ -38,6 +38,10 @@ vuln:
 ## validate-schemas: emit K8s conversions and validate them with kubeconform
 validate-schemas:
 	./scripts/validate-schemas.sh
+
+## corpus: scrape a scheduler corpus from GitHub (usage: make corpus SCHED=slurm)
+corpus:
+	uv run scripts/corpus/fetch_corpus.py $(SCHED)
 
 ## check: lint + test (what CI runs)
 check: lint test
