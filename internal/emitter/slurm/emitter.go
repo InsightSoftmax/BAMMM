@@ -113,7 +113,7 @@ func directives(job *splat.Job) []string {
 		add("qos", s.QOS)
 	}
 	if s.Priority != 0 {
-		add("priority", strconv.Itoa(s.Priority))
+		add("priority", strconv.Itoa(splat.SlurmPriority.Denormalize(s.Priority)))
 	}
 	if s.Reservation != "" {
 		add("reservation", s.Reservation)

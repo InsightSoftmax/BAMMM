@@ -60,7 +60,7 @@ func Parse(data []byte) (*splat.Job, error) {
 		job.Spec.Tasks = append(job.Spec.Tasks, taskFromJob(aj, i))
 	}
 	if maxPriority > 0 {
-		job.Spec.Schedule.Priority = normalizePriority(maxPriority)
+		job.Spec.Schedule.Priority = splat.ArmadaPriority.Normalize(int(math.Round(maxPriority)))
 	}
 
 	job.Metadata.Labels = commonLabels(req.Jobs)
@@ -190,17 +190,4 @@ func tolerations(ts []corev1.Toleration) []interface{} {
 		out = append(out, ts[i])
 	}
 	return out
-}
-
-// normalizePriority maps an Armada priority (higher = more important) to the
-// SPLAT 0–1000 scale, clamping out-of-range values.
-func normalizePriority(p float64) int {
-	v := int(math.Round(p))
-	if v < 0 {
-		return 0
-	}
-	if v > 1000 {
-		return 1000
-	}
-	return v
 }

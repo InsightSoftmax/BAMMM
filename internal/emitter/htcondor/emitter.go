@@ -82,7 +82,7 @@ func Emit(job *splat.Job) ([]byte, error) {
 		line("error", denormalizeVars(job.Spec.Output.Stderr))
 	}
 	if job.Spec.Schedule.Priority != 0 {
-		line("priority", strconv.Itoa(job.Spec.Schedule.Priority))
+		line("priority", strconv.Itoa(splat.HTCondorPriority.Denormalize(job.Spec.Schedule.Priority)))
 	}
 	if env := envString(e.Environment.Vars); env != "" {
 		line("environment", `"`+env+`"`)

@@ -199,14 +199,18 @@ func containerName(task splat.Task) string {
 }
 
 // priority returns the Armada priority, preferring the round-tripped raw value
-// over the normalized SPLAT priority.
+// (exact same-scheduler round-trip) over the canonical SPLAT priority, which is
+// denormalized back to Armada's native scale.
 func priority(job *splat.Job, ext map[string]interface{}) float64 {
 	if v, ok := ext["priority"]; ok {
 		if f, ok := floatValue(v); ok {
 			return f
 		}
 	}
-	return float64(job.Spec.Schedule.Priority)
+	if job.Spec.Schedule.Priority == 0 {
+		return 0
+	}
+	return float64(splat.ArmadaPriority.Denormalize(job.Spec.Schedule.Priority))
 }
 
 // ── Extension helpers ──────────────────────────────────────────────────────
