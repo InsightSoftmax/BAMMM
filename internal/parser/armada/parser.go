@@ -7,7 +7,6 @@ import (
 	"math"
 	"strconv"
 
-	corev1 "k8s.io/api/core/v1"
 	"sigs.k8s.io/yaml"
 
 	armadatypes "github.com/InsightSoftmax/BAMMM/internal/armada"
@@ -96,7 +95,7 @@ func taskFromJob(aj *armadatypes.Job, index int) splat.Task {
 	task.Execution = exec
 
 	if len(aj.PodSpec.Tolerations) > 0 {
-		task.Placement = &splat.Placement{Tolerations: tolerations(aj.PodSpec.Tolerations)}
+		task.Placement = &splat.Placement{Tolerations: k8senc.Tolerations(aj.PodSpec.Tolerations)}
 	}
 	return task
 }
@@ -182,12 +181,4 @@ func applyExtensions(job *splat.Job, req *armadatypes.Request, rawPriority float
 	if len(ext) > 0 {
 		job.Spec.Extensions.Armada = ext
 	}
-}
-
-func tolerations(ts []corev1.Toleration) []interface{} {
-	out := make([]interface{}, 0, len(ts))
-	for i := range ts {
-		out = append(out, ts[i])
-	}
-	return out
 }

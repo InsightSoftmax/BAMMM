@@ -12,6 +12,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"sigs.k8s.io/yaml"
 
+	"github.com/InsightSoftmax/BAMMM/internal/jobset"
 	"github.com/InsightSoftmax/BAMMM/internal/k8senc"
 	"github.com/InsightSoftmax/BAMMM/internal/parser"
 	"github.com/InsightSoftmax/BAMMM/internal/splat"
@@ -38,13 +39,22 @@ const (
 func Parse(data []byte) (*splat.Job, error) {
 	var k8sJob *batchv1.Job
 	for _, doc := range k8senc.SplitYAMLDocs(data) {
-		if k8senc.DocumentKind(doc) == "Job" {
+		switch k8senc.DocumentKind(doc) {
+		case jobset.Kind:
+			var js jobset.JobSet
+			if err := yaml.Unmarshal(doc, &js); err != nil {
+				return nil, fmt.Errorf("yunikorn: unmarshal JobSet: %w", err)
+			}
+			return jobFromJobSet(&js), nil
+		case "Job":
+			if k8sJob != nil {
+				continue
+			}
 			var j batchv1.Job
 			if err := yaml.Unmarshal(doc, &j); err != nil {
 				return nil, fmt.Errorf("yunikorn: unmarshal Job: %w", err)
 			}
 			k8sJob = &j
-			break
 		}
 	}
 	if k8sJob == nil {
@@ -62,6 +72,33 @@ func Parse(data []byte) (*splat.Job, error) {
 	applySpec(job, &k8sJob.Spec)
 	applyPodSpec(job, &k8sJob.Spec.Template)
 	return job, nil
+}
+
+// jobFromJobSet builds a multi-role SPLAT job from a YuniKorn-scheduled JobSet,
+// recovering gang scheduling from the task-groups annotation the emitter stamps
+// on every pod template.
+func jobFromJobSet(js *jobset.JobSet) *splat.Job {
+	job := &splat.Job{APIVersion: splat.APIVersion, Kind: splat.Kind}
+	job.Metadata.Name = js.Name
+	job.Metadata.Annotations = map[string]string{"bammm.io/source-format": "yunikorn"}
+	if js.Namespace != "" && js.Namespace != "default" {
+		job.Metadata.Annotations["bammm.io/namespace"] = js.Namespace
+	}
+	applyLabels(job, js.Labels)
+
+	tasks, volumes, maxRetries := jobset.ToTasks(js)
+	job.Spec.Tasks = tasks
+	job.Spec.Volumes = volumes
+	if maxRetries > 0 {
+		job.Spec.Lifecycle.MaxRetries = maxRetries
+	}
+	for i := range js.Spec.ReplicatedJobs {
+		applyGang(job, js.Spec.ReplicatedJobs[i].Template.Spec.Template.Annotations)
+		if job.Spec.Gang != nil {
+			break
+		}
+	}
+	return job
 }
 
 func applyLabels(job *splat.Job, labels map[string]string) {

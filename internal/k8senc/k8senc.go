@@ -184,6 +184,66 @@ func AttachVolumes(pod *corev1.PodSpec, c *corev1.Container, volumes []splat.Vol
 	}
 }
 
+// VolumesFromPod recovers job-level SPLAT volumes from a container's mounts
+// paired with the pod's volume sources, writing into seen (keyed by name so
+// identical per-role volumes dedupe across a multi-role job). Shared by the
+// Volcano parser and the JobSet (Kueue/YuniKorn) parsers.
+func VolumesFromPod(c *corev1.Container, pod *corev1.PodSpec, seen map[string]splat.Volume) {
+	sources := map[string]corev1.Volume{}
+	for _, v := range pod.Volumes {
+		sources[v.Name] = v
+	}
+	for _, m := range c.VolumeMounts {
+		if _, ok := seen[m.Name]; ok {
+			continue
+		}
+		v := splat.Volume{Name: m.Name, MountPath: m.MountPath, ReadOnly: m.ReadOnly}
+		if src, ok := sources[m.Name]; ok {
+			switch {
+			case src.PersistentVolumeClaim != nil:
+				v.PVC = src.PersistentVolumeClaim.ClaimName
+			case src.ConfigMap != nil:
+				v.ConfigMap = src.ConfigMap.Name
+			case src.Secret != nil:
+				v.Secret = src.Secret.SecretName
+			case src.HostPath != nil:
+				v.HostPath = src.HostPath.Path
+			case src.EmptyDir != nil:
+				v.EmptyDir = true
+			}
+		}
+		seen[m.Name] = v
+	}
+}
+
+// SortVolumes returns the volumes collected in seen, ordered by name.
+func SortVolumes(seen map[string]splat.Volume) []splat.Volume {
+	if len(seen) == 0 {
+		return nil
+	}
+	names := make([]string, 0, len(seen))
+	for n := range seen {
+		names = append(names, n)
+	}
+	sort.Strings(names)
+	out := make([]splat.Volume, 0, len(names))
+	for _, n := range names {
+		out = append(out, seen[n])
+	}
+	return out
+}
+
+// Tolerations converts core/v1 pod tolerations into the loosely-typed slice
+// SPLAT stores in Placement.Tolerations (which round-trips back via ConvertVia).
+// Shared by the Volcano and Armada parsers.
+func Tolerations(ts []corev1.Toleration) []interface{} {
+	out := make([]interface{}, 0, len(ts))
+	for i := range ts {
+		out = append(out, ts[i])
+	}
+	return out
+}
+
 // ConvertVia re-materializes a loosely-typed value (e.g. map[string]interface{}
 // from a YAML round-trip, or a concrete struct) into dst by marshaling through
 // YAML.
