@@ -472,7 +472,7 @@ func sanitizeKey(s string) string {
 func normalizePath(p string) string {
 	p = strings.ReplaceAll(p, "%j", "{job_id}")
 	p = strings.ReplaceAll(p, "%x", "{job_name}")
-	p = strings.ReplaceAll(p, "%a", "{array_task_id}")
+	p = strings.ReplaceAll(p, "%a", "{array_index}")
 	p = strings.ReplaceAll(p, "%A", "{array_job_id}")
 	p = strings.ReplaceAll(p, "%N", "{node_name}")
 	p = strings.ReplaceAll(p, "%n", "{node_rank}")

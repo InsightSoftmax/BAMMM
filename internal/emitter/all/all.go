@@ -9,6 +9,7 @@ package all
 import (
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/armada"
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/kueue"
+	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/pbs"
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/slurm"
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/volcano"
 )

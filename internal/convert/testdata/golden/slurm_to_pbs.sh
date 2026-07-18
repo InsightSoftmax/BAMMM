@@ -1,0 +1,35 @@
+#!/bin/bash
+#PBS -N bert-finetune
+#PBS -q gpu-hpc
+#PBS -A nlp-research
+#PBS -l select=4:ncpus=6:mpiprocs=8:ngpus=2
+#PBS -l walltime=08:00:00
+#PBS -o /scratch/logs/bert-%J.out
+#PBS -e /scratch/logs/bert-%J.err
+#PBS -m ea
+#PBS -M researcher@university.edu
+
+module load cuda/12.1 python/3.11 openmpi/4.1.5
+
+export OMP_NUM_THREADS=6
+export NCCL_DEBUG=INFO
+export NCCL_IB_DISABLE=0
+export MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+export MASTER_PORT=29500
+
+echo "Job ID: $SLURM_JOB_ID"
+echo "Nodes: $SLURM_JOB_NODELIST"
+echo "Master: $MASTER_ADDR"
+
+srun python -m torch.distributed.run \
+    --nproc_per_node=8 \
+    --nnodes=$SLURM_NNODES \
+    --node_rank=$SLURM_NODEID \
+    --master_addr=$MASTER_ADDR \
+    --master_port=$MASTER_PORT \
+    /workspace/train.py \
+        --model bert-large-uncased \
+        --dataset /scratch/data/squad \
+        --output-dir /scratch/checkpoints/bert-$SLURM_JOB_ID \
+        --epochs 5 \
+        --batch-size 32

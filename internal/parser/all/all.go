@@ -5,6 +5,7 @@ package all
 import (
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/armada"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/kueue"
+	_ "github.com/InsightSoftmax/BAMMM/internal/parser/pbs"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/slurm"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/volcano"
 )

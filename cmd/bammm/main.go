@@ -169,7 +169,7 @@ func newFormatsCmd() *cobra.Command {
 			fmt.Fprintln(w, "  splat  (pass-through; valid for both --from and --to)")
 			fmt.Fprintln(w)
 			fmt.Fprintln(w, "Planned:", strings.Join([]string{
-				"pbs", "lsf", "htcondor", "flux", "yunikorn", "runai",
+				"lsf", "htcondor", "flux", "yunikorn", "runai",
 			}, ", "))
 		},
 	}
