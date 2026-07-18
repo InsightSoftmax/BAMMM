@@ -31,12 +31,12 @@ builds:
 
 archives:
   - id: bammm
-    builds: [bammm]
+    ids: [bammm]
     # Version-less names so `releases/latest/download/<name>` URLs are stable.
     name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
     format_overrides:
       - goos: windows
-        format: zip
+        formats: [zip]
     files:
       - LICENSE
       - README.md
@@ -59,8 +59,89 @@ changelog:
 
 release:
   github:
-    owner: finos
-    name: bammm
+    owner: InsightSoftmax
+    name: BAMMM
   draft: false
   prerelease: auto
   name_template: "{{ .ProjectName }} {{ .Tag }}"
+
+# ── Linux packages ───────────────────────────────────────────────────────────
+# Native .deb/.rpm/.apk built from the same binaries and attached to the GitHub
+# release (users download and `dpkg -i` / `rpm -i` / `apk add`). No apt/yum repo
+# hosting — that would need an external service (Cloudsmith/Fury).
+nfpms:
+  - id: bammm
+    package_name: bammm
+    ids: [bammm]
+    # Version-less names so `releases/latest/download/<name>` URLs stay stable.
+    file_name_template: "{{ .PackageName }}_{{ .Os }}_{{ .Arch }}"
+    vendor: Insight Softmax Consulting
+    homepage: https://github.com/InsightSoftmax/BAMMM
+    maintainer: BAMMM maintainers <bammm@insightsoftmax.com>
+    description: Convert batch job specifications between scheduler formats via SPLAT.
+    license: Apache-2.0
+    formats: [deb, rpm, apk]
+
+# ── Container image ──────────────────────────────────────────────────────────
+# Multi-arch static-binary image published to GHCR using the built-in
+# GITHUB_TOKEN (no external registry account).
+dockers:
+  - id: bammm-amd64
+    goos: linux
+    goarch: amd64
+    dockerfile: Dockerfile.goreleaser
+    use: buildx
+    image_templates:
+      - "ghcr.io/insightsoftmax/bammm:{{ .Version }}-amd64"
+      - "ghcr.io/insightsoftmax/bammm:latest-amd64"
+    build_flag_templates:
+      - "--platform=linux/amd64"
+      - "--label=org.opencontainers.image.source=https://github.com/InsightSoftmax/BAMMM"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.licenses=Apache-2.0"
+  - id: bammm-arm64
+    goos: linux
+    goarch: arm64
+    dockerfile: Dockerfile.goreleaser
+    use: buildx
+    image_templates:
+      - "ghcr.io/insightsoftmax/bammm:{{ .Version }}-arm64"
+      - "ghcr.io/insightsoftmax/bammm:latest-arm64"
+    build_flag_templates:
+      - "--platform=linux/arm64"
+      - "--label=org.opencontainers.image.source=https://github.com/InsightSoftmax/BAMMM"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.licenses=Apache-2.0"
+
+docker_manifests:
+  - name_template: "ghcr.io/insightsoftmax/bammm:{{ .Version }}"
+    image_templates:
+      - "ghcr.io/insightsoftmax/bammm:{{ .Version }}-amd64"
+      - "ghcr.io/insightsoftmax/bammm:{{ .Version }}-arm64"
+  - name_template: "ghcr.io/insightsoftmax/bammm:latest"
+    image_templates:
+      - "ghcr.io/insightsoftmax/bammm:latest-amd64"
+      - "ghcr.io/insightsoftmax/bammm:latest-arm64"
+
+# ── Homebrew (macOS) ─────────────────────────────────────────────────────────
+# Pushes a cask to the InsightSoftmax/homebrew-tap repo (GoReleaser replaced the
+# deprecated `brews` formulae with `homebrew_casks`, which are macOS-only; Linux
+# users install via the .deb/.rpm, the release tarball, or `go install`).
+# Requires a PAT with write access to that repo, exposed to the release workflow
+# as HOMEBREW_TAP_TOKEN (the default GITHUB_TOKEN cannot push to another repo).
+homebrew_casks:
+  - name: bammm
+    repository:
+      owner: InsightSoftmax
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    directory: Casks
+    homepage: https://github.com/InsightSoftmax/BAMMM
+    description: Convert batch job specifications between scheduler formats via SPLAT.
+    # Strip the quarantine attribute so Gatekeeper doesn't block the unsigned CLI.
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/bammm"]
+          end

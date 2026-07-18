@@ -80,3 +80,20 @@ jobs:
           cache: true
       - name: kubeconform (Tier 2)
         run: make validate-schemas
+
+  release-config:
+    name: Release config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      # Catch .goreleaser.yaml mistakes on PRs instead of at tag time.
+      - name: goreleaser check
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: latest
+          args: check

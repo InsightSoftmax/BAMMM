@@ -1,0 +1,6 @@
+# Image built by GoReleaser: it drops the prebuilt static `bammm` binary into
+# the build context, so there is no compile step here. distroless/static keeps
+# the image tiny and rootless.
+FROM gcr.io/distroless/static:nonroot
+COPY bammm /usr/local/bin/bammm
+ENTRYPOINT ["/usr/local/bin/bammm"]

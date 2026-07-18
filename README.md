@@ -112,10 +112,25 @@ curl -sSL https://github.com/InsightSoftmax/BAMMM/releases/latest/download/bammm
 sudo install bammm /usr/local/bin/bammm
 ```
 
-**Homebrew** (coming soon):
+**Linux packages** (`.deb` / `.rpm` / `.apk` are attached to each [release](https://github.com/InsightSoftmax/BAMMM/releases/latest)):
+
+```sh
+# Debian/Ubuntu
+curl -sSLO https://github.com/InsightSoftmax/BAMMM/releases/latest/download/bammm_linux_amd64.deb
+sudo dpkg -i bammm_linux_amd64.deb
+# RHEL/Fedora: sudo rpm -i bammm_linux_amd64.rpm
+```
+
+**Homebrew** (macOS / Linux):
 
 ```sh
 brew install InsightSoftmax/tap/bammm
+```
+
+**Container image** (GHCR, multi-arch):
+
+```sh
+docker run --rm -i ghcr.io/insightsoftmax/bammm:latest convert -f slurm -t kueue < job.sh
 ```
 
 ## SPLAT format quick start
