@@ -14,6 +14,7 @@ import (
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/all"
 	"github.com/InsightSoftmax/BAMMM/internal/parser"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/all"
+	"github.com/InsightSoftmax/BAMMM/internal/splat"
 )
 
 // version is stamped at build time by GoReleaser:
@@ -44,6 +45,7 @@ func newRootCmd() *cobra.Command {
 func newConvertCmd() *cobra.Command {
 	var from, to, inputFile, inputDir, outputDir, pattern string
 	var recursive, report bool
+	var priorityRange string
 
 	cmd := &cobra.Command{
 		Use:   "convert [file...]",
@@ -65,6 +67,12 @@ Use --from splat / --to splat to validate or round-trip without converting.`,
   bammm convert --from slurm --to kueue --input-dir corpus/slurm --output-dir out/`,
 		Args: cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if scale, err := splat.ParseRange(priorityRange); err != nil {
+				return err
+			} else {
+				splat.CanonicalScale = scale
+			}
+
 			items, batch, err := gatherInputs(args, inputDir, pattern, recursive)
 			if err != nil {
 				return err
@@ -104,6 +112,7 @@ Use --from splat / --to splat to validate or round-trip without converting.`,
 	cmd.Flags().StringVar(&pattern, "pattern", "", "filename glob to filter --input-dir (e.g. '*.sbatch')")
 	cmd.Flags().BoolVar(&recursive, "recursive", true, "recurse into subdirectories of --input-dir")
 	cmd.Flags().BoolVar(&report, "report", false, "print a SPLAT field-coverage report over the inputs")
+	cmd.Flags().StringVar(&priorityRange, "priority-range", "0:1000", "canonical priority band MIN:MAX; widen to reduce round-trip rounding loss")
 	_ = cmd.MarkFlagRequired("from")
 	_ = cmd.MarkFlagRequired("to")
 	return cmd

@@ -1,6 +1,11 @@
 package splat
 
-import "math"
+import (
+	"fmt"
+	"math"
+	"strconv"
+	"strings"
+)
 
 // PriorityScale describes a scheduler's native priority convention so BAMMM can
 // map it to and from SPLAT's canonical priority band: an integer 0–1000 where
@@ -25,28 +30,61 @@ var (
 	ArmadaPriority   = PriorityScale{Min: 0, Max: 1000, Invert: false}
 )
 
-// Normalize maps a native priority value onto the canonical 0–1000 band.
+// CanonicalScale is the interchange band that every native priority is mapped
+// onto and back off of, with higher always meaning higher priority. It defaults
+// to 0–1000; widening it (e.g. via `bammm convert --priority-range`) reduces the
+// quantization loss when round-tripping schedulers with large native ranges.
+// It is process-global: set it once before converting.
+var CanonicalScale = PriorityScale{Min: 0, Max: 1000}
+
+// Normalize maps a native priority value onto the canonical band (CanonicalScale).
 func (s PriorityScale) Normalize(native int) int {
 	if s.Max == s.Min {
-		return 0
+		return CanonicalScale.Min
 	}
 	n := clampInt(native, s.Min, s.Max)
 	frac := float64(n-s.Min) / float64(s.Max-s.Min) // 0..1, higher native → higher frac
 	if s.Invert {
 		frac = 1 - frac
 	}
-	return int(math.Round(frac * 1000))
+	return CanonicalScale.Min + int(math.Round(frac*float64(CanonicalScale.Max-CanonicalScale.Min)))
 }
 
-// Denormalize maps a canonical 0–1000 priority back to the scheduler's native
-// range and direction. The result is always a valid native value.
+// Denormalize maps a canonical priority (on CanonicalScale) back to the
+// scheduler's native range and direction. The result is always a valid native
+// value.
 func (s PriorityScale) Denormalize(canonical int) int {
-	c := clampInt(canonical, 0, 1000)
-	frac := float64(c) / 1000
+	if CanonicalScale.Max == CanonicalScale.Min {
+		return s.Min
+	}
+	c := clampInt(canonical, CanonicalScale.Min, CanonicalScale.Max)
+	frac := float64(c-CanonicalScale.Min) / float64(CanonicalScale.Max-CanonicalScale.Min)
 	if s.Invert {
 		frac = 1 - frac
 	}
 	return s.Min + int(math.Round(frac*float64(s.Max-s.Min)))
+}
+
+// ParseRange parses a "MIN:MAX" priority band (e.g. "0:10000") into a
+// non-inverted canonical PriorityScale. It errors on malformed input or when
+// MAX does not exceed MIN.
+func ParseRange(s string) (PriorityScale, error) {
+	lo, hi, ok := strings.Cut(s, ":")
+	if !ok {
+		return PriorityScale{}, fmt.Errorf("priority range %q: expected MIN:MAX", s)
+	}
+	min, err := strconv.Atoi(strings.TrimSpace(lo))
+	if err != nil {
+		return PriorityScale{}, fmt.Errorf("priority range %q: bad MIN: %w", s, err)
+	}
+	max, err := strconv.Atoi(strings.TrimSpace(hi))
+	if err != nil {
+		return PriorityScale{}, fmt.Errorf("priority range %q: bad MAX: %w", s, err)
+	}
+	if max <= min {
+		return PriorityScale{}, fmt.Errorf("priority range %q: MAX must exceed MIN", s)
+	}
+	return PriorityScale{Min: min, Max: max}, nil
 }
 
 func clampInt(v, lo, hi int) int {

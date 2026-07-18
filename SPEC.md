@@ -94,10 +94,13 @@ spec:
     queue: string              # target queue / partition name
                                # Slurm: --partition; PBS: -q; LSF: -q; Flux: --queue
                                # Armada/Volcano/Kueue/YuniKorn: queue or localQueue name
-    priority: integer          # canonical 0–1000 scale, HIGHER = HIGHER PRIORITY (500 = normal)
+    priority: integer          # canonical 0–1000 scale by default, HIGHER = HIGHER PRIORITY (500 = normal)
                                # Each scheduler's native priority is normalized into this band on
                                # parse and denormalized back to its native range on emit, so cross-
                                # scheduler conversions stay in-range and keep the right direction.
+                               # The band is configurable: `bammm convert --priority-range MIN:MAX`
+                               # (e.g. 0:100000) widens it to reduce round-trip rounding loss for
+                               # schedulers with large native ranges.
                                # Native ranges: Slurm 0–1000, PBS -1024..1023, HTCondor -1000..1000,
                                # Armada 0–1000. nice/fair-share style values (lower = higher) invert.
                                # Slurm: --priority; PBS: -p; HTCondor: priority; LSF: -sp; Flux: --urgency
