@@ -24,7 +24,7 @@ func Generate() ([]byte, error) {
 		// The opaque scalar wrappers marshal to strings; reflection alone would
 		// emit empty objects for them (they have only unexported fields).
 		Mapper: func(t reflect.Type) *jsonschema.Schema {
-			if t.Kind() == reflect.Ptr {
+			if t.Kind() == reflect.Pointer {
 				t = t.Elem()
 			}
 			switch t {
