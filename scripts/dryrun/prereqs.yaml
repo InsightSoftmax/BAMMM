@@ -1,0 +1,56 @@
+# Cluster prerequisites for Tier 3 K8s dry-run.
+# Applied after the Volcano/Kueue/JobSet operators are Ready, before dry-running
+# the emitted workloads. Namespaces must exist for server-side dry-run of
+# namespaced objects; Volcano's admission webhook rejects vcjobs whose queue
+# does not exist, so the queues our fixtures reference are created here.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ml-team
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: physics-team
+---
+apiVersion: scheduling.volcano.sh/v1beta1
+kind: Queue
+metadata:
+  name: gpu-hpc
+spec:
+  weight: 1
+  reclaimable: true
+---
+apiVersion: scheduling.volcano.sh/v1beta1
+kind: Queue
+metadata:
+  name: ml-gpu
+spec:
+  weight: 1
+  reclaimable: true
+---
+apiVersion: scheduling.volcano.sh/v1beta1
+kind: Queue
+metadata:
+  name: research-simulations
+spec:
+  weight: 1
+  reclaimable: true
+---
+# PriorityClasses referenced by podSpecs in the fixtures. The bare-Pod dry-run
+# (Armada podSpecs) is rejected if the referenced PriorityClass does not exist.
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high
+value: 1000
+globalDefault: false
+description: "Test PriorityClass for Tier 3 dry-run fixtures."
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 1000
+globalDefault: false
+description: "Test PriorityClass for Tier 3 dry-run fixtures."

@@ -1,0 +1,95 @@
+name: Dry-run (Tier 3)
+
+# Tier 3 execution validation: submit emitted specs to real scheduler admission
+# paths without running the workload. Slower and flakier than the main CI gate
+# (spins up kind + operators, sets up Slurm), so it lives in its own workflow —
+# triggered on PRs that touch the emitters, plus nightly and on demand.
+on:
+  pull_request:
+    paths:
+      - 'internal/emitter/**'
+      - 'internal/splat/**'
+      - 'internal/*/types.go'
+      - 'scripts/dryrun/**'
+      - '.github/workflows/dryrun.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 7 * * *'
+
+permissions:
+  contents: read
+
+env:
+  CERT_MANAGER_VERSION: v1.16.2
+  VOLCANO_VERSION: v1.10.0
+  KUEUE_VERSION: v0.10.1
+  JOBSET_VERSION: v0.8.2
+
+jobs:
+  k8s-dryrun:
+    name: K8s dry-run (kind)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      - uses: astral-sh/setup-uv@v6
+      - uses: helm/kind-action@v1.12.0
+
+      # Install each operator and wait for it Ready before the next. Kueue
+      # registers a cluster-wide Deployment webhook, so it must go LAST —
+      # otherwise applying a later operator's Deployment hits Kueue's
+      # not-yet-ready webhook and fails with "connection refused".
+      - name: Install cert-manager
+        run: |
+          set -euo pipefail
+          kubectl apply -f "https://github.com/cert-manager/cert-manager/releases/download/${CERT_MANAGER_VERSION}/cert-manager.yaml"
+          kubectl wait --for=condition=Available --timeout=300s deployment --all -n cert-manager
+
+      - name: Install Volcano
+        run: |
+          set -euo pipefail
+          kubectl apply -f "https://raw.githubusercontent.com/volcano-sh/volcano/${VOLCANO_VERSION}/installer/volcano-development.yaml"
+          kubectl wait --for=condition=Available --timeout=300s deployment --all -n volcano-system
+
+      - name: Install JobSet
+        run: |
+          set -euo pipefail
+          kubectl apply --server-side -f "https://github.com/kubernetes-sigs/jobset/releases/download/${JOBSET_VERSION}/manifests.yaml"
+          kubectl wait --for=condition=Available --timeout=300s deployment --all -n jobset-system
+
+      - name: Install Kueue
+        run: |
+          set -euo pipefail
+          kubectl apply --server-side -f "https://github.com/kubernetes-sigs/kueue/releases/download/${KUEUE_VERSION}/manifests.yaml"
+          kubectl wait --for=condition=Available --timeout=300s deployment --all -n kueue-system
+
+      - name: Apply cluster prerequisites
+        run: kubectl apply -f scripts/dryrun/prereqs.yaml
+
+      - name: Dry-run emitted manifests
+        run: bash scripts/dryrun/k8s.sh
+
+      - name: Diagnostics
+        if: failure()
+        run: |
+          kubectl get pods -A -o wide || true
+          kubectl -n jobset-system describe deploy jobset-controller-manager || true
+          kubectl -n jobset-system logs deploy/jobset-controller-manager --all-containers --tail=80 || true
+          kubectl get events -A --sort-by=.lastTimestamp | tail -50 || true
+
+  slurm-dryrun:
+    name: Slurm dry-run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Set up single-node Slurm
+        run: bash scripts/dryrun/setup-slurm.sh
+      - name: sbatch --test-only
+        run: bash scripts/dryrun/slurm.sh

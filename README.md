@@ -173,7 +173,15 @@ make test              # go test -race ./...
 make lint              # golangci-lint
 make check             # lint + test
 make validate-schemas  # kubeconform Tier 2 schema validation
+make dryrun-k8s        # Tier 3: kubectl --dry-run=server (needs a cluster + operators)
+make dryrun-slurm      # Tier 3: sbatch --test-only (needs slurmctld)
 ```
+
+Execution validation is tiered: Tier 1 syntax (`bammm validate`), Tier 2
+schema/CRD (`kubeconform`, in CI), Tier 3 real scheduler admission — kind +
+Volcano/Kueue/JobSet operators and a Slurm controller, run by the separate
+[`dryrun`](.github/workflows/dryrun.yml) workflow (PRs touching emitters,
+nightly, or on demand).
 
 Requires Go 1.25+.
 
