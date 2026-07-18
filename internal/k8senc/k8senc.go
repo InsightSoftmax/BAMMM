@@ -5,6 +5,7 @@ package k8senc
 
 import (
 	"sort"
+	"strings"
 
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
@@ -15,6 +16,44 @@ import (
 
 // GPUResourceName is the de-facto standard GPU resource key across the K8s ecosystem.
 const GPUResourceName = "nvidia.com/gpu"
+
+// SplitYAMLDocs splits a YAML stream into individual documents on "---"
+// separators, dropping empty and comment-only fragments. Shared by the Kueue
+// and Volcano parsers, whose inputs are often multi-document bundles.
+func SplitYAMLDocs(data []byte) [][]byte {
+	var docs [][]byte
+	for _, part := range strings.Split(string(data), "\n---") {
+		part = strings.TrimLeft(part, "-\n")
+		if strings.TrimSpace(stripYAMLComments(part)) == "" {
+			continue
+		}
+		docs = append(docs, []byte(part))
+	}
+	return docs
+}
+
+// DocumentKind returns the value of the top-level "kind:" field in a document.
+func DocumentKind(doc []byte) string {
+	for _, line := range strings.Split(string(doc), "\n") {
+		trimmed := strings.TrimSpace(line)
+		if strings.HasPrefix(trimmed, "kind:") {
+			return strings.TrimSpace(strings.TrimPrefix(trimmed, "kind:"))
+		}
+	}
+	return ""
+}
+
+func stripYAMLComments(s string) string {
+	var b strings.Builder
+	for _, line := range strings.Split(s, "\n") {
+		if strings.HasPrefix(strings.TrimSpace(line), "#") {
+			continue
+		}
+		b.WriteString(line)
+		b.WriteString("\n")
+	}
+	return b.String()
+}
 
 // ResourceRequirements builds a core/v1 requirements block from SPLAT resources,
 // mirroring requests into limits (batch jobs are typically guaranteed QoS).

@@ -4,7 +4,6 @@ package kueue
 
 import (
 	"fmt"
-	"strings"
 	"time"
 
 	batchv1 "k8s.io/api/batch/v1"
@@ -30,13 +29,13 @@ const queueNameLabel = "kueue.x-k8s.io/queue-name"
 // The input may be a multi-document YAML stream containing the Job plus a
 // supporting ConfigMap (from which an embedded HPC script is recovered).
 func Parse(data []byte) (*splat.Job, error) {
-	docs := splitDocs(data)
+	docs := k8senc.SplitYAMLDocs(data)
 
 	var k8sJob *batchv1.Job
 	configMaps := map[string]map[string]string{} // name -> data
 
 	for _, doc := range docs {
-		kind := detectKind(doc)
+		kind := k8senc.DocumentKind(doc)
 		switch kind {
 		case "Job":
 			var j batchv1.Job
@@ -183,41 +182,4 @@ func scriptFromConfigMap(c *corev1.Container, pod *corev1.PodSpec, configMaps ma
 		}
 	}
 	return ""
-}
-
-// splitDocs splits a YAML stream into individual documents on "---" separators,
-// dropping empty/comment-only fragments.
-func splitDocs(data []byte) [][]byte {
-	var docs [][]byte
-	for _, part := range strings.Split(string(data), "\n---") {
-		part = strings.TrimLeft(part, "-\n")
-		if strings.TrimSpace(stripComments(part)) == "" {
-			continue
-		}
-		docs = append(docs, []byte(part))
-	}
-	return docs
-}
-
-// detectKind returns the value of the top-level "kind:" field in a document.
-func detectKind(doc []byte) string {
-	for _, line := range strings.Split(string(doc), "\n") {
-		trimmed := strings.TrimSpace(line)
-		if strings.HasPrefix(trimmed, "kind:") {
-			return strings.TrimSpace(strings.TrimPrefix(trimmed, "kind:"))
-		}
-	}
-	return ""
-}
-
-func stripComments(s string) string {
-	var b strings.Builder
-	for _, line := range strings.Split(s, "\n") {
-		if strings.HasPrefix(strings.TrimSpace(line), "#") {
-			continue
-		}
-		b.WriteString(line)
-		b.WriteString("\n")
-	}
-	return b.String()
 }

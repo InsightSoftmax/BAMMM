@@ -3,6 +3,7 @@
 package volcano
 
 import (
+	"bytes"
 	"fmt"
 	"time"
 
@@ -15,6 +16,24 @@ import (
 	volcanotypes "github.com/InsightSoftmax/BAMMM/internal/volcano"
 )
 
+// findVCJobDoc returns the batch.volcano.sh Job document from a (possibly
+// multi-document) YAML stream.
+func findVCJobDoc(data []byte) ([]byte, error) {
+	docs := k8senc.SplitYAMLDocs(data)
+	if len(docs) == 0 {
+		return nil, fmt.Errorf("volcano: empty input")
+	}
+	for _, d := range docs {
+		if k8senc.DocumentKind(d) == volcanotypes.Kind && bytes.Contains(d, []byte("batch.volcano.sh")) {
+			return d, nil
+		}
+	}
+	if len(docs) == 1 {
+		return docs[0], nil // single doc — let unmarshal/kind checks report
+	}
+	return nil, fmt.Errorf("volcano: no batch.volcano.sh Job document found")
+}
+
 func init() {
 	parser.Register("volcano", parserImpl{})
 }
@@ -26,12 +45,15 @@ func (parserImpl) Parse(data []byte) (*splat.Job, error) { return Parse(data) }
 // Parse converts a Volcano vcjob manifest into a SPLAT job. Each vcjob task
 // becomes a SPLAT task; minAvailable becomes spec.gang.
 func Parse(data []byte) (*splat.Job, error) {
-	var vc volcanotypes.Job
-	if err := yaml.Unmarshal(data, &vc); err != nil {
-		return nil, fmt.Errorf("volcano: unmarshal: %w", err)
+	// vcjobs commonly ship in multi-document bundles (Namespace + Queue + the
+	// Job). Find the batch.volcano.sh Job document.
+	doc, err := findVCJobDoc(data)
+	if err != nil {
+		return nil, err
 	}
-	if vc.Kind != "" && vc.Kind != volcanotypes.Kind {
-		return nil, fmt.Errorf("volcano: unexpected kind %q", vc.Kind)
+	var vc volcanotypes.Job
+	if err := yaml.Unmarshal(doc, &vc); err != nil {
+		return nil, fmt.Errorf("volcano: unmarshal: %w", err)
 	}
 	if len(vc.Spec.Tasks) == 0 {
 		return nil, fmt.Errorf("volcano: vcjob has no tasks")

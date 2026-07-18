@@ -176,7 +176,9 @@ SCHEDULERS: dict[str, Scheduler] = {
     "kueue": Scheduler(
         name="kueue",
         extensions={".yaml", ".yml"},
-        accept=accept_contains("kueue.x-k8s.io/queue-name"),
+        # Require a batch/v1 Job — the queue-name label rides on many other kinds
+        # (RayJob, Deployment, JobSet…) the parser doesn't handle.
+        accept=accept_contains("kueue.x-k8s.io/queue-name", "kind: Job"),
         queries=[
             "kueue.x-k8s.io/queue-name kind: Job extension:yaml",
             "kueue.x-k8s.io/queue-name extension:yaml",

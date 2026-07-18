@@ -87,6 +87,52 @@ func TestParse_Volumes(t *testing.T) {
 	}
 }
 
+func TestParse_MultiDoc(t *testing.T) {
+	// A real-world bundle: Namespace + Queue + the vcjob. The parser must find
+	// the batch.volcano.sh Job among the other documents.
+	bundle := []byte(`apiVersion: v1
+kind: Namespace
+metadata:
+  name: ml-team
+---
+apiVersion: scheduling.volcano.sh/v1beta1
+kind: Queue
+metadata:
+  name: ml-gpu
+spec:
+  weight: 1
+---
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: trainer
+spec:
+  minAvailable: 1
+  queue: ml-gpu
+  tasks:
+    - name: worker
+      replicas: 2
+      template:
+        spec:
+          containers:
+            - name: c
+              image: trainer:1
+`)
+	job, err := volcano.Parse(bundle)
+	if err != nil {
+		t.Fatalf("Parse multi-doc: %v", err)
+	}
+	if job.Metadata.Name != "trainer" {
+		t.Errorf("name: got %q want trainer", job.Metadata.Name)
+	}
+	if len(job.Spec.Tasks) != 1 || job.Spec.Tasks[0].Name != "worker" {
+		t.Errorf("tasks: got %v", job.Spec.Tasks)
+	}
+	if job.Spec.Schedule.Queue != "ml-gpu" {
+		t.Errorf("queue: got %q", job.Spec.Schedule.Queue)
+	}
+}
+
 func TestParse_Extensions(t *testing.T) {
 	job := source(t)
 	ext := job.Spec.Extensions.Volcano
