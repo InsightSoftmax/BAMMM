@@ -173,6 +173,7 @@ make test              # go test -race ./...
 make lint              # golangci-lint
 make check             # lint + test
 make validate-schemas  # kubeconform Tier 2 schema validation
+make schema            # regenerate schema/splat.schema.json from the Go types
 make dryrun-k8s        # Tier 3: kubectl --dry-run=server (needs a cluster + operators)
 make dryrun-slurm      # Tier 3: sbatch --test-only (needs slurmctld)
 ```

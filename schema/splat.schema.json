@@ -1,0 +1,784 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bammm.io/schemas/splat/v1alpha1.json",
+  "$ref": "#/$defs/Job",
+  "$defs": {
+    "Array": {
+      "properties": {
+        "indices": {
+          "type": "string"
+        },
+        "maxConcurrent": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ContainerExecution": {
+      "properties": {
+        "image": {
+          "type": "string"
+        },
+        "imagePullPolicy": {
+          "type": "string"
+        },
+        "imagePullSecrets": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "command": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "args": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "environment": {
+          "$ref": "#/$defs/Environment"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Dependency": {
+      "properties": {
+        "scheme": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "scheme"
+      ]
+    },
+    "EmbeddedFile": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "encoding": {
+          "type": "string"
+        },
+        "permissions": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name",
+        "content"
+      ]
+    },
+    "EnvFromConfigMap": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "configMapName": {
+          "type": "string"
+        },
+        "configMapKey": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name",
+        "configMapName",
+        "configMapKey"
+      ]
+    },
+    "EnvFromSecret": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "secretName": {
+          "type": "string"
+        },
+        "secretKey": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name",
+        "secretName",
+        "secretKey"
+      ]
+    },
+    "Environment": {
+      "properties": {
+        "vars": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "secrets": {
+          "items": {
+            "$ref": "#/$defs/EnvFromSecret"
+          },
+          "type": "array"
+        },
+        "configMaps": {
+          "items": {
+            "$ref": "#/$defs/EnvFromConfigMap"
+          },
+          "type": "array"
+        },
+        "inheritFromSubmitter": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "EventPolicy": {
+      "properties": {
+        "event": {
+          "type": "string"
+        },
+        "events": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "action": {
+          "type": "string"
+        },
+        "timeout": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Execution": {
+      "properties": {
+        "container": {
+          "$ref": "#/$defs/ContainerExecution"
+        },
+        "script": {
+          "type": "string"
+        },
+        "executable": {
+          "type": "string"
+        },
+        "arguments": {
+          "type": "string"
+        },
+        "shell": {
+          "type": "string"
+        },
+        "workingDir": {
+          "type": "string"
+        },
+        "environment": {
+          "$ref": "#/$defs/Environment"
+        },
+        "stdin": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Extensions": {
+      "properties": {
+        "slurm": {
+          "type": "object"
+        },
+        "pbs": {
+          "type": "object"
+        },
+        "lsf": {
+          "type": "object"
+        },
+        "htcondor": {
+          "type": "object"
+        },
+        "flux": {
+          "type": "object"
+        },
+        "armada": {
+          "type": "object"
+        },
+        "volcano": {
+          "type": "object"
+        },
+        "kueue": {
+          "type": "object"
+        },
+        "yunikorn": {
+          "type": "object"
+        },
+        "runai": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "FileStaging": {
+      "properties": {
+        "inputs": {
+          "items": {
+            "$ref": "#/$defs/FileTransfer"
+          },
+          "type": "array"
+        },
+        "outputs": {
+          "items": {
+            "$ref": "#/$defs/FileTransfer"
+          },
+          "type": "array"
+        },
+        "embeddedFiles": {
+          "items": {
+            "$ref": "#/$defs/EmbeddedFile"
+          },
+          "type": "array"
+        },
+        "transferPolicy": {
+          "type": "string"
+        },
+        "checkpointFiles": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "checkpointExitCode": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "FileTransfer": {
+      "properties": {
+        "src": {
+          "type": "string"
+        },
+        "dst": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "src",
+        "dst"
+      ]
+    },
+    "GPURequest": {
+      "properties": {
+        "count": {
+          "type": "number"
+        },
+        "type": {
+          "type": "string"
+        },
+        "memory": {
+          "type": "string"
+        },
+        "fraction": {
+          "type": "number"
+        },
+        "migProfile": {
+          "type": "string"
+        },
+        "exclusive": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Gang": {
+      "properties": {
+        "minAvailable": {
+          "type": "integer"
+        },
+        "style": {
+          "type": "string"
+        },
+        "timeout": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Job": {
+      "properties": {
+        "apiVersion": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "spec": {
+          "$ref": "#/$defs/Spec"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "apiVersion",
+        "kind",
+        "metadata",
+        "spec"
+      ]
+    },
+    "Lifecycle": {
+      "properties": {
+        "maxRetries": {
+          "type": "integer"
+        },
+        "requeueOnFailure": {
+          "type": "boolean"
+        },
+        "successExitCodes": {
+          "items": {
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "ttlAfterFinished": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Metadata": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "clientId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name"
+      ]
+    },
+    "NFSVol": {
+      "properties": {
+        "server": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "server",
+        "path"
+      ]
+    },
+    "Notifications": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "events": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Output": {
+      "properties": {
+        "stdout": {
+          "type": "string"
+        },
+        "stderr": {
+          "type": "string"
+        },
+        "mergeStderr": {
+          "type": "boolean"
+        },
+        "openMode": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Placement": {
+      "properties": {
+        "nodeSelector": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "tolerations": {
+          "items": true,
+          "type": "array"
+        },
+        "affinity": true,
+        "topologySpread": {
+          "items": true,
+          "type": "array"
+        },
+        "topology": {
+          "type": "string"
+        },
+        "groupBy": {
+          "type": "string"
+        },
+        "constraint": {
+          "type": "string"
+        },
+        "prefer": {
+          "type": "string"
+        },
+        "exclusive": {
+          "type": "boolean"
+        },
+        "nodePools": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ResourceLimits": {
+      "properties": {
+        "cpusPerTask": {
+          "type": "integer"
+        },
+        "memoryPerTask": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Resources": {
+      "properties": {
+        "nodes": {
+          "type": "integer"
+        },
+        "tasks": {
+          "type": "integer"
+        },
+        "tasksPerNode": {
+          "type": "integer"
+        },
+        "tasksPerSocket": {
+          "type": "integer"
+        },
+        "tasksPerCore": {
+          "type": "integer"
+        },
+        "cpusPerTask": {
+          "type": "integer"
+        },
+        "memoryPerTask": {
+          "type": "string"
+        },
+        "memoryPerCpu": {
+          "type": "string"
+        },
+        "gpu": {
+          "$ref": "#/$defs/GPURequest"
+        },
+        "diskPerTask": {
+          "type": "string"
+        },
+        "genericResources": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "limits": {
+          "$ref": "#/$defs/ResourceLimits"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Schedule": {
+      "properties": {
+        "queue": {
+          "type": "string"
+        },
+        "partition": {
+          "type": "string"
+        },
+        "priorityClass": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "account": {
+          "type": "string"
+        },
+        "project": {
+          "type": "string"
+        },
+        "bank": {
+          "type": "string"
+        },
+        "qos": {
+          "type": "string"
+        },
+        "walltime": {
+          "type": "string"
+        },
+        "walltimeMin": {
+          "type": "string"
+        },
+        "beginAfter": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deadline": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "signalBeforeEnd": {
+          "type": "string"
+        },
+        "hold": {
+          "type": "boolean"
+        },
+        "reservation": {
+          "type": "string"
+        },
+        "exclusive": {
+          "type": "boolean"
+        },
+        "exclusiveMode": {
+          "type": "string"
+        },
+        "oversubscribe": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Spec": {
+      "properties": {
+        "schedule": {
+          "$ref": "#/$defs/Schedule"
+        },
+        "resources": {
+          "$ref": "#/$defs/Resources"
+        },
+        "execution": {
+          "$ref": "#/$defs/Execution"
+        },
+        "tasks": {
+          "items": {
+            "$ref": "#/$defs/Task"
+          },
+          "type": "array"
+        },
+        "gang": {
+          "$ref": "#/$defs/Gang"
+        },
+        "array": {
+          "$ref": "#/$defs/Array"
+        },
+        "dependencies": {
+          "items": {
+            "$ref": "#/$defs/Dependency"
+          },
+          "type": "array"
+        },
+        "lifecycle": {
+          "$ref": "#/$defs/Lifecycle"
+        },
+        "placement": {
+          "$ref": "#/$defs/Placement"
+        },
+        "output": {
+          "$ref": "#/$defs/Output"
+        },
+        "notifications": {
+          "$ref": "#/$defs/Notifications"
+        },
+        "fileStaging": {
+          "$ref": "#/$defs/FileStaging"
+        },
+        "volumes": {
+          "items": {
+            "$ref": "#/$defs/Volume"
+          },
+          "type": "array"
+        },
+        "workloadType": {
+          "type": "string"
+        },
+        "distributedFramework": {
+          "type": "string"
+        },
+        "extensions": {
+          "$ref": "#/$defs/Extensions"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Task": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "replicas": {
+          "type": "integer"
+        },
+        "minReplicas": {
+          "type": "integer"
+        },
+        "resources": {
+          "$ref": "#/$defs/Resources"
+        },
+        "execution": {
+          "$ref": "#/$defs/Execution"
+        },
+        "lifecycle": {
+          "$ref": "#/$defs/TaskLifecycle"
+        },
+        "placement": {
+          "$ref": "#/$defs/Placement"
+        },
+        "dependsOn": {
+          "items": {
+            "$ref": "#/$defs/TaskDep"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name"
+      ]
+    },
+    "TaskDep": {
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name"
+      ]
+    },
+    "TaskLifecycle": {
+      "properties": {
+        "maxRetries": {
+          "type": "integer"
+        },
+        "policies": {
+          "items": {
+            "$ref": "#/$defs/EventPolicy"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Volume": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "mountPath": {
+          "type": "string"
+        },
+        "readOnly": {
+          "type": "boolean"
+        },
+        "pvc": {
+          "type": "string"
+        },
+        "configMap": {
+          "type": "string"
+        },
+        "secret": {
+          "type": "string"
+        },
+        "hostPath": {
+          "type": "string"
+        },
+        "emptyDir": {
+          "type": "boolean"
+        },
+        "nfs": {
+          "$ref": "#/$defs/NFSVol"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name",
+        "mountPath"
+      ]
+    }
+  },
+  "title": "SPLAT Job",
+  "description": "Scheduler-Portable Language for Abstracting Tasks — the BAMMM interchange job spec (apiVersion bammm.io/v1alpha1). Generated from the Go types in internal/splat; see SPEC.md."
+}
