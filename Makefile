@@ -1,4 +1,4 @@
-.PHONY: build test lint tidy vuln check install clean help validate-schemas corpus
+.PHONY: build test lint tidy vuln check install clean help validate-schemas corpus dryrun-k8s dryrun-slurm
 
 BINARY     := bammm
 CMD        := ./cmd/bammm
@@ -42,6 +42,14 @@ validate-schemas:
 ## corpus: scrape a scheduler corpus from GitHub (usage: make corpus SCHED=slurm)
 corpus:
 	uv run scripts/corpus/fetch_corpus.py $(SCHED)
+
+## dryrun-k8s: Tier 3 dry-run of K8s conversions (needs kubectl -> a cluster with operators)
+dryrun-k8s:
+	bash scripts/dryrun/k8s.sh
+
+## dryrun-slurm: Tier 3 dry-run of Slurm output (needs a working slurmctld)
+dryrun-slurm:
+	bash scripts/dryrun/slurm.sh
 
 ## check: lint + test (what CI runs)
 check: lint test
