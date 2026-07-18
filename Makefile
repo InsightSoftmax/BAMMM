@@ -39,7 +39,7 @@ vuln:
 validate-schemas:
 	./scripts/validate-schemas.sh
 
-## corpus: scrape a scheduler corpus from GitHub (usage: make corpus SCHED=slurm)
+## corpus: scrape a scheduler corpus from GitHub (usage: make corpus SCHED=slurm; SCHED=pairs hunts cross-scheduler pairs)
 corpus:
 	uv run scripts/corpus/fetch_corpus.py $(SCHED)
 
