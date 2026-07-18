@@ -38,25 +38,33 @@ jobs:
       - uses: astral-sh/setup-uv@v6
       - uses: helm/kind-action@v1.12.0
 
+      # Install each operator and wait for it Ready before the next. Kueue
+      # registers a cluster-wide Deployment webhook, so it must go LAST —
+      # otherwise applying a later operator's Deployment hits Kueue's
+      # not-yet-ready webhook and fails with "connection refused".
       - name: Install cert-manager
         run: |
           set -euo pipefail
           kubectl apply -f "https://github.com/cert-manager/cert-manager/releases/download/${CERT_MANAGER_VERSION}/cert-manager.yaml"
           kubectl wait --for=condition=Available --timeout=300s deployment --all -n cert-manager
 
-      - name: Install operators
+      - name: Install Volcano
         run: |
           set -euo pipefail
           kubectl apply -f "https://raw.githubusercontent.com/volcano-sh/volcano/${VOLCANO_VERSION}/installer/volcano-development.yaml"
-          kubectl apply --server-side -f "https://github.com/kubernetes-sigs/kueue/releases/download/${KUEUE_VERSION}/manifests.yaml"
-          kubectl apply --server-side -f "https://github.com/kubernetes-sigs/jobset/releases/download/${JOBSET_VERSION}/manifests.yaml"
+          kubectl wait --for=condition=Available --timeout=300s deployment --all -n volcano-system
 
-      - name: Wait for operator webhooks
+      - name: Install JobSet
         run: |
           set -euo pipefail
-          kubectl wait --for=condition=Available --timeout=300s deployment --all -n volcano-system
-          kubectl wait --for=condition=Available --timeout=300s deployment --all -n kueue-system
+          kubectl apply --server-side -f "https://github.com/kubernetes-sigs/jobset/releases/download/${JOBSET_VERSION}/manifests.yaml"
           kubectl wait --for=condition=Available --timeout=300s deployment --all -n jobset-system
+
+      - name: Install Kueue
+        run: |
+          set -euo pipefail
+          kubectl apply --server-side -f "https://github.com/kubernetes-sigs/kueue/releases/download/${KUEUE_VERSION}/manifests.yaml"
+          kubectl wait --for=condition=Available --timeout=300s deployment --all -n kueue-system
 
       - name: Apply cluster prerequisites
         run: kubectl apply -f scripts/dryrun/prereqs.yaml
@@ -73,6 +81,7 @@ jobs:
         with:
           go-version-file: go.mod
           cache: true
-      - uses: koesterlab/setup-slurm-action@v1
+      - name: Set up single-node Slurm
+        run: bash scripts/dryrun/setup-slurm.sh
       - name: sbatch --test-only
         run: bash scripts/dryrun/slurm.sh
