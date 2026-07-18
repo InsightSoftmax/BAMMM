@@ -236,14 +236,11 @@ candidate cross-scheduler *equivalent* pairs for conversion ground truth.
 
 See [CLAUDE.md](CLAUDE.md) for architecture decisions, the build plan, and notes for contributors.
 
-## Collaboration
+## Acknowledgements
 
-Active collaboration between:
-
-- **AWS**
-- **Nitka Consulting**
-- **Insight Softmax Consulting**
-- **Run.ai / NVIDIA** (Run.ai validation)
+BAMMM started as an idea kicked around with Boris Litvin (AWS), until Marlow
+Warnicke (NVIDIA) nerd-sniped me into actually turning it into a real tool. It's
+built and maintained under Insight Softmax Consulting and GR-OSS.
 
 ## Contributing
 
