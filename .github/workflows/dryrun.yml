@@ -72,6 +72,14 @@ jobs:
       - name: Dry-run emitted manifests
         run: bash scripts/dryrun/k8s.sh
 
+      - name: Diagnostics
+        if: failure()
+        run: |
+          kubectl get pods -A -o wide || true
+          kubectl -n jobset-system describe deploy jobset-controller-manager || true
+          kubectl -n jobset-system logs deploy/jobset-controller-manager --all-containers --tail=80 || true
+          kubectl get events -A --sort-by=.lastTimestamp | tail -50 || true
+
   slurm-dryrun:
     name: Slurm dry-run
     runs-on: ubuntu-latest
