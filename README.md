@@ -80,7 +80,7 @@ Wherever the translation is lossy, BAMMM tells you exactly what got dropped, wha
 | **Kueue** | K8s | ✅ | ✅ |
 | **Armada** | K8s | ✅ | ✅ |
 | **OpenPBS** | HPC | ✅ | ✅ |
-| **HTCondor** | HPC | 🚧 | 🚧 |
+| **HTCondor** | HPC | ✅ | ✅ |
 | **Flux** | HPC | 🚧 | 🚧 |
 | **YuniKorn** | K8s | 🚧 | 🚧 |
 | **Run.ai** | K8s (Partner) | 🚧 | 🚧 |

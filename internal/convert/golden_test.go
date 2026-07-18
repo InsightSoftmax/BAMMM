@@ -42,6 +42,11 @@ var goldenCases = []goldenCase{
 	{"pbs_to_pbs", "pbs", "pbs", "conversions/03-htcondor-to-pbs/target.sh"},
 	{"pbs_to_slurm", "pbs", "slurm", "conversions/03-htcondor-to-pbs/target.sh"},
 
+	{"htcondor_to_splat", "htcondor", "splat", "conversions/03-htcondor-to-pbs/source.sub"},
+	{"htcondor_to_htcondor", "htcondor", "htcondor", "conversions/03-htcondor-to-pbs/source.sub"},
+	{"htcondor_to_pbs", "htcondor", "pbs", "conversions/03-htcondor-to-pbs/source.sub"},
+	{"htcondor_to_slurm", "htcondor", "slurm", "conversions/03-htcondor-to-pbs/source.sub"},
+
 	{"volcano_to_splat", "volcano", "splat", "conversions/02-volcano-to-slurm/source.yaml"},
 	{"volcano_to_slurm", "volcano", "slurm", "conversions/02-volcano-to-slurm/source.yaml"},
 	{"volcano_to_volcano", "volcano", "volcano", "conversions/02-volcano-to-slurm/source.yaml"},
