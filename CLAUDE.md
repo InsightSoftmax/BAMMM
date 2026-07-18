@@ -83,13 +83,14 @@ Short version:
 - Slurm het-jobs — only Slurm can execute; approximated elsewhere
 - Run.ai GPU fractions — rounded to whole GPU on other schedulers
 
-## Collaborations
+## Origin & contacts
 
-- AWS
-- Nitka Consulting
-- Insight Softmax Consulting
-- Run.ai (NVIDIA) contacts — for Run.ai validation
-- Potential LSF contacts via community
+Built and maintained under Insight Softmax Consulting and GR-OSS. The idea came
+out of a conversation with Boris Litvin (AWS); Marlow Warnicke (NVIDIA)
+nerd-sniped it into being. Those are the people who sparked it, not corporate
+collaborators — don't describe the project as an active partnership with AWS or
+NVIDIA. LSF/PBS Pro validation would need community contributors with vendor
+licenses.
 
 ## Repo layout
 
