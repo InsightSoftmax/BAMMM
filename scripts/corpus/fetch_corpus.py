@@ -41,6 +41,7 @@ import argparse
 import base64
 import json
 import os
+import re
 import sys
 import time
 from dataclasses import dataclass, field
@@ -99,6 +100,16 @@ def accept_contains(*needles: str) -> Callable:
                 return False, f"missing {n!r}"
         return True, ""
     return _accept
+
+
+def accept_kueue(content: str, path: str, args) -> tuple[bool, str]:
+    if "kueue.x-k8s.io/queue-name" not in content:
+        return False, "missing queue-name label"
+    # Exact `kind: Job` line — substring matching would also accept JobSet,
+    # RayJob, MPIJob, etc., which the batch/v1 Job parser can't handle.
+    if not re.search(r"^\s*kind:\s*['\"]?Job['\"]?\s*$", content, re.MULTILINE):
+        return False, "no batch/v1 Job"
+    return True, ""
 
 
 # ── Scheduler registry ──────────────────────────────────────────────────────
@@ -176,9 +187,9 @@ SCHEDULERS: dict[str, Scheduler] = {
     "kueue": Scheduler(
         name="kueue",
         extensions={".yaml", ".yml"},
-        # Require a batch/v1 Job — the queue-name label rides on many other kinds
-        # (RayJob, Deployment, JobSet…) the parser doesn't handle.
-        accept=accept_contains("kueue.x-k8s.io/queue-name", "kind: Job"),
+        # Require an exact `kind: Job` — the queue-name label rides on many other
+        # kinds (RayJob, Deployment, JobSet…) the parser doesn't handle.
+        accept=accept_kueue,
         queries=[
             "kueue.x-k8s.io/queue-name kind: Job extension:yaml",
             "kueue.x-k8s.io/queue-name extension:yaml",

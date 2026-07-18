@@ -7,35 +7,11 @@
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
   },
-  "kubernetes-sigs__kueue__site__static__examples__jobs__ray-job-sample.yaml": {
-    "repo": "kubernetes-sigs/kueue",
-    "path": "site/static/examples/jobs/ray-job-sample.yaml",
-    "html_url": "https://github.com/kubernetes-sigs/kueue/blob/2b494fec38e1afd615d706697c75340a7b76c0db/site/static/examples/jobs/ray-job-sample.yaml",
-    "sha": "6c28eefc22069ab01eb8853a024d11d4ecf31938",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
-  },
-  "AI-Hypercomputer__gpu-recipes__training__a4__paligemma2__templates__workload-job.yaml": {
-    "repo": "AI-Hypercomputer/gpu-recipes",
-    "path": "training/a4/paligemma2/templates/workload-job.yaml",
-    "html_url": "https://github.com/AI-Hypercomputer/gpu-recipes/blob/eef14ea0fa334054b8acbd80052e96aa39b2351d/training/a4/paligemma2/templates/workload-job.yaml",
-    "sha": "6fa23a26836eebd54aa87d9e96cdd1b3f8718ca0",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
-  },
   "open-cluster-management-io__ocm__solutions__kueue-admission-check__job-demo2.yaml": {
     "repo": "open-cluster-management-io/ocm",
     "path": "solutions/kueue-admission-check/job-demo2.yaml",
     "html_url": "https://github.com/open-cluster-management-io/ocm/blob/0ab9a37d104b61bee41373c1d669280f56c2414b/solutions/kueue-admission-check/job-demo2.yaml",
     "sha": "40eb03dddbdb75864fd4af783c110007daefc93e",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
-  },
-  "opendatahub-io__odh-dashboard__packages__cypress__cypress__fixtures__resources__yaml__ray-job.yaml": {
-    "repo": "opendatahub-io/odh-dashboard",
-    "path": "packages/cypress/cypress/fixtures/resources/yaml/ray-job.yaml",
-    "html_url": "https://github.com/opendatahub-io/odh-dashboard/blob/56ce953f73a606f09761a0a641417b2c6693f378/packages/cypress/cypress/fixtures/resources/yaml/ray-job.yaml",
-    "sha": "b65c0a79bc1bfae0ee85ad0f1426b058bc9f531f",
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
   },
@@ -55,27 +31,11 @@
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
   },
-  "opendatahub-io-contrib__genai-llm-rag-pattern__examples__sample-ray-job.yaml": {
-    "repo": "opendatahub-io-contrib/genai-llm-rag-pattern",
-    "path": "examples/sample-ray-job.yaml",
-    "html_url": "https://github.com/opendatahub-io-contrib/genai-llm-rag-pattern/blob/9eb493df855453ecdcd875598e80b6a6b6c7c231/examples/sample-ray-job.yaml",
-    "sha": "525b05d8e60aa6d3bbcf8dd1694923850b421512",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
-  },
   "ai-on-gke__tutorials-and-examples__workflow-orchestration__dws-example__job-without-node-selector.yaml": {
     "repo": "ai-on-gke/tutorials-and-examples",
     "path": "workflow-orchestration/dws-example/job-without-node-selector.yaml",
     "html_url": "https://github.com/ai-on-gke/tutorials-and-examples/blob/e90668010f020bce4c64235be87d8543dd1b76c1/workflow-orchestration/dws-example/job-without-node-selector.yaml",
     "sha": "a27b73c644a151eecbc0c0603c0690416be9b0df",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
-  },
-  "openshift__kueue-operator__manifests__kueue-operator.crd.yaml": {
-    "repo": "openshift/kueue-operator",
-    "path": "manifests/kueue-operator.crd.yaml",
-    "html_url": "https://github.com/openshift/kueue-operator/blob/4917e56fe85fd0f2de1233b2574ffa4d773afda7/manifests/kueue-operator.crd.yaml",
-    "sha": "fb3d0c9d8e08d9fb55ebf96065ec1b1469c073ae",
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
   },
@@ -100,14 +60,6 @@
     "path": "setup.KubeConEU25/sample-jobs/important.yaml",
     "html_url": "https://github.com/project-codeflare/mlbatch/blob/1fdca6b413532c5c184210f5dbbb0456cbb24896/setup.KubeConEU25/sample-jobs/important.yaml",
     "sha": "2e95d2f0e6facb0bbecbd3818fbc7e41084ef675",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
-  },
-  "yangwhale__gpu-tpu-pedia__gpu__testbed-a4__gke-runtime__jobset__templates__workload-job.yaml": {
-    "repo": "yangwhale/gpu-tpu-pedia",
-    "path": "gpu/testbed-a4/gke-runtime/jobset/templates/workload-job.yaml",
-    "html_url": "https://github.com/yangwhale/gpu-tpu-pedia/blob/e88b518338abc8f9fbba5b908e46e7b0dabb20b0/gpu/testbed-a4/gke-runtime/jobset/templates/workload-job.yaml",
-    "sha": "871770c846561c430627d3be69a60a62bb9dcbd6",
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
   },
@@ -167,30 +119,6 @@
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
   },
-  "silogen__cluster-forge__sources__airm__0.3.3__charts__airm-dispatcher__templates__airm-cluster-policies.yaml": {
-    "repo": "silogen/cluster-forge",
-    "path": "sources/airm/0.3.3/charts/airm-dispatcher/templates/airm-cluster-policies.yaml",
-    "html_url": "https://github.com/silogen/cluster-forge/blob/e0ce456e2464683f187f87d664c95a73fd6e6f6a/sources/airm/0.3.3/charts/airm-dispatcher/templates/airm-cluster-policies.yaml",
-    "sha": "caf92aa6b091706173542e6dea0df098b7fd6e5c",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
-  },
-  "AI-Hypercomputer__gpu-recipes__src__helm-charts__a3ultra__jobset__templates__workload-jobset.yaml": {
-    "repo": "AI-Hypercomputer/gpu-recipes",
-    "path": "src/helm-charts/a3ultra/jobset/templates/workload-jobset.yaml",
-    "html_url": "https://github.com/AI-Hypercomputer/gpu-recipes/blob/eef14ea0fa334054b8acbd80052e96aa39b2351d/src/helm-charts/a3ultra/jobset/templates/workload-jobset.yaml",
-    "sha": "8d550c99baaf631410b7a4245cc09fab28841440",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
-  },
-  "sutaakar__checkpointing__pytorchjob.yaml": {
-    "repo": "sutaakar/checkpointing",
-    "path": "pytorchjob.yaml",
-    "html_url": "https://github.com/sutaakar/checkpointing/blob/5903cb9294b7b4e9ee34b1dbab52dd20bdc9a939/pytorchjob.yaml",
-    "sha": "13c7d29b68caacc6488cef3b058ee7b7e1e86085",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
-  },
   "elotl__kueue-cluster-select-controller__examples__tf-mnist-job.yaml": {
     "repo": "elotl/kueue-cluster-select-controller",
     "path": "examples/tf-mnist-job.yaml",
@@ -199,13 +127,77 @@
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
   },
-  "kubeflow__trainer__examples__yaml__03-kueue-integration.yaml": {
-    "repo": "kubeflow/trainer",
-    "path": "examples/yaml/03-kueue-integration.yaml",
-    "html_url": "https://github.com/kubeflow/trainer/blob/b85b82f3240ec63cce704e7e6e18b749671e820d/examples/yaml/03-kueue-integration.yaml",
-    "sha": "3cb55db6e93788311d87adf85fdbf0ae683f0a76",
+  "ahmedwaleedmalik__k8s-llm-inference-platform__workloads__kueue-demo__job-team-a.yaml": {
+    "repo": "ahmedwaleedmalik/k8s-llm-inference-platform",
+    "path": "workloads/kueue-demo/job-team-a.yaml",
+    "html_url": "https://github.com/ahmedwaleedmalik/k8s-llm-inference-platform/blob/4d75fc1cf1b34f068f084388946b60e4274dfc5f/workloads/kueue-demo/job-team-a.yaml",
+    "sha": "27c28a878b50c975f50026751a9667c71a2c6673",
     "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
+  },
+  "thc1006__satellite-mission-compiler__manifests__k8s__kueue__05-sample-job-cpu.yaml": {
+    "repo": "thc1006/satellite-mission-compiler",
+    "path": "manifests/k8s/kueue/05-sample-job-cpu.yaml",
+    "html_url": "https://github.com/thc1006/satellite-mission-compiler/blob/c55edf591178a4a7e63def43554d40ad95999035/manifests/k8s/kueue/05-sample-job-cpu.yaml",
+    "sha": "b9f3ac0e57d9ab9ade93c987a2817879024b8598",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
+  },
+  "gfilicetti__gke-github-deployment__gke__kueue__examples__job-kueue-example-1.yaml": {
+    "repo": "gfilicetti/gke-github-deployment",
+    "path": "gke/kueue/examples/job-kueue-example-1.yaml",
+    "html_url": "https://github.com/gfilicetti/gke-github-deployment/blob/20c7aa956d4e35a1ab6eafbda57f2ab2ad1b0b81/gke/kueue/examples/job-kueue-example-1.yaml",
+    "sha": "0c72122c88b38a59a9ac335203bc8bd2f7d2b6a0",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
+  },
+  "iitrabhi__FEniCS-on-cloud__cluster-toolkit__examples__gke-a3-ultragpu__system_benchmarks__ramble-hpl.yaml": {
+    "repo": "iitrabhi/FEniCS-on-cloud",
+    "path": "cluster-toolkit/examples/gke-a3-ultragpu/system_benchmarks/ramble-hpl.yaml",
+    "html_url": "https://github.com/iitrabhi/FEniCS-on-cloud/blob/6c92e1ae7889a4cd34c84a573bfe234285e3c452/cluster-toolkit/examples/gke-a3-ultragpu/system_benchmarks/ramble-hpl.yaml",
+    "sha": "b861f8978f297c5ed8289e45aab963fdf148e28b",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
+  },
+  "ai-on-gke__batch-reference-architecture__low_priority__workloads__team-c__team-c-low-priority-job-2.yaml": {
+    "repo": "ai-on-gke/batch-reference-architecture",
+    "path": "low_priority/workloads/team-c/team-c-low-priority-job-2.yaml",
+    "html_url": "https://github.com/ai-on-gke/batch-reference-architecture/blob/e38314dbc79967d773c73f894c6b6a259c18db74/low_priority/workloads/team-c/team-c-low-priority-job-2.yaml",
+    "sha": "91886782316c8cfce326e86cb363c8e699cfaf9d",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
+  },
+  "kubernetes-sigs__kueue__site__static__examples__multikueue__dev__sample-tas-job.yaml": {
+    "repo": "kubernetes-sigs/kueue",
+    "path": "site/static/examples/multikueue/dev/sample-tas-job.yaml",
+    "html_url": "https://github.com/kubernetes-sigs/kueue/blob/2b494fec38e1afd615d706697c75340a7b76c0db/site/static/examples/multikueue/dev/sample-tas-job.yaml",
+    "sha": "3b8cdd49a5552703b571e2af02a0538ef76e65cd",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
+  },
+  "Project-HAMi__website__tutorials__labs__examples__09-kueue-hami-vgpu__03-jobs.yaml": {
+    "repo": "Project-HAMi/website",
+    "path": "tutorials/labs/examples/09-kueue-hami-vgpu/03-jobs.yaml",
+    "html_url": "https://github.com/Project-HAMi/website/blob/aa282781239fc86c4f6a59a95dca36c475bfca7d/tutorials/labs/examples/09-kueue-hami-vgpu/03-jobs.yaml",
+    "sha": "02c8870b549e6ca7a36ace952996ece33114fe67",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
+  },
+  "AI-Hypercomputer__tpu-recipes__microbenchmarks__ironwood__automation__autoscaling__tpu7x-4x4x8-collectives.yaml": {
+    "repo": "AI-Hypercomputer/tpu-recipes",
+    "path": "microbenchmarks/ironwood/automation/autoscaling/tpu7x-4x4x8-collectives.yaml",
+    "html_url": "https://github.com/AI-Hypercomputer/tpu-recipes/blob/d06fbc539276d784fb1b77ee1a809c6eb7d22565/microbenchmarks/ironwood/automation/autoscaling/tpu7x-4x4x8-collectives.yaml",
+    "sha": "25655ca50eb2862057446d5badf666d15dd75858",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
+  },
+  "rnravu__kueue-console__kueue-demo__jobs__job-large.yaml": {
+    "repo": "rnravu/kueue-console",
+    "path": "kueue-demo/jobs/job-large.yaml",
+    "html_url": "https://github.com/rnravu/kueue-console/blob/0af241a5ed699e61fdc88cfe34dc2200fc93a617/kueue-demo/jobs/job-large.yaml",
+    "sha": "d28a4e252e45155604e03feb19c5199e47109810",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name kind: Job extension:yaml"
   },
   "kubernetes-sigs__kueue__cmd__kueueviz__examples__04-llm-job.yaml": {
     "repo": "kubernetes-sigs/kueue",
@@ -231,14 +223,6 @@
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name extension:yaml"
   },
-  "aws-samples__sagemaker-genai-hosting-examples__SageMakerHyperpod__mistral7B-TGI__mistral-deployment-policy.yaml": {
-    "repo": "aws-samples/sagemaker-genai-hosting-examples",
-    "path": "SageMakerHyperpod/mistral7B-TGI/mistral-deployment-policy.yaml",
-    "html_url": "https://github.com/aws-samples/sagemaker-genai-hosting-examples/blob/5d8ee1c4e85a102529c498468bec6965a1e82e74/SageMakerHyperpod/mistral7B-TGI/mistral-deployment-policy.yaml",
-    "sha": "bbc5129bf6ca591d8b31abe39205dee4dfc36a83",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
   "AI-Hypercomputer__tpu-recipes__microbenchmarks__ironwood__automation__tpu7x-2x4x4-collectives.yaml": {
     "repo": "AI-Hypercomputer/tpu-recipes",
     "path": "microbenchmarks/ironwood/automation/tpu7x-2x4x4-collectives.yaml",
@@ -255,35 +239,11 @@
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name extension:yaml"
   },
-  "aws-solutions-library-samples__guidance-for-protein-language-esm-model-training-with-sagemaker-hyperpod__infra__hyperpod__eks__task-governance__1-imagenet-gpu-team-a.yaml": {
-    "repo": "aws-solutions-library-samples/guidance-for-protein-language-esm-model-training-with-sagemaker-hyperpod",
-    "path": "infra/hyperpod/eks/task-governance/1-imagenet-gpu-team-a.yaml",
-    "html_url": "https://github.com/aws-solutions-library-samples/guidance-for-protein-language-esm-model-training-with-sagemaker-hyperpod/blob/0490d6e4b52488fdd8fb88c836fe3b90ce98882a/infra/hyperpod/eks/task-governance/1-imagenet-gpu-team-a.yaml",
-    "sha": "560db3bd5ed0b1ab32f3dc6901ed17ef3cbb7013",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
   "Nielius__AdversarialCircuitEvaluation__k8s__kaniko-build.yaml": {
     "repo": "Nielius/AdversarialCircuitEvaluation",
     "path": "k8s/kaniko-build.yaml",
     "html_url": "https://github.com/Nielius/AdversarialCircuitEvaluation/blob/23d9d6863bf258250027f77fec2275b4a507cd01/k8s/kaniko-build.yaml",
     "sha": "c3381868bb7959af7ac54f0564ba5db5331e7451",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
-  "GoogleCloudPlatform__devrel-demos__ai-ml__dynamic-slicing__kueue-lws-decode-model-streamer.yaml": {
-    "repo": "GoogleCloudPlatform/devrel-demos",
-    "path": "ai-ml/dynamic-slicing/kueue-lws-decode-model-streamer.yaml",
-    "html_url": "https://github.com/GoogleCloudPlatform/devrel-demos/blob/e555a141762e48a2b04eae918acc63eccaf81cb0/ai-ml/dynamic-slicing/kueue-lws-decode-model-streamer.yaml",
-    "sha": "4574f274fc1c4f14041cc80710331b50580394c3",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
-  "ai-on-gke__batch-reference-architecture__jobset__workloads__team-c__team-c-jobset-0.yaml": {
-    "repo": "ai-on-gke/batch-reference-architecture",
-    "path": "jobset/workloads/team-c/team-c-jobset-0.yaml",
-    "html_url": "https://github.com/ai-on-gke/batch-reference-architecture/blob/e38314dbc79967d773c73f894c6b6a259c18db74/jobset/workloads/team-c/team-c-jobset-0.yaml",
-    "sha": "7c0f52431f959cca34f9903f531600b8995fd7f4",
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name extension:yaml"
   },
@@ -295,14 +255,6 @@
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name extension:yaml"
   },
-  "tsisodia10__kueue-demo__jobs__sample-xgboostjob.yaml": {
-    "repo": "tsisodia10/kueue-demo",
-    "path": "jobs/sample-xgboostjob.yaml",
-    "html_url": "https://github.com/tsisodia10/kueue-demo/blob/792319a00ea0f090ebfb1084cf2a7f0e44d9767f/jobs/sample-xgboostjob.yaml",
-    "sha": "0cf75e744a47c5a03c8a473f44b76dbd5504e128",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
   "hemang-rh__openshift-gitops__components__demo-kueue__kueue-job.yaml": {
     "repo": "hemang-rh/openshift-gitops",
     "path": "components/demo-kueue/kueue-job.yaml",
@@ -311,67 +263,11 @@
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name extension:yaml"
   },
-  "opendatahub-io__distributed-workloads__examples__stable-diffusion-dreambooth__notebook__raycluster.yaml": {
-    "repo": "opendatahub-io/distributed-workloads",
-    "path": "examples/stable-diffusion-dreambooth/notebook/raycluster.yaml",
-    "html_url": "https://github.com/opendatahub-io/distributed-workloads/blob/4302f1960d8a1f79a6663dbd7ae1dd99d6cb946a/examples/stable-diffusion-dreambooth/notebook/raycluster.yaml",
-    "sha": "dcc7c148a537994df36694fddf8f09c9dab9bc12",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
-  "RedHatTraining__ai-factory-apps__scale__kueue__7-inference-workload.yaml": {
-    "repo": "RedHatTraining/ai-factory-apps",
-    "path": "scale/kueue/7-inference-workload.yaml",
-    "html_url": "https://github.com/RedHatTraining/ai-factory-apps/blob/892f056f9f7241227a305bb18f389a1e28fb8f54/scale/kueue/7-inference-workload.yaml",
-    "sha": "0772b440f191b307b1f6730734efd7c8db085484",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
-  "AI-Hypercomputer__gpu-recipes__training__a4x__llama3_70b__nemo-gke__nemo2602__64gpus-fp8cs-gbs256__templates__workload-job.yaml": {
-    "repo": "AI-Hypercomputer/gpu-recipes",
-    "path": "training/a4x/llama3_70b/nemo-gke/nemo2602/64gpus-fp8cs-gbs256/templates/workload-job.yaml",
-    "html_url": "https://github.com/AI-Hypercomputer/gpu-recipes/blob/eef14ea0fa334054b8acbd80052e96aa39b2351d/training/a4x/llama3_70b/nemo-gke/nemo2602/64gpus-fp8cs-gbs256/templates/workload-job.yaml",
-    "sha": "ecc077bac4d30ae1f60e776d910d0e5b1a7f1e78",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
   "CarloGem__ACC-POConcept__sample-job-limits-gang.yaml": {
     "repo": "CarloGem/ACC-POConcept",
     "path": "sample-job-limits-gang.yaml",
     "html_url": "https://github.com/CarloGem/ACC-POConcept/blob/9c92f7d552c67ddfdfc143c2b45d63d2e46393e7/sample-job-limits-gang.yaml",
     "sha": "cebaea6c6bbaf6f776b714a1987b45c60bb1ccf7",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
-  "alauda__aml-docs__docs__en__training_guides__assets__kueue__preemption__inference-service.yaml": {
-    "repo": "alauda/aml-docs",
-    "path": "docs/en/training_guides/assets/kueue/preemption/inference-service.yaml",
-    "html_url": "https://github.com/alauda/aml-docs/blob/2cc8393c5afdc84af8ae5531c1d9dd23e718a1db/docs/en/training_guides/assets/kueue/preemption/inference-service.yaml",
-    "sha": "efec27d1355aa3094f0614736d9749b15b355c10",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
-  "patilchinmay__k8s-experiments__kueue__07-multikueue-cohort-distinct-flavors__05-jobsets-fill-quota.yaml": {
-    "repo": "patilchinmay/k8s-experiments",
-    "path": "kueue/07-multikueue-cohort-distinct-flavors/05-jobsets-fill-quota.yaml",
-    "html_url": "https://github.com/patilchinmay/k8s-experiments/blob/9353240d459fdc84fb312b64f8cbc13bbb268bd9/kueue/07-multikueue-cohort-distinct-flavors/05-jobsets-fill-quota.yaml",
-    "sha": "1a605b10c6d7f98d0f3540c6ac63b42efccbb3e6",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
-  "patilchinmay__k8s-experiments__kueue__06-multikueue-jobset-priority__07-jobset-low-priority.yaml": {
-    "repo": "patilchinmay/k8s-experiments",
-    "path": "kueue/06-multikueue-jobset-priority/07-jobset-low-priority.yaml",
-    "html_url": "https://github.com/patilchinmay/k8s-experiments/blob/9353240d459fdc84fb312b64f8cbc13bbb268bd9/kueue/06-multikueue-jobset-priority/07-jobset-low-priority.yaml",
-    "sha": "d4b8398704cb7599533dd26de5abce0172a9f43b",
-    "stars": 0,
-    "query": "kueue.x-k8s.io/queue-name extension:yaml"
-  },
-  "eformat__rhoai-cluster-pool__applications__models__base__deepseek-r1__serving-deepseek-qwen3-vllm-oci-2.yaml": {
-    "repo": "eformat/rhoai-cluster-pool",
-    "path": "applications/models/base/deepseek-r1/serving-deepseek-qwen3-vllm-oci-2.yaml",
-    "html_url": "https://github.com/eformat/rhoai-cluster-pool/blob/1c9e156dadb24e436245cbc3f2cd03494470bd38/applications/models/base/deepseek-r1/serving-deepseek-qwen3-vllm-oci-2.yaml",
-    "sha": "481968fae910a18d3127cb10b7b291e5e67355b8",
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name extension:yaml"
   },
@@ -396,6 +292,110 @@
     "path": "benchmark/sd-bm-3.yaml",
     "html_url": "https://github.com/Kimcheolhui/kueue-scheduling/blob/d4d78997c1f89817a55cdf9e8147b3363b3e66fe/benchmark/sd-bm-3.yaml",
     "sha": "22a9983f3e423e8ae8d68bf3ec65ddbf2e0d06f6",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "Kimcheolhui__kueue-scheduling__benchmark__sd-bm-5.yaml": {
+    "repo": "Kimcheolhui/kueue-scheduling",
+    "path": "benchmark/sd-bm-5.yaml",
+    "html_url": "https://github.com/Kimcheolhui/kueue-scheduling/blob/d4d78997c1f89817a55cdf9e8147b3363b3e66fe/benchmark/sd-bm-5.yaml",
+    "sha": "7f792228ce9449edf970a73eb106eebb6b547815",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "edwardsp__azcp__examples__aks__init-container-download-then-train.yaml": {
+    "repo": "edwardsp/azcp",
+    "path": "examples/aks/init-container-download-then-train.yaml",
+    "html_url": "https://github.com/edwardsp/azcp/blob/4a4561505620e43dc2cd4bc51b0eab729522fa12/examples/aks/init-container-download-then-train.yaml",
+    "sha": "e44c889739df63bc773b02bea463b1d2e4800437",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "Azure__ai-infrastructure-on-azure__infrastructure_validations__aks__NHC__helm__aznhc__templates__job.yaml": {
+    "repo": "Azure/ai-infrastructure-on-azure",
+    "path": "infrastructure_validations/aks/NHC/helm/aznhc/templates/job.yaml",
+    "html_url": "https://github.com/Azure/ai-infrastructure-on-azure/blob/c2d57c6bbe3f9772f265e5229a6ea4dd0f646075/infrastructure_validations/aks/NHC/helm/aznhc/templates/job.yaml",
+    "sha": "1bf747fed942d128a4cc69d5e4a5c8a8d8d00f80",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "lasyard__docs___files__macos__workspace__k8s__kueue__tas4_job.yaml": {
+    "repo": "lasyard/docs",
+    "path": "_files/macos/workspace/k8s/kueue/tas4_job.yaml",
+    "html_url": "https://github.com/lasyard/docs/blob/5dd43cb2ec7a2e1e74e3ed98f01a8c301b769b96/_files/macos/workspace/k8s/kueue/tas4_job.yaml",
+    "sha": "417e0a32ebd5dd1cb864cbfd05afb66a3b000847",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "gclouduniverse__reproducibility-deprecated__Training__A3Mega__GPT3-175B-NeMo__helm-context__templates__nemo-example.yaml": {
+    "repo": "gclouduniverse/reproducibility-deprecated",
+    "path": "Training/A3Mega/GPT3-175B-NeMo/helm-context/templates/nemo-example.yaml",
+    "html_url": "https://github.com/gclouduniverse/reproducibility-deprecated/blob/d4792e41a30c62d43bd796ce92a4283e21607c0b/Training/A3Mega/GPT3-175B-NeMo/helm-context/templates/nemo-example.yaml",
+    "sha": "2259f03e9d6a795e6a9f226f141a647e4ced65cc",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "lowang-bh__k8s-learn__job__job-suspend.yaml": {
+    "repo": "lowang-bh/k8s-learn",
+    "path": "job/job-suspend.yaml",
+    "html_url": "https://github.com/lowang-bh/k8s-learn/blob/9ef3a0bebe63ad7e3d301b6349316b403d91c878/job/job-suspend.yaml",
+    "sha": "867d5cd216301782493a841f5489b4843ea7a51a",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "RedHatQuickCourses__genai-apps__kueue__workloads__job-cohort-nopreempt.yaml": {
+    "repo": "RedHatQuickCourses/genai-apps",
+    "path": "kueue/workloads/job-cohort-nopreempt.yaml",
+    "html_url": "https://github.com/RedHatQuickCourses/genai-apps/blob/b275947bb3664bea44cd0b08011ba3aef5b5717c/kueue/workloads/job-cohort-nopreempt.yaml",
+    "sha": "28843637f0c2c158cdbe783212ef2cf3ec675b94",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "2bPro__deepfake__kueue__eidf__fake_det_interact_pvc_job.yaml": {
+    "repo": "2bPro/deepfake",
+    "path": "kueue/eidf/fake_det_interact_pvc_job.yaml",
+    "html_url": "https://github.com/2bPro/deepfake/blob/053cd29ef2549f1f6ca61f33c2b0f0282661be6c/kueue/eidf/fake_det_interact_pvc_job.yaml",
+    "sha": "b88e19ede3a8cdbc4626fdab849bcba087a88b37",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "markxio__teas__configs__job-vllm-server-client-keep-alive.yaml": {
+    "repo": "markxio/teas",
+    "path": "configs/job-vllm-server-client-keep-alive.yaml",
+    "html_url": "https://github.com/markxio/teas/blob/65c2615b8ae39f325274d184eb46c6fc0d72e410/configs/job-vllm-server-client-keep-alive.yaml",
+    "sha": "71737151846973cbf74a82833325004e0b1fcd67",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "yoshikawa__sandbox__kueue__multi-clusters__management__sample-job2.yaml": {
+    "repo": "yoshikawa/sandbox",
+    "path": "kueue/multi-clusters/management/sample-job2.yaml",
+    "html_url": "https://github.com/yoshikawa/sandbox/blob/5d93db978fb8d8027af65aa182516d304b420f39/kueue/multi-clusters/management/sample-job2.yaml",
+    "sha": "113d9bb45c01e200eb134aacc1d6c31049569da8",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "stogiannidis__learnable-reinspection__k8s__eval_debug.yaml": {
+    "repo": "stogiannidis/learnable-reinspection",
+    "path": "k8s/eval_debug.yaml",
+    "html_url": "https://github.com/stogiannidis/learnable-reinspection/blob/d340bdfcf2cb015f5c5dd6b7dd0d59e340ebb367/k8s/eval_debug.yaml",
+    "sha": "3a84a9514ca91467444250ee59266aa28d95edcc",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "astrafy__vertex-mlops__blueprints__gke__patterns__batch__manifest-templates__team-resources__job.yaml": {
+    "repo": "astrafy/vertex-mlops",
+    "path": "blueprints/gke/patterns/batch/manifest-templates/team-resources/job.yaml",
+    "html_url": "https://github.com/astrafy/vertex-mlops/blob/9de7c012eab97707a0b48792878f3d5775710f18/blueprints/gke/patterns/batch/manifest-templates/team-resources/job.yaml",
+    "sha": "b7ad11bea3071012cc23a399090149d209e794f7",
+    "stars": 0,
+    "query": "kueue.x-k8s.io/queue-name extension:yaml"
+  },
+  "AlignmentResearch__harmtune__k8s__kaniko-build.yaml": {
+    "repo": "AlignmentResearch/harmtune",
+    "path": "k8s/kaniko-build.yaml",
+    "html_url": "https://github.com/AlignmentResearch/harmtune/blob/dddc922a99fef8b303a66de17b0fe205f7f18111/k8s/kaniko-build.yaml",
+    "sha": "16a65a4e258a35b4fbd0764ef8672972e613a133",
     "stars": 0,
     "query": "kueue.x-k8s.io/queue-name extension:yaml"
   }
