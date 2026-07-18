@@ -1,0 +1,104 @@
+{
+  "NVIDIA/knavigator": {
+    "repo": "NVIDIA/knavigator",
+    "stars": 0,
+    "schedulers": [
+      "kueue",
+      "volcano"
+    ],
+    "files": {
+      "volcano": [
+        {
+          "path": "resources/benchmarks/templates/volcano/job.yaml",
+          "html_url": "https://github.com/NVIDIA/knavigator/blob/e5f1892df98235ba2c20a49574b6620b7a6f0e94/resources/benchmarks/templates/volcano/job.yaml",
+          "sha": "4c656f0800a2b6f3887cb4a60cf0318b24855bf0"
+        }
+      ],
+      "kueue": [
+        {
+          "path": "resources/benchmarks/templates/kueue/job.yaml",
+          "html_url": "https://github.com/NVIDIA/knavigator/blob/e5f1892df98235ba2c20a49574b6620b7a6f0e94/resources/benchmarks/templates/kueue/job.yaml",
+          "sha": "e1d6230b8a5f8263c27688811334330a67cde63f"
+        }
+      ]
+    }
+  },
+  "Project-HAMi/website": {
+    "repo": "Project-HAMi/website",
+    "stars": 0,
+    "schedulers": [
+      "kueue",
+      "volcano"
+    ],
+    "files": {
+      "volcano": [
+        {
+          "path": "tutorials/labs/examples/08-volcano-vgpu/02-gang-job.yaml",
+          "html_url": "https://github.com/Project-HAMi/website/blob/aa282781239fc86c4f6a59a95dca36c475bfca7d/tutorials/labs/examples/08-volcano-vgpu/02-gang-job.yaml",
+          "sha": "513894bed730e3578d8ebf5bd8be9272fadcbab8"
+        },
+        {
+          "path": "tutorials/labs/examples/08-volcano-vgpu/05-queue-fit-job.yaml",
+          "html_url": "https://github.com/Project-HAMi/website/blob/aa282781239fc86c4f6a59a95dca36c475bfca7d/tutorials/labs/examples/08-volcano-vgpu/05-queue-fit-job.yaml",
+          "sha": "f26c5ccf7815889c25347ef8a58f58a715c41e87"
+        }
+      ],
+      "kueue": [
+        {
+          "path": "tutorials/labs/examples/09-kueue-hami-vgpu/03-jobs.yaml",
+          "html_url": "https://github.com/Project-HAMi/website/blob/aa282781239fc86c4f6a59a95dca36c475bfca7d/tutorials/labs/examples/09-kueue-hami-vgpu/03-jobs.yaml",
+          "sha": "02c8870b549e6ca7a36ace952996ece33114fe67"
+        }
+      ]
+    }
+  },
+  "lasyard/docs": {
+    "repo": "lasyard/docs",
+    "stars": 0,
+    "schedulers": [
+      "kueue",
+      "volcano"
+    ],
+    "files": {
+      "volcano": [
+        {
+          "path": "_files/macos/workspace/k8s/volcano/sleep_vj_high.yaml",
+          "html_url": "https://github.com/lasyard/docs/blob/5dd43cb2ec7a2e1e74e3ed98f01a8c301b769b96/_files/macos/workspace/k8s/volcano/sleep_vj_high.yaml",
+          "sha": "f9d8e3173e24190fc62d5c730671af608c9a02c0"
+        },
+        {
+          "path": "_files/macos/workspace/k8s/volcano/hierarchical_vj_a1.yaml",
+          "html_url": "https://github.com/lasyard/docs/blob/5dd43cb2ec7a2e1e74e3ed98f01a8c301b769b96/_files/macos/workspace/k8s/volcano/hierarchical_vj_a1.yaml",
+          "sha": "433a0324aff9b66f8de0009009558cb54fe45a31"
+        }
+      ],
+      "kueue": [
+        {
+          "path": "_files/macos/workspace/k8s/kueue/tas3_job.yaml",
+          "html_url": "https://github.com/lasyard/docs/blob/5dd43cb2ec7a2e1e74e3ed98f01a8c301b769b96/_files/macos/workspace/k8s/kueue/tas3_job.yaml",
+          "sha": "e6b61c93aeb23bac55863163330e393a210b0869"
+        },
+        {
+          "path": "_files/macos/workspace/k8s/kueue/tas1_job.yaml",
+          "html_url": "https://github.com/lasyard/docs/blob/5dd43cb2ec7a2e1e74e3ed98f01a8c301b769b96/_files/macos/workspace/k8s/kueue/tas1_job.yaml",
+          "sha": "74191c0910ab75630a08829eb48dc3f596564255"
+        },
+        {
+          "path": "_files/macos/workspace/k8s/kueue/tas4_job.yaml",
+          "html_url": "https://github.com/lasyard/docs/blob/5dd43cb2ec7a2e1e74e3ed98f01a8c301b769b96/_files/macos/workspace/k8s/kueue/tas4_job.yaml",
+          "sha": "417e0a32ebd5dd1cb864cbfd05afb66a3b000847"
+        },
+        {
+          "path": "_files/macos/workspace/k8s/kueue/sleep_job_kueue_high.yaml",
+          "html_url": "https://github.com/lasyard/docs/blob/5dd43cb2ec7a2e1e74e3ed98f01a8c301b769b96/_files/macos/workspace/k8s/kueue/sleep_job_kueue_high.yaml",
+          "sha": "a8f6e48f63683735f3facecf931defa32d9712b4"
+        },
+        {
+          "path": "_files/macos/workspace/k8s/sleep_job_kueue.yaml",
+          "html_url": "https://github.com/lasyard/docs/blob/5dd43cb2ec7a2e1e74e3ed98f01a8c301b769b96/_files/macos/workspace/k8s/sleep_job_kueue.yaml",
+          "sha": "cab958a71a498b984f2dd15eb05a04010fda7ba4"
+        }
+      ]
+    }
+  }
+}
