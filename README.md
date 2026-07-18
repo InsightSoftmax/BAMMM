@@ -185,6 +185,9 @@ nightly, or on demand).
 
 Requires Go 1.25+.
 
+**Adding a scheduler?** See [docs/adding-a-scheduler.md](docs/adding-a-scheduler.md)
+for the full parser/emitter contribution guide.
+
 ### Corpus
 
 Real-world job specs for testing are scraped from GitHub into
