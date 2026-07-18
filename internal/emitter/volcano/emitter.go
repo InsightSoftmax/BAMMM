@@ -22,6 +22,10 @@ type emitterImpl struct{}
 
 func (emitterImpl) Emit(job *splat.Job) ([]byte, error) { return Emit(job) }
 
+// defaultImage is the placeholder used when a script/executable source has no
+// container image; Volcano (like Kubernetes) requires every container to set one.
+const defaultImage = "ubuntu:22.04"
+
 // Emit converts a SPLAT job into a Volcano vcjob. Multi-role jobs (spec.tasks)
 // become vcjob tasks; single-role jobs become one task.
 func Emit(job *splat.Job) ([]byte, error) {
@@ -124,6 +128,7 @@ func podSpec(job *splat.Job, task splat.Task) (*corev1.PodSpec, error) {
 			c.Env = k8senc.EnvVars(exec.Environment)
 		}
 	case exec.Script != "":
+		c.Image = defaultImage
 		c.Command = []string{"/bin/bash", "-c"}
 		c.Args = []string{exec.Script}
 		c.Env = k8senc.EnvVars(exec.Environment)

@@ -36,3 +36,21 @@ metadata:
 spec:
   weight: 1
   reclaimable: true
+---
+# PriorityClasses referenced by podSpecs in the fixtures. The bare-Pod dry-run
+# (Armada podSpecs) is rejected if the referenced PriorityClass does not exist.
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high
+value: 1000
+globalDefault: false
+description: "Test PriorityClass for Tier 3 dry-run fixtures."
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 1000
+globalDefault: false
+description: "Test PriorityClass for Tier 3 dry-run fixtures."
