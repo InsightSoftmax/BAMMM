@@ -7,6 +7,7 @@ import (
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/htcondor"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/kueue"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/pbs"
+	_ "github.com/InsightSoftmax/BAMMM/internal/parser/runai"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/slurm"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/volcano"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/yunikorn"
