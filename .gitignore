@@ -3,24 +3,12 @@ bin/
 dist/
 coverage.out
 
-# Corpus — potentially thousands of files; use Git LFS or a separate store
-# Manifest files are checked in so the corpus is reproducible without re-scraping
-testdata/corpus/slurm/*.sh
-testdata/corpus/slurm/*.slurm
-testdata/corpus/slurm/*.job
-testdata/corpus/pbs/*.sh
-testdata/corpus/pbs/*.pbs
-testdata/corpus/htcondor/*.sub
-testdata/corpus/htcondor/*.jdl
-testdata/corpus/flux/*.json
-testdata/corpus/lsf/*.sh
-testdata/corpus/lsf/*.bsub
-testdata/corpus/volcano/*.yaml
-testdata/corpus/kueue/*.yaml
-testdata/corpus/armada/*.yaml
-testdata/corpus/yunikorn/*.yaml
-testdata/corpus/runai/*.yaml
-# Keep manifests and reviewed pairs
+# Corpus — third-party job specs scraped from public repos, each under its own
+# license. Ignore ALL corpus content and check in only the provenance manifests,
+# so the corpus is reproducible from source (scripts/corpus/fetch_corpus.py)
+# without re-hosting other people's files.
+testdata/corpus/**
+!testdata/corpus/**/
 !testdata/corpus/**/manifest.json
 !testdata/pairs/
 

@@ -1,0 +1,514 @@
+{
+  "Project-Platypus__Platypus__examples__submit_mpi.pbs": {
+    "repo": "Project-Platypus/Platypus",
+    "path": "examples/submit_mpi.pbs",
+    "html_url": "https://github.com/Project-Platypus/Platypus/blob/c1baaa29733a34ee1ace9cd03d0f7c5533261559/examples/submit_mpi.pbs",
+    "sha": "0dbbafc25543f8440635818b364fbe65bec32375",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "iPieter__RobBERT__src__pretrain.pbs": {
+    "repo": "iPieter/RobBERT",
+    "path": "src/pretrain.pbs",
+    "html_url": "https://github.com/iPieter/RobBERT/blob/8f562fe3e79ec8c0ea04051277b6ae86e7e382e9/src/pretrain.pbs",
+    "sha": "b200d73990de4d0b54bc27b0f1fbfaf15ae38ab6",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "GeoscienceAustralia__burn-mapping__BurnCube__jobs.pbs": {
+    "repo": "GeoscienceAustralia/burn-mapping",
+    "path": "BurnCube/jobs.pbs",
+    "html_url": "https://github.com/GeoscienceAustralia/burn-mapping/blob/c1c139da69930c9c7ac9ebdc1a21bc773500d716/BurnCube/jobs.pbs",
+    "sha": "8eb3c1a0a95fa38162ffa71abb3233c23560b3ac",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "ccmbioinfo__crg2__dnaseq.pbs": {
+    "repo": "ccmbioinfo/crg2",
+    "path": "dnaseq.pbs",
+    "html_url": "https://github.com/ccmbioinfo/crg2/blob/9122e22ab4d9d7424a1531c692a14611ae62a1d3/dnaseq.pbs",
+    "sha": "fb7cf14e816efcba7e36067ed011717cd8100e23",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "olcf__XC30-Training__affinity__aff.pbs": {
+    "repo": "olcf/XC30-Training",
+    "path": "affinity/aff.pbs",
+    "html_url": "https://github.com/olcf/XC30-Training/blob/62ee091b865758c9cfe803e9f86b0b1f4d8d3086/affinity/aff.pbs",
+    "sha": "b7e6a51e0fde38c821b77f144185ddf18af30452",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "HydroComplexity__Dhara__examples__1-EBI__ebi.pbs": {
+    "repo": "HydroComplexity/Dhara",
+    "path": "examples/1-EBI/ebi.pbs",
+    "html_url": "https://github.com/HydroComplexity/Dhara/blob/8543f00fe4df7fb6c3771a455f5fa8c4fffa30b8/examples/1-EBI/ebi.pbs",
+    "sha": "b4b4715d457b33e52c05d55790765a54499f75a1",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "nyu-dl__dl4mt-tutorial__session0__train.sh": {
+    "repo": "nyu-dl/dl4mt-tutorial",
+    "path": "session0/train.sh",
+    "html_url": "https://github.com/nyu-dl/dl4mt-tutorial/blob/c476acbe325b8f2709d64649a052573219410fae/session0/train.sh",
+    "sha": "6373f0cff8c72f7591884bf92ddff8dbe8ee32a5",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "alrojo__CB513__my_script.sh": {
+    "repo": "alrojo/CB513",
+    "path": "my_script.sh",
+    "html_url": "https://github.com/alrojo/CB513/blob/c546de658e5a572a63fd35b9cd1393f038396e7e/my_script.sh",
+    "sha": "951fe66cdee59fa1c46c56e171a5b0caf2eb61c1",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "ebimodeling__model-drivers__met__cruncep__rename.sh": {
+    "repo": "ebimodeling/model-drivers",
+    "path": "met/cruncep/rename.sh",
+    "html_url": "https://github.com/ebimodeling/model-drivers/blob/27ca12e515d80a227c7a9529a849e169d027ee59/met/cruncep/rename.sh",
+    "sha": "dc1d511642234ec3d2017a934eb673ad07a91d88",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "ratt-ru__montblanc-support__compile_hdf5.sh": {
+    "repo": "ratt-ru/montblanc-support",
+    "path": "compile_hdf5.sh",
+    "html_url": "https://github.com/ratt-ru/montblanc-support/blob/e5495534d08d07c48b39d9dfc091f21ea4009774/compile_hdf5.sh",
+    "sha": "f11f5a8d9a4c95a09ccfcffa9c1711e53152c9cf",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "guru-das-s__pthreads-fft2d__runDFT.sh": {
+    "repo": "guru-das-s/pthreads-fft2d",
+    "path": "runDFT.sh",
+    "html_url": "https://github.com/guru-das-s/pthreads-fft2d/blob/aa91797159edc87ab093fc8c22a43e1fabf1ee70/runDFT.sh",
+    "sha": "9110a599441c687f7461c8951747d472b0642df5",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "naps62__parallel-sort__scripts__tbb.job.sh": {
+    "repo": "naps62/parallel-sort",
+    "path": "scripts/tbb.job.sh",
+    "html_url": "https://github.com/naps62/parallel-sort/blob/23ffbc48e06c4ad79d41a103e09a750c5c4eef56/scripts/tbb.job.sh",
+    "sha": "69e15ef77a7cb57d6e5ed3dfba2c27000a501f71",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "nhmvienna__Workshop_I_Intro_to_Phyloserver__shell__blastn.sh": {
+    "repo": "nhmvienna/Workshop_I_Intro_to_Phyloserver",
+    "path": "shell/blastn.sh",
+    "html_url": "https://github.com/nhmvienna/Workshop_I_Intro_to_Phyloserver/blob/05bb930a34e0e2815e1234d75a68d6a323781ef4/shell/blastn.sh",
+    "sha": "41698959cf74e407489b3ea18a50167e568de39e",
+    "stars": 0,
+    "query": "#PBS -W depend extension:sh"
+  },
+  "ashiklom__pecan-package-docs__scripts__qsub_build.sh": {
+    "repo": "ashiklom/pecan-package-docs",
+    "path": "scripts/qsub_build.sh",
+    "html_url": "https://github.com/ashiklom/pecan-package-docs/blob/1da7a14c84a1c177da6230629dcd9649dd8940ed/scripts/qsub_build.sh",
+    "sha": "bb2974543c110f1b404a7cb49e32662e2b593d35",
+    "stars": 0,
+    "query": "#PBS -W depend extension:sh"
+  },
+  "hsundar__dendro__jobScripts__downSample.pbs": {
+    "repo": "hsundar/dendro",
+    "path": "jobScripts/downSample.pbs",
+    "html_url": "https://github.com/hsundar/dendro/blob/f3337fc933ffaca885bf159548dfb224dbac5cbe/jobScripts/downSample.pbs",
+    "sha": "3801b95e29d53ddd6a5ebf80e89c0793c03dafae",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "tgen__tCoNuT__clonalCovPerl.pbs": {
+    "repo": "tgen/tCoNuT",
+    "path": "clonalCovPerl.pbs",
+    "html_url": "https://github.com/tgen/tCoNuT/blob/36190970a8b05f4ead789e562ef3d453efe6e834/clonalCovPerl.pbs",
+    "sha": "5cc742d21d3fa5eecf28ff17d85d9f086fa888b6",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "ICHEC__ExSeisDat__systest__genfiles.pbs": {
+    "repo": "ICHEC/ExSeisDat",
+    "path": "systest/genfiles.pbs",
+    "html_url": "https://github.com/ICHEC/ExSeisDat/blob/3c6acb883985043293d8a40caaca743e7b8eaa33/systest/genfiles.pbs",
+    "sha": "5be0d11f6a71abe804fe5c06292567c322e82bba",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "open-AIMS__reef3D__PBS__batchjob_matlab.pbs": {
+    "repo": "open-AIMS/reef3D",
+    "path": "PBS/batchjob_matlab.pbs",
+    "html_url": "https://github.com/open-AIMS/reef3D/blob/6ab5311919a9336be197741a8d5030757dcce6b8/PBS/batchjob_matlab.pbs",
+    "sha": "93109c4b122e1f8c30ea683cfbd441887b93d3ca",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "ssc-oscar__lookup__doC2Pbin.pbs": {
+    "repo": "ssc-oscar/lookup",
+    "path": "doC2Pbin.pbs",
+    "html_url": "https://github.com/ssc-oscar/lookup/blob/aebe8f0d1925855fca02e2dc2bd60f077ce48e51/doC2Pbin.pbs",
+    "sha": "4ceb3f0fb1839ddf1b0877f38a917ae6be1503e8",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "mjvalder__FrictionSim2D__examples__run.pbs": {
+    "repo": "mjvalder/FrictionSim2D",
+    "path": "examples/run.pbs",
+    "html_url": "https://github.com/mjvalder/FrictionSim2D/blob/83e7da28a8f4fc38ec7a2d8c7d6596fc3e3792ea/examples/run.pbs",
+    "sha": "2a827b08569067632879c2f12cfafcbcd0ccb701",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "low-sky__simscript__templates__MHDstart.pbs": {
+    "repo": "low-sky/simscript",
+    "path": "templates/MHDstart.pbs",
+    "html_url": "https://github.com/low-sky/simscript/blob/2c8b3b7fad61e2e255312293eeda076aa5a25d1e/templates/MHDstart.pbs",
+    "sha": "7de4fedc9007d1aa3374cf5793d76f33dd7e6c01",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "sabaronett__streaming-instability__unstrat__AB__0.05__2048__cgdd.pbs": {
+    "repo": "sabaronett/streaming-instability",
+    "path": "unstrat/AB/0.05/2048/cgdd.pbs",
+    "html_url": "https://github.com/sabaronett/streaming-instability/blob/a6cb8591b66fde11d2168d17d96ab063f59ddcbe/unstrat/AB/0.05/2048/cgdd.pbs",
+    "sha": "1bcf34f5bffe986de238ba11075a1cdca3f8a3de",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "Chunli-Dai__CoastlineMapping__template__job_ortho.pbs": {
+    "repo": "Chunli-Dai/CoastlineMapping",
+    "path": "template/job_ortho.pbs",
+    "html_url": "https://github.com/Chunli-Dai/CoastlineMapping/blob/13056faed7d4e995ae9989f1db99a2dcc31fee06/template/job_ortho.pbs",
+    "sha": "733fdd7f4ddf312823c1acc0e356498a86cee8c2",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "samarth-kashyap__dopplervel__jobscripts__job_genMat.pbs": {
+    "repo": "samarth-kashyap/dopplervel",
+    "path": "jobscripts/job_genMat.pbs",
+    "html_url": "https://github.com/samarth-kashyap/dopplervel/blob/60d93d7e366a7595579898e604046ab6d73f7f43/jobscripts/job_genMat.pbs",
+    "sha": "754b8df9ca7efa8dfef59a9dd85f794aa39e77bd",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "atimms__cybertron_scripts__pbs_scripts__cut_and_run.pbs": {
+    "repo": "atimms/cybertron_scripts",
+    "path": "pbs_scripts/cut_and_run.pbs",
+    "html_url": "https://github.com/atimms/cybertron_scripts/blob/77e91ac10cb2ceb020bff6b2f631c07ce814f8ec/pbs_scripts/cut_and_run.pbs",
+    "sha": "c5e3dce27110c928111827bc683ab24ce61d4045",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "bideliunian__CMC-GGM__proj_cmc__model1_power_d10.PBS": {
+    "repo": "bideliunian/CMC-GGM",
+    "path": "proj_cmc/model1_power_d10.PBS",
+    "html_url": "https://github.com/bideliunian/CMC-GGM/blob/9d7abe1aa1301b09555e64fe73db980437454581/proj_cmc/model1_power_d10.PBS",
+    "sha": "c349f5c11746c26cf0e9691c526c76a098f7f8fb",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "fpbarthel__GLASS__bin__gistic_run.pbs": {
+    "repo": "fpbarthel/GLASS",
+    "path": "bin/gistic_run.pbs",
+    "html_url": "https://github.com/fpbarthel/GLASS/blob/333d5d01477e49bb2cf87be459d4161d4cde4483/bin/gistic_run.pbs",
+    "sha": "bf4b08027ffdb04b8f6716afe8f78127801321ec",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "ling-ii__MMAN4953__meetest.pbs": {
+    "repo": "ling-ii/MMAN4953",
+    "path": "meetest.pbs",
+    "html_url": "https://github.com/ling-ii/MMAN4953/blob/fb4eababcda32d99d5dfab59db83d9c311632330/meetest.pbs",
+    "sha": "b28bc73e6f99f37480e3daa0c2b22a87e78b4558",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "ntBre__Force-Constants__template.pbs": {
+    "repo": "ntBre/Force-Constants",
+    "path": "template.pbs",
+    "html_url": "https://github.com/ntBre/Force-Constants/blob/4ab19c482e1929b211ce9a242c37a385897189d5/template.pbs",
+    "sha": "5ab2e2fec0506eac77d8b2d4e8bec744df5754a3",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "idaholab__thermal_to_fusion_converter__postprocess__geant.pbs": {
+    "repo": "idaholab/thermal_to_fusion_converter",
+    "path": "postprocess/geant.pbs",
+    "html_url": "https://github.com/idaholab/thermal_to_fusion_converter/blob/8d102e30cb8915dff3e3b00939718298cd36f35c/postprocess/geant.pbs",
+    "sha": "7db60656b41f230dfecf5e2e1f3be0ca94513af0",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "dfm__exoabc__scripts__fit.pbs": {
+    "repo": "dfm/exoabc",
+    "path": "scripts/fit.pbs",
+    "html_url": "https://github.com/dfm/exoabc/blob/8bbce60d9baa3a959e111a0a50a0df4f203177d3/scripts/fit.pbs",
+    "sha": "643898db4c27ea04b343ef39db1ea83f8234df1e",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "cmcb-warwick__KiT__private__pbstemplatejh.pbs": {
+    "repo": "cmcb-warwick/KiT",
+    "path": "private/pbstemplatejh.pbs",
+    "html_url": "https://github.com/cmcb-warwick/KiT/blob/742f7c9ecd586aa6a446b610d38ae7a4288e0940/private/pbstemplatejh.pbs",
+    "sha": "037cc77fc53b1f26581070173ea49e66594936f5",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "EPCCed__EPCC-Exercises__CFD__C__C-SER__cfd.pbs": {
+    "repo": "EPCCed/EPCC-Exercises",
+    "path": "CFD/C/C-SER/cfd.pbs",
+    "html_url": "https://github.com/EPCCed/EPCC-Exercises/blob/50a99f46241d88a08c41832f9f8dfa14aaf614bb/CFD/C/C-SER/cfd.pbs",
+    "sha": "6f0dbb30b22e2a41c70b3ae15e233a1d4023f68f",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "tomasvicar__DeepRetinaSegmentation__run_main_drive_opt.pbs": {
+    "repo": "tomasvicar/DeepRetinaSegmentation",
+    "path": "run_main_drive_opt.pbs",
+    "html_url": "https://github.com/tomasvicar/DeepRetinaSegmentation/blob/06ae8f5c027a47b1ecfac8d56b4c33fbe6664449/run_main_drive_opt.pbs",
+    "sha": "fc57e5a76c5151738596c8c52cf40a3a79a4d08e",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "kidsneuro-lab__rna-seq2__run_pe_align.pbs": {
+    "repo": "kidsneuro-lab/rna-seq2",
+    "path": "run_pe_align.pbs",
+    "html_url": "https://github.com/kidsneuro-lab/rna-seq2/blob/bd91889630aaacf5d754b8a9f6fe469f59a42f5c/run_pe_align.pbs",
+    "sha": "33ec85015d257b8a8e014a605686ee2617b20f24",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "monomest__Thesis__myjob_C_eval.pbs": {
+    "repo": "monomest/Thesis",
+    "path": "myjob_C_eval.pbs",
+    "html_url": "https://github.com/monomest/Thesis/blob/3a15f747dfd934535ffb7a02bf3fee97d9c546cb/myjob_C_eval.pbs",
+    "sha": "5faf2042be24ceb4dce11f9cc6a72deb3b4b37f8",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "VDBWRAIR__compare_blast__job.pbs": {
+    "repo": "VDBWRAIR/compare_blast",
+    "path": "job.pbs",
+    "html_url": "https://github.com/VDBWRAIR/compare_blast/blob/d1f16d715ee8128412bdd98cf5acc2e694c3c692/job.pbs",
+    "sha": "9a7501ac19462e600f9ae50b11f2a41cd2a57238",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "UBC-MOAD__tracerexperiments__CNTDIFF__run24__mitgcm.pbs": {
+    "repo": "UBC-MOAD/tracerexperiments",
+    "path": "CNTDIFF/run24/mitgcm.pbs",
+    "html_url": "https://github.com/UBC-MOAD/tracerexperiments/blob/fb80fdb030569c22697fe0bf9ae1c1468913b9d1/CNTDIFF/run24/mitgcm.pbs",
+    "sha": "1bc977c252f8e3bc736c8dbbc35a55663751b19a",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "UBC-MOAD__tracerexperiments__CNTDIFF__run15__mitgcm.pbs": {
+    "repo": "UBC-MOAD/tracerexperiments",
+    "path": "CNTDIFF/run15/mitgcm.pbs",
+    "html_url": "https://github.com/UBC-MOAD/tracerexperiments/blob/fb80fdb030569c22697fe0bf9ae1c1468913b9d1/CNTDIFF/run15/mitgcm.pbs",
+    "sha": "bb80724599539f1c6fc21ee11639b5c42da1af66",
+    "stars": 0,
+    "query": "#PBS -q extension:pbs"
+  },
+  "AdvancedPhotonSource__cohere-ui__hpc_scripts__mpi_job.sh": {
+    "repo": "AdvancedPhotonSource/cohere-ui",
+    "path": "hpc_scripts/mpi_job.sh",
+    "html_url": "https://github.com/AdvancedPhotonSource/cohere-ui/blob/ab9e4ca695b456f08ad384d15e89c65e2f56ea2b/hpc_scripts/mpi_job.sh",
+    "sha": "cca627180e8ce32f0a82ee8d7adfb17201f931c5",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "dmccloskey__sequencing_utilities__scripts__run_reseq.sh": {
+    "repo": "dmccloskey/sequencing_utilities",
+    "path": "scripts/run_reseq.sh",
+    "html_url": "https://github.com/dmccloskey/sequencing_utilities/blob/3845cede661bc263a38cf8850148380e08c0e9ea/scripts/run_reseq.sh",
+    "sha": "c94c7091f12157b9034cd7bfc05993b1a30c8dfe",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "andersonbrookee__biom262-hw1__tf_binding.sh": {
+    "repo": "andersonbrookee/biom262-hw1",
+    "path": "tf_binding.sh",
+    "html_url": "https://github.com/andersonbrookee/biom262-hw1/blob/6bf9d7a65df4286ab1886812539baeb854b65914/tf_binding.sh",
+    "sha": "4ec54439d851d91982752fbab7c4aa24453029b9",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "brettin__sunspot_examples__submit_reg_go2.sh": {
+    "repo": "brettin/sunspot_examples",
+    "path": "submit_reg_go2.sh",
+    "html_url": "https://github.com/brettin/sunspot_examples/blob/ebe6cf400816e58eed783504b4b16eb7b8b06044/submit_reg_go2.sh",
+    "sha": "a658ccbf582d60b66809f8c9f07530c9c44fee0b",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "hailingfang__learning__hpc__qsub-run.sh": {
+    "repo": "hailingfang/learning",
+    "path": "hpc/qsub-run.sh",
+    "html_url": "https://github.com/hailingfang/learning/blob/40d9b1d4364006622b46b3819c03b570ef9f864c/hpc/qsub-run.sh",
+    "sha": "7f7d11db04f4efe263c47fa942bd8849cd8d3288",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "Wilber__Genome-Annotation__1_train_classifier.sh": {
+    "repo": "Wilber/Genome-Annotation",
+    "path": "1_train_classifier.sh",
+    "html_url": "https://github.com/Wilber/Genome-Annotation/blob/ad1f0ca5fbc3924f0ddbbf8aed0ff1d4ddd0d28a/1_train_classifier.sh",
+    "sha": "590a4e33ae16811840b0390cda58d313dd54f5fa",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "carden24__Bioinformatics_scripts__stats_on_bams.sh": {
+    "repo": "carden24/Bioinformatics_scripts",
+    "path": "stats_on_bams.sh",
+    "html_url": "https://github.com/carden24/Bioinformatics_scripts/blob/020af3000eeca9c2e270be798fe7264ece87f22b/stats_on_bams.sh",
+    "sha": "f7323929f5c547a87c56bff4603ecdac93ad7cc5",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "tsukuba-hpcs__matrix-job__examples__job.sh": {
+    "repo": "tsukuba-hpcs/matrix-job",
+    "path": "examples/job.sh",
+    "html_url": "https://github.com/tsukuba-hpcs/matrix-job/blob/a929f0008d1ab3627cc397055d9d2ea15bf2fc50/examples/job.sh",
+    "sha": "1d1b80eb647bfb32a4a876a0fe4082117c76b787",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "djgagne__HWT_mode__run_WRF_pbs.sh": {
+    "repo": "djgagne/HWT_mode",
+    "path": "run_WRF_pbs.sh",
+    "html_url": "https://github.com/djgagne/HWT_mode/blob/5702bda66086b275e38f30b9aa62477ece2af854/run_WRF_pbs.sh",
+    "sha": "87061a7a3a0cb5c4f1e89c24ef0854c40aa50a6a",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "trutheresy__UQ-2D-Metamaterials__Run_Matlab2.sh": {
+    "repo": "trutheresy/UQ-2D-Metamaterials",
+    "path": "Run_Matlab2.sh",
+    "html_url": "https://github.com/trutheresy/UQ-2D-Metamaterials/blob/7692219a47785bb77c51eeb454540ac00e9c989c/Run_Matlab2.sh",
+    "sha": "81a11600b795eec87424d47cc0d44124b04f9924",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "stellema__euc_particles__jobs__zip_plx.sh": {
+    "repo": "stellema/euc_particles",
+    "path": "jobs/zip_plx.sh",
+    "html_url": "https://github.com/stellema/euc_particles/blob/bf4f7edea51ee8aaaec2465e0da66b02d20ac5db/jobs/zip_plx.sh",
+    "sha": "99c4e5f16e1f7c47ba44dc170be0bc0bb55f04b3",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "todo-lab-nifs__MEGA__examples__opn050__go001.sh": {
+    "repo": "todo-lab-nifs/MEGA",
+    "path": "examples/opn050/go001.sh",
+    "html_url": "https://github.com/todo-lab-nifs/MEGA/blob/c414c3a0925a605a97dcbe929ccf67ea7666191f/examples/opn050/go001.sh",
+    "sha": "c463e7b5a31e43f9329d148c62163bdb53184f1a",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "stellema__euc_particles__jobs__sim__pset.sh": {
+    "repo": "stellema/euc_particles",
+    "path": "jobs/sim/pset.sh",
+    "html_url": "https://github.com/stellema/euc_particles/blob/bf4f7edea51ee8aaaec2465e0da66b02d20ac5db/jobs/sim/pset.sh",
+    "sha": "74f4cce6faeb6453a10c4f46f311a40401459818",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "lab305itep__digisc__digi2zip2.sh": {
+    "repo": "lab305itep/digisc",
+    "path": "digi2zip2.sh",
+    "html_url": "https://github.com/lab305itep/digisc/blob/a948fa96def7664736ef73aafbfc2acf611cf3f0/digi2zip2.sh",
+    "sha": "c8a5348704b1ae6d3f1010819d3e8d064d424c49",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "sabrina-faria__breaking-simmetry-lotsizing__script_paralela.sh": {
+    "repo": "sabrina-faria/breaking-simmetry-lotsizing",
+    "path": "script_paralela.sh",
+    "html_url": "https://github.com/sabrina-faria/breaking-simmetry-lotsizing/blob/17f665fc4b9f1ed2b025c1b3cc74b683e3e1d1d0/script_paralela.sh",
+    "sha": "a6faab709a3016c1fc5da49c636fa4705040533e",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "nikmar13__hpc__modified_script.sh": {
+    "repo": "nikmar13/hpc",
+    "path": "modified_script.sh",
+    "html_url": "https://github.com/nikmar13/hpc/blob/1b71600b6b25e47cccbceb1d1d4e46dc9063e366/modified_script.sh",
+    "sha": "7e0c51fcfba1a412ae5e261959f8b3631cb84792",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "stellema__euc_particles__jobs__sim__sim220h.sh": {
+    "repo": "stellema/euc_particles",
+    "path": "jobs/sim/sim220h.sh",
+    "html_url": "https://github.com/stellema/euc_particles/blob/bf4f7edea51ee8aaaec2465e0da66b02d20ac5db/jobs/sim/sim220h.sh",
+    "sha": "41f32a9731233b7fa5be5d6d30c0ebe7daf400b1",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "stellema__euc_particles__jobs__sim__sim190r.sh": {
+    "repo": "stellema/euc_particles",
+    "path": "jobs/sim/sim190r.sh",
+    "html_url": "https://github.com/stellema/euc_particles/blob/bf4f7edea51ee8aaaec2465e0da66b02d20ac5db/jobs/sim/sim190r.sh",
+    "sha": "28ced1bf495d1645f4a6215feb55de66b46216e6",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "lab305itep__digisc__MonoNu__high.sh": {
+    "repo": "lab305itep/digisc",
+    "path": "MonoNu/high.sh",
+    "html_url": "https://github.com/lab305itep/digisc/blob/a948fa96def7664736ef73aafbfc2acf611cf3f0/MonoNu/high.sh",
+    "sha": "1f6d6809e135dae6c1cff2f3dfd63584d758b817",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "stellema__euc_particles__jobs__procs__t250hp.sh": {
+    "repo": "stellema/euc_particles",
+    "path": "jobs/procs/t250hp.sh",
+    "html_url": "https://github.com/stellema/euc_particles/blob/bf4f7edea51ee8aaaec2465e0da66b02d20ac5db/jobs/procs/t250hp.sh",
+    "sha": "66bb72a6688e380e9d04286974a26246504fde52",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "jasperzuallaert__VIBFold__boltz_job_script.sh": {
+    "repo": "jasperzuallaert/VIBFold",
+    "path": "boltz_job_script.sh",
+    "html_url": "https://github.com/jasperzuallaert/VIBFold/blob/7bf89eae449e8a714c67ad36d5df73f5153b170a/boltz_job_script.sh",
+    "sha": "56641541d6b49fbeaa683ebef94a7fd36333935e",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "naivete5656__CPNN__scripts__ours.sh": {
+    "repo": "naivete5656/CPNN",
+    "path": "scripts/ours.sh",
+    "html_url": "https://github.com/naivete5656/CPNN/blob/bcdf7d05299361e4203627f062cf95e78f175477/scripts/ours.sh",
+    "sha": "21ae69854d410d6a21da9c024a327c9ddbcb2ec7",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "raimondilab__GPCR_structure_analysis__launcher.sh": {
+    "repo": "raimondilab/GPCR_structure_analysis",
+    "path": "launcher.sh",
+    "html_url": "https://github.com/raimondilab/GPCR_structure_analysis/blob/354b75001a9635b6531d35485f05a188ae693f44/launcher.sh",
+    "sha": "8bc7fe31b9626020b484140f3a53e143100c8725",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "zkstewart__Various_scripts__BINge__run_binge.sh": {
+    "repo": "zkstewart/Various_scripts",
+    "path": "BINge/run_binge.sh",
+    "html_url": "https://github.com/zkstewart/Various_scripts/blob/4b57a98815efbde381b7ad38b2d18e5d3527f0e5/BINge/run_binge.sh",
+    "sha": "3dd0301c2931761c5a61b2d29311d8e632871921",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  },
+  "glasslab__glassutils__scripts__calcPBC.sh": {
+    "repo": "glasslab/glassutils",
+    "path": "scripts/calcPBC.sh",
+    "html_url": "https://github.com/glasslab/glassutils/blob/0f06945a4f621236ea13f0f15dbbb53b5ab2084a/scripts/calcPBC.sh",
+    "sha": "1ecd1277c4d84b575c8056d20492ed9dc391580b",
+    "stars": 0,
+    "query": "#PBS -J extension:sh"
+  }
+}

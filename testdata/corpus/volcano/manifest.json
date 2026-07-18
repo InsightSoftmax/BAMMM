@@ -1,0 +1,602 @@
+{
+  "volcano-sh__volcano__example__job.yaml": {
+    "repo": "volcano-sh/volcano",
+    "path": "example/job.yaml",
+    "html_url": "https://github.com/volcano-sh/volcano/blob/0b6d4106b317f7104c532d146a3d77f13be078c8/example/job.yaml",
+    "sha": "8cf3b76a2ca79a16d466622a04c0503e7957d490",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "volcano-sh__volcano-global__docs__deploy__exmaple__propagationpolicy.yaml": {
+    "repo": "volcano-sh/volcano-global",
+    "path": "docs/deploy/exmaple/propagationpolicy.yaml",
+    "html_url": "https://github.com/volcano-sh/volcano-global/blob/bc14015ed014e5109af993da712ffe703df72ac3/docs/deploy/exmaple/propagationpolicy.yaml",
+    "sha": "255b9bc39dd5bb381abb80e7c38bef998a14232d",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "kalavai-net__kube-watcher__templates__dummy__template.yaml": {
+    "repo": "kalavai-net/kube-watcher",
+    "path": "templates/dummy/template.yaml",
+    "html_url": "https://github.com/kalavai-net/kube-watcher/blob/9e45ecdada1c8355fe1269591c62a88d038204af/templates/dummy/template.yaml",
+    "sha": "551b4531545bdd97975feb48d2c0ae55a7c93b90",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "hzxuzhonghu__volcano-demo__gang__demo.yaml": {
+    "repo": "hzxuzhonghu/volcano-demo",
+    "path": "gang/demo.yaml",
+    "html_url": "https://github.com/hzxuzhonghu/volcano-demo/blob/cf4c8da69b90a274e11f26b7fce1958815aeecda/gang/demo.yaml",
+    "sha": "746e295a6f089be8d44b6771672d9f1ee862b535",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "Project-HAMi__website__tutorials__labs__examples__08-volcano-vgpu__02-gang-job.yaml": {
+    "repo": "Project-HAMi/website",
+    "path": "tutorials/labs/examples/08-volcano-vgpu/02-gang-job.yaml",
+    "html_url": "https://github.com/Project-HAMi/website/blob/aa282781239fc86c4f6a59a95dca36c475bfca7d/tutorials/labs/examples/08-volcano-vgpu/02-gang-job.yaml",
+    "sha": "513894bed730e3578d8ebf5bd8be9272fadcbab8",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "peopleforrester__2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial__examples__complete-pipeline__fraud-detection-pipeline.yaml": {
+    "repo": "peopleforrester/2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial",
+    "path": "examples/complete-pipeline/fraud-detection-pipeline.yaml",
+    "html_url": "https://github.com/peopleforrester/2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial/blob/13bf9f97f189863e7616f78117e965bf8fb495c7/examples/complete-pipeline/fraud-detection-pipeline.yaml",
+    "sha": "db6cbd1e6a8e232d3ba6a1f7fa115539a796562e",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "ChahwanSong__dms-scheduler__template__dms-vcjob-sync-n.yaml": {
+    "repo": "ChahwanSong/dms-scheduler",
+    "path": "template/dms-vcjob-sync-n.yaml",
+    "html_url": "https://github.com/ChahwanSong/dms-scheduler/blob/b34bea71a3e1c54cf04dbed1b47ba54ab41e0436/template/dms-vcjob-sync-n.yaml",
+    "sha": "de05276c1d8390520d3f772ba8cf5b5f10c71ceb",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "volcano-sh__volcano__example__kubecon-2019-china__mpi-sample__mpi-example.yaml": {
+    "repo": "volcano-sh/volcano",
+    "path": "example/kubecon-2019-china/mpi-sample/mpi-example.yaml",
+    "html_url": "https://github.com/volcano-sh/volcano/blob/0b6d4106b317f7104c532d146a3d77f13be078c8/example/kubecon-2019-china/mpi-sample/mpi-example.yaml",
+    "sha": "5566f0aa762ee81ee59853cdff1b39ad52d94561",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "Azure__azurehpc__experimental__aks_ndv4__nhc.yaml": {
+    "repo": "Azure/azurehpc",
+    "path": "experimental/aks_ndv4/nhc.yaml",
+    "html_url": "https://github.com/Azure/azurehpc/blob/2d57191cb35ed638525ba9424cc2aa1b5abe1c05/experimental/aks_ndv4/nhc.yaml",
+    "sha": "8266a43804fc5adc5a5239a7424ca3ea4ffaa5a5",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "HienMinh58__ai-training-job-queue-k8s__k8s__jobs__volcano-config-priority-training-job-8.yaml": {
+    "repo": "HienMinh58/ai-training-job-queue-k8s",
+    "path": "k8s/jobs/volcano-config-priority-training-job-8.yaml",
+    "html_url": "https://github.com/HienMinh58/ai-training-job-queue-k8s/blob/8890226996d7f5fd361476476070b4d3eb0acfa5/k8s/jobs/volcano-config-priority-training-job-8.yaml",
+    "sha": "1761f5c592f120ac3233a10e59e2efa2c7a56f57",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "c3di__neural_fib_se_bse__train_network__preprocess_data.yaml": {
+    "repo": "c3di/neural_fib_se_bse",
+    "path": "train_network/preprocess_data.yaml",
+    "html_url": "https://github.com/c3di/neural_fib_se_bse/blob/3efd774886766f08cd44bd8440c066e9f0c211ab/train_network/preprocess_data.yaml",
+    "sha": "6f54d8ac9f5ebfd5b044153503408fd5dfc96486",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "NVIDIA__knavigator__resources__benchmarks__templates__volcano__job.yaml": {
+    "repo": "NVIDIA/knavigator",
+    "path": "resources/benchmarks/templates/volcano/job.yaml",
+    "html_url": "https://github.com/NVIDIA/knavigator/blob/e5f1892df98235ba2c20a49574b6620b7a6f0e94/resources/benchmarks/templates/volcano/job.yaml",
+    "sha": "4c656f0800a2b6f3887cb4a60cf0318b24855bf0",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "gqcn__volcano-test-cases__reclaim-between-queues__case3__training-low.yaml": {
+    "repo": "gqcn/volcano-test-cases",
+    "path": "reclaim-between-queues/case3/training-low.yaml",
+    "html_url": "https://github.com/gqcn/volcano-test-cases/blob/7fd85bfbb3b55159cfd641657ac0c5487fc6f9dc/reclaim-between-queues/case3/training-low.yaml",
+    "sha": "3355a2a1453ac8f08703a43c7feedf08f1c0e9c5",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "jsfillman__kluge__cli__mpi-job8.yaml": {
+    "repo": "jsfillman/kluge",
+    "path": "cli/mpi-job8.yaml",
+    "html_url": "https://github.com/jsfillman/kluge/blob/f02389298374adc4fce1d6735658fa8030ee87b6/cli/mpi-job8.yaml",
+    "sha": "ede2280feb25664fccd32296f3da2b8578e01396",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "peopleforrester__2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial__components__02-training__pytorch__pytorch-fsdp-large-model.yaml": {
+    "repo": "peopleforrester/2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial",
+    "path": "components/02-training/pytorch/pytorch-fsdp-large-model.yaml",
+    "html_url": "https://github.com/peopleforrester/2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial/blob/13bf9f97f189863e7616f78117e965bf8fb495c7/components/02-training/pytorch/pytorch-fsdp-large-model.yaml",
+    "sha": "4b80cd8e344499e170161d3268ceed6da156a6e4",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "diegopacheco__devops-playground__volcano-fun__job__spark-pi-simple.yaml": {
+    "repo": "diegopacheco/devops-playground",
+    "path": "volcano-fun/job/spark-pi-simple.yaml",
+    "html_url": "https://github.com/diegopacheco/devops-playground/blob/3d7253e4783b42acc167a53e7ac5ecec8bd6f0e7/volcano-fun/job/spark-pi-simple.yaml",
+    "sha": "a7f5e5de4a61799fbfb7db67c8de000ae1614956",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "lowang-bh__k8s-learn__volcano__tasktop.yaml": {
+    "repo": "lowang-bh/k8s-learn",
+    "path": "volcano/tasktop.yaml",
+    "html_url": "https://github.com/lowang-bh/k8s-learn/blob/9ef3a0bebe63ad7e3d301b6349316b403d91c878/volcano/tasktop.yaml",
+    "sha": "43f514c671646edfc9f8ccc613f9cf4cabbbbe57",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "JBris__kubernetes-kind-examples__deployment__dev__volcano__vcjob.yaml": {
+    "repo": "JBris/kubernetes-kind-examples",
+    "path": "deployment/dev/volcano/vcjob.yaml",
+    "html_url": "https://github.com/JBris/kubernetes-kind-examples/blob/0aa3436465c819277843706599d8bf4af15b30cd/deployment/dev/volcano/vcjob.yaml",
+    "sha": "a94e2fa7984d494423d67e4971e59638017aa280",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "0f502a__volcano-reclaim-demo__config__reclaim__job-to-queue2.yaml": {
+    "repo": "0f502a/volcano-reclaim-demo",
+    "path": "config/reclaim/job-to-queue2.yaml",
+    "html_url": "https://github.com/0f502a/volcano-reclaim-demo/blob/b16f2c267ad1dd87862ededb57fa6f074b8a2b45/config/reclaim/job-to-queue2.yaml",
+    "sha": "9f2096e30b89ea29f484be069d028f9e940d7571",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "cvlab-epfl__cvlab-kubernetes-guide__scheduler_experiments__Volcano__t1__jobs-p2-cpu.yaml": {
+    "repo": "cvlab-epfl/cvlab-kubernetes-guide",
+    "path": "scheduler_experiments/Volcano/t1/jobs-p2-cpu.yaml",
+    "html_url": "https://github.com/cvlab-epfl/cvlab-kubernetes-guide/blob/a3403a01feded5f94b4bd619487fad6fc9dbf1bf/scheduler_experiments/Volcano/t1/jobs-p2-cpu.yaml",
+    "sha": "3cf4fc729c8e7ef4a0f22d8da3e9eca4f8d4e73b",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "awslabs__ai-on-eks__infra__trainium-inferentia__examples__mlp_train__trn1-mlp-cluster-autoscaler.yaml": {
+    "repo": "awslabs/ai-on-eks",
+    "path": "infra/trainium-inferentia/examples/mlp_train/trn1-mlp-cluster-autoscaler.yaml",
+    "html_url": "https://github.com/awslabs/ai-on-eks/blob/4beef2bb2310636a62c571f992ffa1a9b32fd664/infra/trainium-inferentia/examples/mlp_train/trn1-mlp-cluster-autoscaler.yaml",
+    "sha": "891d8d5ce4752caa0d8699ca829e0029c118f99b",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "diegopacheco__devops-playground__volcano-fun__job__spark-pi-job.yaml": {
+    "repo": "diegopacheco/devops-playground",
+    "path": "volcano-fun/job/spark-pi-job.yaml",
+    "html_url": "https://github.com/diegopacheco/devops-playground/blob/3d7253e4783b42acc167a53e7ac5ecec8bd6f0e7/volcano-fun/job/spark-pi-job.yaml",
+    "sha": "563b134e287834876390e0c7cdfe581095ced6eb",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "lasyard__docs___files__macos__workspace__k8s__volcano__sleep_vj_high.yaml": {
+    "repo": "lasyard/docs",
+    "path": "_files/macos/workspace/k8s/volcano/sleep_vj_high.yaml",
+    "html_url": "https://github.com/lasyard/docs/blob/5dd43cb2ec7a2e1e74e3ed98f01a8c301b769b96/_files/macos/workspace/k8s/volcano/sleep_vj_high.yaml",
+    "sha": "f9d8e3173e24190fc62d5c730671af608c9a02c0",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "raijenki__kubv1__cm1__cm1.yaml": {
+    "repo": "raijenki/kubv1",
+    "path": "cm1/cm1.yaml",
+    "html_url": "https://github.com/raijenki/kubv1/blob/1de770064d8a3f34a9e83389ab766dca6058f963/cm1/cm1.yaml",
+    "sha": "2af613bad363e4a52bdbcceebde83b8205b3838b",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "cvlab-epfl__cvlab-kubernetes-guide__scheduler_experiments__Volcano__t1__jobs-p1.yaml": {
+    "repo": "cvlab-epfl/cvlab-kubernetes-guide",
+    "path": "scheduler_experiments/Volcano/t1/jobs-p1.yaml",
+    "html_url": "https://github.com/cvlab-epfl/cvlab-kubernetes-guide/blob/a3403a01feded5f94b4bd619487fad6fc9dbf1bf/scheduler_experiments/Volcano/t1/jobs-p1.yaml",
+    "sha": "8b14e7cfd5a197b718808e4acdf5bb46e90eb5d1",
+    "stars": 0,
+    "query": "batch.volcano.sh/v1alpha1 extension:yaml"
+  },
+  "volcano-sh__volcano__example__invalid_jobs__minAvailable-webhook-deny.yaml": {
+    "repo": "volcano-sh/volcano",
+    "path": "example/invalid_jobs/minAvailable-webhook-deny.yaml",
+    "html_url": "https://github.com/volcano-sh/volcano/blob/0b6d4106b317f7104c532d146a3d77f13be078c8/example/invalid_jobs/minAvailable-webhook-deny.yaml",
+    "sha": "297dfe05d1f07280e1a3484651101dc4fb738293",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "data-infra__cube-studio__install__kubernetes__volcano__demo.yaml": {
+    "repo": "data-infra/cube-studio",
+    "path": "install/kubernetes/volcano/demo.yaml",
+    "html_url": "https://github.com/data-infra/cube-studio/blob/516898e6702693d479fba526e495ea68eda838e6/install/kubernetes/volcano/demo.yaml",
+    "sha": "e589b1202211b5d31066d4bdec2e35cbfbd4027d",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "sytelus__nanuGPT__scripts__volcano__volcano_job.yaml": {
+    "repo": "sytelus/nanuGPT",
+    "path": "scripts/volcano/volcano_job.yaml",
+    "html_url": "https://github.com/sytelus/nanuGPT/blob/7ba8b86c691ccae09508158a0ed3bb199a7eef2a/scripts/volcano/volcano_job.yaml",
+    "sha": "f49480784251023ecb3520e73e47eee9672cef4d",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "TommyLike__spark-operator-volcano-demo__hack__volcano-0.2.yaml": {
+    "repo": "TommyLike/spark-operator-volcano-demo",
+    "path": "hack/volcano-0.2.yaml",
+    "html_url": "https://github.com/TommyLike/spark-operator-volcano-demo/blob/f50e0f2afc3050a2732963159560efcb417bb02f/hack/volcano-0.2.yaml",
+    "sha": "f7f37baebbfbe8a7f0361c9d7c80cd9f833d5de6",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "k82cn__bsi-installer__grid__master__volcano-crds.yaml": {
+    "repo": "k82cn/bsi-installer",
+    "path": "grid/master/volcano-crds.yaml",
+    "html_url": "https://github.com/k82cn/bsi-installer/blob/0fd0c3116cd8f4b84d3f1983bf592ff0b21cddb2/grid/master/volcano-crds.yaml",
+    "sha": "e770ead4de54ebfe6a9e309e2cb567350398e8cb",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "gko01__k8s-for-hpc-workloads__hpc-components__sample-volcano-job.yaml": {
+    "repo": "gko01/k8s-for-hpc-workloads",
+    "path": "hpc-components/sample-volcano-job.yaml",
+    "html_url": "https://github.com/gko01/k8s-for-hpc-workloads/blob/ebc590a936e8672b5131cf13a28ac4f271282ee9/hpc-components/sample-volcano-job.yaml",
+    "sha": "c9697da7c5171d211be546887e0c0966c6b3c065",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "agileml__examples__sleep-job__volcano-sleep.yaml": {
+    "repo": "agileml/examples",
+    "path": "sleep-job/volcano-sleep.yaml",
+    "html_url": "https://github.com/agileml/examples/blob/82387a54d2db009bf63e010e581ff0644b8abb87/sleep-job/volcano-sleep.yaml",
+    "sha": "157cf70e7d0c05356c71dd8f2a4dcf6128a707b5",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "HienMinh58__ai-training-job-queue-k8s__k8s__jobs__priority-training-job-3.yaml": {
+    "repo": "HienMinh58/ai-training-job-queue-k8s",
+    "path": "k8s/jobs/priority-training-job-3.yaml",
+    "html_url": "https://github.com/HienMinh58/ai-training-job-queue-k8s/blob/8890226996d7f5fd361476476070b4d3eb0acfa5/k8s/jobs/priority-training-job-3.yaml",
+    "sha": "aacf16e84bf98bc11bacf4dd5ccc014816d1a983",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "apulis__Apulis-AI-Platform__src__ClusterBootstrap__services__volcanosh__volcanosh.yaml": {
+    "repo": "apulis/Apulis-AI-Platform",
+    "path": "src/ClusterBootstrap/services/volcanosh/volcanosh.yaml",
+    "html_url": "https://github.com/apulis/Apulis-AI-Platform/blob/2cf1fbb50e08b477940f5f336b1b897a49608b72/src/ClusterBootstrap/services/volcanosh/volcanosh.yaml",
+    "sha": "59d722e01e6daa41e60d3eecfeb15b77b6550366",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "volcano-sh__apis__artifacts__vcjob.yaml": {
+    "repo": "volcano-sh/apis",
+    "path": "artifacts/vcjob.yaml",
+    "html_url": "https://github.com/volcano-sh/apis/blob/1ed4d4dbe91b4daaf3e4f72171863ba0d6dc772d/artifacts/vcjob.yaml",
+    "sha": "0a06865d657d3e1da12f69d07ac3940de390c220",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "k82cn__kubesim__example__volcano-job.yaml": {
+    "repo": "k82cn/kubesim",
+    "path": "example/volcano-job.yaml",
+    "html_url": "https://github.com/k82cn/kubesim/blob/ee6ce388c1fc41ec2da7be38f5c8c2551ae1f643/example/volcano-job.yaml",
+    "sha": "0f7b6231749569311ea266ff3eb6371187a6cbfd",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "raijenki__kubv2__gromacs__gromacs.yaml": {
+    "repo": "raijenki/kubv2",
+    "path": "gromacs/gromacs.yaml",
+    "html_url": "https://github.com/raijenki/kubv2/blob/9f2ffa1a4612dad95b84d8eb16d64116cf47970f/gromacs/gromacs.yaml",
+    "sha": "b16e9961a82b2185675aca156f7cd4063238b673",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "meta-pytorch__monarch__examples__kubernetes__hello_kubernetes_job__manifests__volcano_workers.yaml": {
+    "repo": "meta-pytorch/monarch",
+    "path": "examples/kubernetes/hello_kubernetes_job/manifests/volcano_workers.yaml",
+    "html_url": "https://github.com/meta-pytorch/monarch/blob/f3e7a3510ae3264a3f1686fca556f21c420a8334/examples/kubernetes/hello_kubernetes_job/manifests/volcano_workers.yaml",
+    "sha": "79a083f66612d9f76477a05b6e29e4d6376004c2",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "lasyard__docs___files__macos__workspace__k8s__volcano__hierarchical_vj_a1.yaml": {
+    "repo": "lasyard/docs",
+    "path": "_files/macos/workspace/k8s/volcano/hierarchical_vj_a1.yaml",
+    "html_url": "https://github.com/lasyard/docs/blob/5dd43cb2ec7a2e1e74e3ed98f01a8c301b769b96/_files/macos/workspace/k8s/volcano/hierarchical_vj_a1.yaml",
+    "sha": "433a0324aff9b66f8de0009009558cb54fe45a31",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "volcano-sh__volcano-global__docs__deploy__exmaple__mindspore-cpu.yaml": {
+    "repo": "volcano-sh/volcano-global",
+    "path": "docs/deploy/exmaple/mindspore-cpu.yaml",
+    "html_url": "https://github.com/volcano-sh/volcano-global/blob/bc14015ed014e5109af993da712ffe703df72ac3/docs/deploy/exmaple/mindspore-cpu.yaml",
+    "sha": "8f7ed83b6b29907818eb17e2d411c7372e1390d4",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "peopleforrester__2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial__components__02-training__tensorflow__tensorflow-multiworker.yaml": {
+    "repo": "peopleforrester/2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial",
+    "path": "components/02-training/tensorflow/tensorflow-multiworker.yaml",
+    "html_url": "https://github.com/peopleforrester/2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial/blob/13bf9f97f189863e7616f78117e965bf8fb495c7/components/02-training/tensorflow/tensorflow-multiworker.yaml",
+    "sha": "0798ca1f4060c20c4086399c36b331511094d3d0",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "diegopacheco__devops-playground__volcano-fun__job__spark-streaming-ui.yaml": {
+    "repo": "diegopacheco/devops-playground",
+    "path": "volcano-fun/job/spark-streaming-ui.yaml",
+    "html_url": "https://github.com/diegopacheco/devops-playground/blob/3d7253e4783b42acc167a53e7ac5ecec8bd6f0e7/volcano-fun/job/spark-streaming-ui.yaml",
+    "sha": "7ba2346241e38a2d944b3d17b6a71cb047292d6b",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "gfnogueira__data-brew__orchestration__volcano__04-vcjob-gang-ok.yaml": {
+    "repo": "gfnogueira/data-brew",
+    "path": "orchestration/volcano/04-vcjob-gang-ok.yaml",
+    "html_url": "https://github.com/gfnogueira/data-brew/blob/c3eef7f0fcccb66cecd6c833077b7408cd7693aa/orchestration/volcano/04-vcjob-gang-ok.yaml",
+    "sha": "00da87b2e0bec2ec4635ab2820927df253af9449",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "gilbert12tw__eda-licenses-operator__deploy__examples__vcjob-plain.yaml": {
+    "repo": "gilbert12tw/eda-licenses-operator",
+    "path": "deploy/examples/vcjob-plain.yaml",
+    "html_url": "https://github.com/gilbert12tw/eda-licenses-operator/blob/c5c3c9abe2b87c40c8665d3cc4268c991615efbc/deploy/examples/vcjob-plain.yaml",
+    "sha": "cd5f4e0ae3837df68d23b305be700f8b2d81fa5d",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "RafalSiwek__distributed-mlops-overview__examples__voclano_scheduler__multinode_ddp_volcano_mpi_amd_gpu_job.yaml": {
+    "repo": "RafalSiwek/distributed-mlops-overview",
+    "path": "examples/voclano_scheduler/multinode_ddp_volcano_mpi_amd_gpu_job.yaml",
+    "html_url": "https://github.com/RafalSiwek/distributed-mlops-overview/blob/7c4d9bc8e4f5d4e3ae6b114423da58e1ce107f0d/examples/voclano_scheduler/multinode_ddp_volcano_mpi_amd_gpu_job.yaml",
+    "sha": "b4d67a7351cb5c39636d8e57a79d8917bcba2be9",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "awslabs__global-capacity-orchestrator-on-aws__examples__volcano-gang-job.yaml": {
+    "repo": "awslabs/global-capacity-orchestrator-on-aws",
+    "path": "examples/volcano-gang-job.yaml",
+    "html_url": "https://github.com/awslabs/global-capacity-orchestrator-on-aws/blob/8b75dc03e4fc61d222c997afb246a74c5fc407ec/examples/volcano-gang-job.yaml",
+    "sha": "5afd72daae3b3728230f8a9f75d2ca42dd48864c",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "SPS-Lab__mpi-k8s__LAMMPS__lammps.yaml": {
+    "repo": "SPS-Lab/mpi-k8s",
+    "path": "LAMMPS/lammps.yaml",
+    "html_url": "https://github.com/SPS-Lab/mpi-k8s/blob/0b5611159388c00c108fe84bb81453ac7e7b9317/LAMMPS/lammps.yaml",
+    "sha": "37284315d41b756fa3f3ff5635ab918a66534fb8",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "dmrub__volcano-k8s-examples__tensorflow__volcano-gpu-tf-keras-mirrored-strategy-mlflow.yaml": {
+    "repo": "dmrub/volcano-k8s-examples",
+    "path": "tensorflow/volcano-gpu-tf-keras-mirrored-strategy-mlflow.yaml",
+    "html_url": "https://github.com/dmrub/volcano-k8s-examples/blob/a783469249591fa7687ed31e0be945932f112e12/tensorflow/volcano-gpu-tf-keras-mirrored-strategy-mlflow.yaml",
+    "sha": "88fc137e6d1dafe751a27c259c390b81150d2076",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "InsightSoftmax__BAMMM__conversions__02-volcano-to-slurm__source.yaml": {
+    "repo": "InsightSoftmax/BAMMM",
+    "path": "conversions/02-volcano-to-slurm/source.yaml",
+    "html_url": "https://github.com/InsightSoftmax/BAMMM/blob/72ad75b8dad1c136b735a7bfe2c5d7d1e11f78c1/conversions/02-volcano-to-slurm/source.yaml",
+    "sha": "9ebc0891b05d5a92b42d99a7fd298062cfde209b",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "freedragon__AKS-with-NDv5__src__nccl-allreduce-job.yaml": {
+    "repo": "freedragon/AKS-with-NDv5",
+    "path": "src/nccl-allreduce-job.yaml",
+    "html_url": "https://github.com/freedragon/AKS-with-NDv5/blob/54ff560bc8080c6c0e99ce68eee908cce8299ab5/src/nccl-allreduce-job.yaml",
+    "sha": "65900777e997ca89443ffbb2ca4f5bb054ca1a79",
+    "stars": 0,
+    "query": "schedulerName: volcano minAvailable extension:yaml"
+  },
+  "Azure__azurehpc__experimental__aks_ndv4__hpc-diagnostics.yaml": {
+    "repo": "Azure/azurehpc",
+    "path": "experimental/aks_ndv4/hpc-diagnostics.yaml",
+    "html_url": "https://github.com/Azure/azurehpc/blob/2d57191cb35ed638525ba9424cc2aa1b5abe1c05/experimental/aks_ndv4/hpc-diagnostics.yaml",
+    "sha": "a60a36bf33263f3cd774250b3f26b694dbf1c3d7",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "elasticdeeplearning__edl__example__ctr__k8s__ctr.yaml": {
+    "repo": "elasticdeeplearning/edl",
+    "path": "example/ctr/k8s/ctr.yaml",
+    "html_url": "https://github.com/elasticdeeplearning/edl/blob/f065ec02bb27a67c80466103e298bd6f37494048/example/ctr/k8s/ctr.yaml",
+    "sha": "4e437633d30666e76c5693e06dcc169efebebec9",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "awslabs__ai-on-eks__infra__trainium-inferentia__examples__mlp_train__trn1-mlp-karpenter.yaml": {
+    "repo": "awslabs/ai-on-eks",
+    "path": "infra/trainium-inferentia/examples/mlp_train/trn1-mlp-karpenter.yaml",
+    "html_url": "https://github.com/awslabs/ai-on-eks/blob/4beef2bb2310636a62c571f992ffa1a9b32fd664/infra/trainium-inferentia/examples/mlp_train/trn1-mlp-karpenter.yaml",
+    "sha": "6872013d9ffe120fe267441fd3e109c44cb5ed35",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "cvlab-epfl__cvlab-kubernetes-guide__scheduler_experiments__Volcano__t1__jobs-p2.yaml": {
+    "repo": "cvlab-epfl/cvlab-kubernetes-guide",
+    "path": "scheduler_experiments/Volcano/t1/jobs-p2.yaml",
+    "html_url": "https://github.com/cvlab-epfl/cvlab-kubernetes-guide/blob/a3403a01feded5f94b4bd619487fad6fc9dbf1bf/scheduler_experiments/Volcano/t1/jobs-p2.yaml",
+    "sha": "a03122d33544b6c225a2acc30689767ce5e22bb7",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "volcano-sh__volcano__example__task-start-dependency__job.yaml": {
+    "repo": "volcano-sh/volcano",
+    "path": "example/task-start-dependency/job.yaml",
+    "html_url": "https://github.com/volcano-sh/volcano/blob/0b6d4106b317f7104c532d146a3d77f13be078c8/example/task-start-dependency/job.yaml",
+    "sha": "e5808ad4052a3f448ab88578b1c489ce3cb26aa7",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "dmrub__volcano-k8s-examples__pytorch__volcano-gpu-pytorch-multi-worker.yaml": {
+    "repo": "dmrub/volcano-k8s-examples",
+    "path": "pytorch/volcano-gpu-pytorch-multi-worker.yaml",
+    "html_url": "https://github.com/dmrub/volcano-k8s-examples/blob/a783469249591fa7687ed31e0be945932f112e12/pytorch/volcano-gpu-pytorch-multi-worker.yaml",
+    "sha": "2818997c1f172f01e52017b6bfd5fc5f364704a8",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "aws-samples__aws-do-eks__Container-Root__eks__deployment__distributed-training__pytorch__volcano__vcjob.yaml": {
+    "repo": "aws-samples/aws-do-eks",
+    "path": "Container-Root/eks/deployment/distributed-training/pytorch/volcano/vcjob.yaml",
+    "html_url": "https://github.com/aws-samples/aws-do-eks/blob/391ed0a45f7c5e571c43c3d6769b878cbbcfe97b/Container-Root/eks/deployment/distributed-training/pytorch/volcano/vcjob.yaml",
+    "sha": "0d1d0c2fd91af5f3eb0a54cdb6b764c80ce9ec7b",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "ChahwanSong__dms-scheduler__template__dms-vcjob-dir-verifier.yaml": {
+    "repo": "ChahwanSong/dms-scheduler",
+    "path": "template/dms-vcjob-dir-verifier.yaml",
+    "html_url": "https://github.com/ChahwanSong/dms-scheduler/blob/b34bea71a3e1c54cf04dbed1b47ba54ab41e0436/template/dms-vcjob-dir-verifier.yaml",
+    "sha": "d51a5c837bc98272d1d04b50f7e7f769951a1e14",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "raijenki__kubv1__parint__smpi-vanilla2.yaml": {
+    "repo": "raijenki/kubv1",
+    "path": "parint/smpi-vanilla2.yaml",
+    "html_url": "https://github.com/raijenki/kubv1/blob/1de770064d8a3f34a9e83389ab766dca6058f963/parint/smpi-vanilla2.yaml",
+    "sha": "3528bc9603308be47669bbb3ac132f105844ee3a",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "kalavai-net__kube-watcher__templates__registrar__template.yaml": {
+    "repo": "kalavai-net/kube-watcher",
+    "path": "templates/registrar/template.yaml",
+    "html_url": "https://github.com/kalavai-net/kube-watcher/blob/9e45ecdada1c8355fe1269591c62a88d038204af/templates/registrar/template.yaml",
+    "sha": "0b5db195f5f63f905e435b1e5b96317536cf16be",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "iflytek__argo-volcano-executor-plugin__install__demo.yaml": {
+    "repo": "iflytek/argo-volcano-executor-plugin",
+    "path": "install/demo.yaml",
+    "html_url": "https://github.com/iflytek/argo-volcano-executor-plugin/blob/cf219bc3da7a8adba3d87ea4ac27015dd77263a6/install/demo.yaml",
+    "sha": "399d573339265a067d48b667956d32de534a3d00",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "gilbert12tw__eda-licenses-operator__deploy__examples__vcjob-dc-001.yaml": {
+    "repo": "gilbert12tw/eda-licenses-operator",
+    "path": "deploy/examples/vcjob-dc-001.yaml",
+    "html_url": "https://github.com/gilbert12tw/eda-licenses-operator/blob/c5c3c9abe2b87c40c8665d3cc4268c991615efbc/deploy/examples/vcjob-dc-001.yaml",
+    "sha": "c8e9a43e7468152286316a336d9f87d18ab28155",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "HienMinh58__ai-training-job-queue-k8s__k8s__jobs__volcano-config-gang-training-job-7.yaml": {
+    "repo": "HienMinh58/ai-training-job-queue-k8s",
+    "path": "k8s/jobs/volcano-config-gang-training-job-7.yaml",
+    "html_url": "https://github.com/HienMinh58/ai-training-job-queue-k8s/blob/8890226996d7f5fd361476476070b4d3eb0acfa5/k8s/jobs/volcano-config-gang-training-job-7.yaml",
+    "sha": "88fe42f17397f17f68f1e3e5200ea26e2b800c1e",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "InsightSoftmax__BAMMM__conversions__01-slurm-to-volcano__target.yaml": {
+    "repo": "InsightSoftmax/BAMMM",
+    "path": "conversions/01-slurm-to-volcano/target.yaml",
+    "html_url": "https://github.com/InsightSoftmax/BAMMM/blob/72ad75b8dad1c136b735a7bfe2c5d7d1e11f78c1/conversions/01-slurm-to-volcano/target.yaml",
+    "sha": "e325bde1eb073cb41df8e9633ce19a50518e36b7",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "peopleforrester__2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial__components__02-training__volcano__volcano-queues.yaml": {
+    "repo": "peopleforrester/2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial",
+    "path": "components/02-training/volcano/volcano-queues.yaml",
+    "html_url": "https://github.com/peopleforrester/2026_Kubecon_Europe_CNCF_MLOps_Pipeline_Tutorial/blob/13bf9f97f189863e7616f78117e965bf8fb495c7/components/02-training/volcano/volcano-queues.yaml",
+    "sha": "1e6656ac4fbfbdbd8acfcccaf60c05fe8a261473",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "HienMinh58__ai-training-job-queue-k8s__k8s__jobs__priority-training-job-5.yaml": {
+    "repo": "HienMinh58/ai-training-job-queue-k8s",
+    "path": "k8s/jobs/priority-training-job-5.yaml",
+    "html_url": "https://github.com/HienMinh58/ai-training-job-queue-k8s/blob/8890226996d7f5fd361476476070b4d3eb0acfa5/k8s/jobs/priority-training-job-5.yaml",
+    "sha": "3ac149a48692a2c682aa48fa37c1a4708f2b39af",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "agileml__examples__pytorch__pytorch-job.yaml": {
+    "repo": "agileml/examples",
+    "path": "pytorch/pytorch-job.yaml",
+    "html_url": "https://github.com/agileml/examples/blob/82387a54d2db009bf63e010e581ff0644b8abb87/pytorch/pytorch-job.yaml",
+    "sha": "ac6bb66efd13ca682bf1536e2fef0b274e2cc21c",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "HienMinh58__ai-training-job-queue-k8s__k8s__jobs__volcano-config-gang-training-job-5.yaml": {
+    "repo": "HienMinh58/ai-training-job-queue-k8s",
+    "path": "k8s/jobs/volcano-config-gang-training-job-5.yaml",
+    "html_url": "https://github.com/HienMinh58/ai-training-job-queue-k8s/blob/8890226996d7f5fd361476476070b4d3eb0acfa5/k8s/jobs/volcano-config-gang-training-job-5.yaml",
+    "sha": "02df53070d34f89561668b020deba80c718c4c42",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "rhys-newbury__mpd__kube-train.yaml": {
+    "repo": "rhys-newbury/mpd",
+    "path": "kube-train.yaml",
+    "html_url": "https://github.com/rhys-newbury/mpd/blob/14695e2cafaf5b9013a48682a431c84dc76e1d43/kube-train.yaml",
+    "sha": "47d5a96c9b89e15102f6016e078e2cfdb8a906eb",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "mahdikhashan__dataset-processing-volcano__manifests__volcano__job-extract-mnist.yaml": {
+    "repo": "mahdikhashan/dataset-processing-volcano",
+    "path": "manifests/volcano/job-extract-mnist.yaml",
+    "html_url": "https://github.com/mahdikhashan/dataset-processing-volcano/blob/befce2279314e8f06bc413286bf7e18d5bb0d33d/manifests/volcano/job-extract-mnist.yaml",
+    "sha": "e5d95c63cbd2281a3749fe6af45b514c68a16a24",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "microsoft__all-things-azure__project-stormbreaker__default__manifests__hpc__adcirc-hpc.yaml": {
+    "repo": "microsoft/all-things-azure",
+    "path": "project-stormbreaker/default/manifests/hpc/adcirc-hpc.yaml",
+    "html_url": "https://github.com/microsoft/all-things-azure/blob/27ade40fb479f9663b431910dd96d377043089b9/project-stormbreaker/default/manifests/hpc/adcirc-hpc.yaml",
+    "sha": "5dca405f8101f650fdc6733d7ee0ea547af474af",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "diegopacheco__devops-playground__volcano-fun__job__flink-streaming-job.yaml": {
+    "repo": "diegopacheco/devops-playground",
+    "path": "volcano-fun/job/flink-streaming-job.yaml",
+    "html_url": "https://github.com/diegopacheco/devops-playground/blob/3d7253e4783b42acc167a53e7ac5ecec8bd6f0e7/volcano-fun/job/flink-streaming-job.yaml",
+    "sha": "f145976aa7aebe4f26e345b0a688ce2869edae57",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "c3di__neural_fib_se_bse__train_network__fib_surrigate_distributed.yaml": {
+    "repo": "c3di/neural_fib_se_bse",
+    "path": "train_network/fib_surrigate_distributed.yaml",
+    "html_url": "https://github.com/c3di/neural_fib_se_bse/blob/3efd774886766f08cd44bd8440c066e9f0c211ab/train_network/fib_surrigate_distributed.yaml",
+    "sha": "4a4a6508902ac76050e91c6a51f2c5d56dd3e7c3",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "RafalSiwek__distributed-mlops-overview__examples__voclano_scheduler__multinode_ddp_volcano_mpi_job.yaml": {
+    "repo": "RafalSiwek/distributed-mlops-overview",
+    "path": "examples/voclano_scheduler/multinode_ddp_volcano_mpi_job.yaml",
+    "html_url": "https://github.com/RafalSiwek/distributed-mlops-overview/blob/7c4d9bc8e4f5d4e3ae6b114423da58e1ce107f0d/examples/voclano_scheduler/multinode_ddp_volcano_mpi_job.yaml",
+    "sha": "03541c9b8d9bb6a8ecaf13c31d667161cac95fab",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  },
+  "lowang-bh__k8s-learn__podgroup__job-web-server-taskmin.yaml": {
+    "repo": "lowang-bh/k8s-learn",
+    "path": "podgroup/job-web-server-taskmin.yaml",
+    "html_url": "https://github.com/lowang-bh/k8s-learn/blob/9ef3a0bebe63ad7e3d301b6349316b403d91c878/podgroup/job-web-server-taskmin.yaml",
+    "sha": "9ba5b0dabec1a732b142a921d070015180a305fc",
+    "stars": 0,
+    "query": "batch.volcano.sh tasks extension:yaml"
+  }
+}
