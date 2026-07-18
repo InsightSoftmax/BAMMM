@@ -16,13 +16,13 @@ spec:
     account: my-project
     priority: 500
     walltime: PT30M
-    walltime_min: PT5M              # backfill: accept as short as 5 minutes
+    walltimeMin: PT5M              # backfill: accept as short as 5 minutes
     reservation: ""
   resources:
     nodes: 1
     tasks: 1
-    cpus_per_task: 4
-    memory_per_task: "8Gi"
+    cpusPerTask: 4
+    memoryPerTask: "8Gi"
     gpu:
       count: 1
       type: a100
@@ -34,7 +34,7 @@ spec:
       echo "Node: ${SLURM_NODELIST}"
       nvidia-smi
       sleep 120
-    working_dir: /scratch/$USER
+    workingDir: /scratch/$USER
     environment:
       vars:
         MY_VAR: hello
@@ -48,8 +48,8 @@ spec:
     email: "user@example.com"
     events: [end, fail]
   lifecycle:
-    max_retries: 1
-    requeue_on_failure: false
+    maxRetries: 1
+    requeueOnFailure: false
 
   extensions:
     slurm:
@@ -60,4 +60,4 @@ spec:
       gpu_bind: closest
       cpus_per_gpu: 4
       mem_per_gpu: "16Gi"
-      signal_before_end: "USR1@60"
+      signalBeforeEnd: "USR1@60"

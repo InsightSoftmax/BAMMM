@@ -19,10 +19,10 @@ spec:
     walltime: PT1H
   resources:
     tasks: 1
-    cpus_per_task: 2
-    memory_per_task: "4Gi"
+    cpusPerTask: 2
+    memoryPerTask: "4Gi"
   lifecycle:
-    max_retries: 3
+    maxRetries: 3
   execution:
     container:
       image: "amazon/amazon-ecs-sample:latest"

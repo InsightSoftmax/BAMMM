@@ -23,9 +23,9 @@ spec:
   resources:
     nodes: 1
     tasks: 1
-    cpus_per_task: 16
-    memory_per_task: "64Gi"
-    disk_per_task: "500Gi"
+    cpusPerTask: 16
+    memoryPerTask: "64Gi"
+    diskPerTask: "500Gi"
   execution:
     # K8s schedulers will use this:
     container:
@@ -55,14 +55,14 @@ spec:
           --output "${SAMPLE_ID}.vcf.gz"
       fi
 
-    working_dir: /scratch/genomics
+    workingDir: /scratch/genomics
     environment:
       vars:
         SAMPLE_ID: "NA12878"
         TMPDIR: /scratch/tmp
 
   placement:
-    node_selector:
+    nodeSelector:
       node-type: high-memory
     constraint: "avx2"
     exclusive: false
@@ -71,7 +71,7 @@ spec:
     stdout: "/scratch/logs/genomics-{job_id}.out"
     stderr: "/scratch/logs/genomics-{job_id}.err"
 
-  file_staging:
+  fileStaging:
     inputs:
       - src: "s3://my-genomics/samples/NA12878.bam"
         dst: "/scratch/genomics/NA12878.bam"
@@ -83,22 +83,22 @@ spec:
 
   volumes:
     - name: reference
-      mount_path: /data
-      read_only: true
+      mountPath: /data
+      readOnly: true
       nfs:
         server: nfs.genomics.internal
         path: /exports/reference/hg38
     - name: scratch
-      mount_path: /scratch
-      empty_dir: true
+      mountPath: /scratch
+      emptyDir: true
 
   notifications:
     email: "bioinformatician@example.com"
     events: [end, fail]
 
   lifecycle:
-    max_retries: 1
-    ttl_after_finished: PT4H
+    maxRetries: 1
+    ttlAfterFinished: PT4H
 
   extensions:
     slurm:
