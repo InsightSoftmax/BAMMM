@@ -56,6 +56,15 @@ of potential translation loss):
 bammm convert --from slurm --to splat --input-dir corpus/slurm --output-dir out/ --report
 ```
 
+Priority is normalized onto a canonical 0–1000 band (higher = higher priority)
+so it survives conversion between schedulers that disagree on range and
+direction. Widen the band with `--priority-range MIN:MAX` (e.g. `0:100000`) to
+reduce rounding loss when round-tripping schedulers with large native ranges:
+
+```sh
+bammm convert --from pbs --to slurm --priority-range 0:100000 job.pbs
+```
+
 ### Validating specs
 
 `bammm validate` checks that specs parse (and, with `--to`, convert) without
@@ -178,7 +187,11 @@ BAMMM tells you upfront when a conversion is lossy. Some things genuinely cannot
 - **Slurm het-jobs** — only Slurm can execute them natively; approximated as multi-task elsewhere.
 - **Run.ai GPU fractions** — virtual GPU partitioning rounds to whole GPUs on every other scheduler.
 
-The full list is in [SPEC.md § Known Lossy Translations](SPEC.md#known-lossy-translations) and [conversions/README.md](conversions/README.md).
+The full list is in [SPEC.md § Known Lossy Translations](SPEC.md#known-lossy-translations) and [conversions/README.md](conversions/README.md). The sharp edges that bite people — the camelCase field rule, priority direction, `extensions.*` passthrough — are collected in [docs/gotchas.md](docs/gotchas.md).
+
+Need a translation BAMMM doesn't do out of the box? A user-defined
+[declarative rules file](docs/translation-rules.md) is designed (not yet built)
+to let you adjust mappings without patching source.
 
 ## Development
 
@@ -214,7 +227,12 @@ scraper is config-driven — one entry per scheduler — and runs under `uv`:
 export GITHUB_TOKEN=ghp_...
 uv run scripts/corpus/fetch_corpus.py --list       # supported schedulers
 make corpus SCHED=slurm                             # scrape a corpus
+make corpus SCHED=pairs                             # hunt repos with ≥2 formats
 ```
+
+The `pairs` mode is different: instead of scraping one scheduler by file, it
+finds repos that contain specs for two or more schedulers side by side —
+candidate cross-scheduler *equivalent* pairs for conversion ground truth.
 
 See [CLAUDE.md](CLAUDE.md) for architecture decisions, the build plan, and notes for contributors.
 
