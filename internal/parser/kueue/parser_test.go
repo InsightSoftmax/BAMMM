@@ -5,8 +5,65 @@ import (
 	"testing"
 	"time"
 
+	kueueemit "github.com/InsightSoftmax/BAMMM/internal/emitter/kueue"
 	"github.com/InsightSoftmax/BAMMM/internal/parser/kueue"
+	"github.com/InsightSoftmax/BAMMM/internal/splat"
 )
+
+// TestRoundTrip_MultiRoleJobSet guards the emitter and parser against drift: a
+// multi-role job emitted as a JobSet must parse back to the same roles.
+func TestRoundTrip_MultiRoleJobSet(t *testing.T) {
+	orig := &splat.Job{
+		APIVersion: splat.APIVersion,
+		Kind:       splat.Kind,
+		Metadata:   splat.Metadata{Name: "sim"},
+		Spec: splat.Spec{
+			Schedule: splat.Schedule{Queue: "gpu"},
+			Tasks: []splat.Task{
+				{
+					Name:      "driver",
+					Replicas:  1,
+					Resources: &splat.Resources{CPUsPerTask: 4},
+					Execution: &splat.Execution{Container: &splat.ContainerExecution{Image: "sim:1", Command: []string{"drive"}}},
+				},
+				{
+					Name:      "compute",
+					Replicas:  4,
+					Resources: &splat.Resources{CPUsPerTask: 32, GPU: &splat.GPURequest{Count: 4}},
+					Execution: &splat.Execution{Container: &splat.ContainerExecution{Image: "sim:1", Command: []string{"work"}}},
+				},
+			},
+		},
+	}
+
+	out, err := kueueemit.Emit(orig)
+	if err != nil {
+		t.Fatalf("Emit: %v", err)
+	}
+	job, err := kueue.Parse(out)
+	if err != nil {
+		t.Fatalf("Parse: %v", err)
+	}
+
+	if job.Spec.Schedule.Queue != "gpu" {
+		t.Errorf("queue: got %q", job.Spec.Schedule.Queue)
+	}
+	if len(job.Spec.Tasks) != 2 {
+		t.Fatalf("tasks: got %d want 2", len(job.Spec.Tasks))
+	}
+	for i, want := range orig.Spec.Tasks {
+		got := job.Spec.Tasks[i]
+		if got.Name != want.Name || got.Replicas != want.Replicas {
+			t.Errorf("task %d: got %s/%d want %s/%d", i, got.Name, got.Replicas, want.Name, want.Replicas)
+		}
+		if got.Execution == nil || got.Execution.Container == nil || got.Execution.Container.Image != "sim:1" {
+			t.Errorf("task %d execution: %+v", i, got.Execution)
+		}
+	}
+	if job.Spec.Tasks[1].Resources == nil || job.Spec.Tasks[1].Resources.GPU == nil || job.Spec.Tasks[1].Resources.GPU.Count != 4 {
+		t.Errorf("compute gpu: %+v", job.Spec.Tasks[1].Resources)
+	}
+}
 
 const scriptJob = `
 apiVersion: v1
@@ -58,6 +115,113 @@ spec:
             name: bert-finetune-script
       restartPolicy: Never
 `
+
+const jobSetManifest = `
+apiVersion: jobset.x-k8s.io/v1alpha2
+kind: JobSet
+metadata:
+  name: ml-training
+  namespace: research
+  labels:
+    kueue.x-k8s.io/queue-name: gpu-hpc
+    team: nlp
+spec:
+  replicatedJobs:
+    - name: driver
+      replicas: 1
+      template:
+        spec:
+          backoffLimit: 3
+          template:
+            spec:
+              containers:
+                - name: driver
+                  image: ray:2.9
+                  command: ["ray", "start", "--head"]
+                  resources:
+                    requests:
+                      cpu: "4"
+                      memory: 8Gi
+              restartPolicy: Never
+    - name: worker
+      replicas: 1
+      template:
+        spec:
+          parallelism: 3
+          completions: 3
+          backoffLimit: 3
+          template:
+            spec:
+              nodeSelector:
+                gpu: "true"
+              containers:
+                - name: worker
+                  image: ubuntu:22.04
+                  command: ["/bin/bash", "-c"]
+                  args: ["echo hi && sleep 1"]
+                  resources:
+                    requests:
+                      cpu: "8"
+                      memory: 16Gi
+                      nvidia.com/gpu: "4"
+              restartPolicy: Never
+`
+
+func TestParse_JobSet(t *testing.T) {
+	job, err := kueue.Parse([]byte(jobSetManifest))
+	if err != nil {
+		t.Fatalf("Parse: %v", err)
+	}
+
+	if job.Metadata.Name != "ml-training" {
+		t.Errorf("name: got %q", job.Metadata.Name)
+	}
+	if job.Metadata.Annotations["bammm.io/namespace"] != "research" {
+		t.Errorf("namespace: got %q", job.Metadata.Annotations["bammm.io/namespace"])
+	}
+	if job.Spec.Schedule.Queue != "gpu-hpc" {
+		t.Errorf("queue: got %q", job.Spec.Schedule.Queue)
+	}
+	if job.Metadata.Labels["team"] != "nlp" {
+		t.Errorf("label team: got %q", job.Metadata.Labels["team"])
+	}
+	if job.Spec.Lifecycle.MaxRetries != 3 {
+		t.Errorf("maxRetries: got %d want 3", job.Spec.Lifecycle.MaxRetries)
+	}
+
+	if len(job.Spec.Tasks) != 2 {
+		t.Fatalf("tasks: got %d want 2", len(job.Spec.Tasks))
+	}
+
+	driver := job.Spec.Tasks[0]
+	if driver.Name != "driver" || driver.Replicas != 1 {
+		t.Errorf("driver: name=%q replicas=%d", driver.Name, driver.Replicas)
+	}
+	if driver.Execution == nil || driver.Execution.Container == nil || driver.Execution.Container.Image != "ray:2.9" {
+		t.Errorf("driver execution: %+v", driver.Execution)
+	}
+	if driver.Resources == nil || driver.Resources.CPUsPerTask != 4 {
+		t.Errorf("driver cpus: %+v", driver.Resources)
+	}
+
+	worker := job.Spec.Tasks[1]
+	if worker.Name != "worker" || worker.Replicas != 3 {
+		t.Errorf("worker: name=%q replicas=%d want worker/3", worker.Name, worker.Replicas)
+	}
+	// An inlined /bin/bash -c on the placeholder image round-trips to a script.
+	if worker.Execution == nil || worker.Execution.Container != nil {
+		t.Errorf("worker should be a script, got %+v", worker.Execution)
+	}
+	if worker.Execution.Script != "echo hi && sleep 1" {
+		t.Errorf("worker script: got %q", worker.Execution.Script)
+	}
+	if worker.Resources == nil || worker.Resources.GPU == nil || worker.Resources.GPU.Count != 4 {
+		t.Errorf("worker gpu: %+v", worker.Resources)
+	}
+	if worker.Placement == nil || worker.Placement.NodeSelector["gpu"] != "true" {
+		t.Errorf("worker nodeSelector: %+v", worker.Placement)
+	}
+}
 
 func TestParse_ScriptJob(t *testing.T) {
 	job, err := kueue.Parse([]byte(scriptJob))

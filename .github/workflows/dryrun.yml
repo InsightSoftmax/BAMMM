@@ -8,7 +8,9 @@ on:
   pull_request:
     paths:
       - 'internal/emitter/**'
+      - 'internal/parser/**'
       - 'internal/splat/**'
+      - 'internal/k8senc/**'
       - 'internal/*/types.go'
       - 'scripts/dryrun/**'
       - '.github/workflows/dryrun.yml'

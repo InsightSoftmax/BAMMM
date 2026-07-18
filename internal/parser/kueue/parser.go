@@ -10,6 +10,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"sigs.k8s.io/yaml"
 
+	"github.com/InsightSoftmax/BAMMM/internal/jobset"
 	"github.com/InsightSoftmax/BAMMM/internal/k8senc"
 	"github.com/InsightSoftmax/BAMMM/internal/parser"
 	"github.com/InsightSoftmax/BAMMM/internal/splat"
@@ -30,6 +31,18 @@ const queueNameLabel = "kueue.x-k8s.io/queue-name"
 // supporting ConfigMap (from which an embedded HPC script is recovered).
 func Parse(data []byte) (*splat.Job, error) {
 	docs := k8senc.SplitYAMLDocs(data)
+
+	// A multi-role job is emitted as a JobSet; if one is present it is the whole
+	// job, so parse it and return before looking for a single batch/v1 Job.
+	for _, doc := range docs {
+		if k8senc.DocumentKind(doc) == jobset.Kind {
+			var js jobset.JobSet
+			if err := yaml.Unmarshal(doc, &js); err != nil {
+				return nil, fmt.Errorf("kueue: unmarshal JobSet: %w", err)
+			}
+			return jobFromJobSet(&js), nil
+		}
+	}
 
 	var k8sJob *batchv1.Job
 	configMaps := map[string]map[string]string{} // name -> data
@@ -71,6 +84,25 @@ func Parse(data []byte) (*splat.Job, error) {
 	applyPodSpec(job, &k8sJob.Spec.Template.Spec, configMaps)
 
 	return job, nil
+}
+
+// jobFromJobSet builds a multi-role SPLAT job from a Kueue-admitted JobSet.
+func jobFromJobSet(js *jobset.JobSet) *splat.Job {
+	job := &splat.Job{APIVersion: splat.APIVersion, Kind: splat.Kind}
+	job.Metadata.Name = js.Name
+	job.Metadata.Annotations = map[string]string{"bammm.io/source-format": "kueue"}
+	if js.Namespace != "" && js.Namespace != "default" {
+		job.Metadata.Annotations["bammm.io/namespace"] = js.Namespace
+	}
+	applyLabels(job, js.Labels)
+
+	tasks, volumes, maxRetries := jobset.ToTasks(js)
+	job.Spec.Tasks = tasks
+	job.Spec.Volumes = volumes
+	if maxRetries > 0 {
+		job.Spec.Lifecycle.MaxRetries = maxRetries
+	}
+	return job
 }
 
 func applyLabels(job *splat.Job, labels map[string]string) {
