@@ -37,6 +37,8 @@ var goldenCases = []goldenCase{
 	{"slurm_to_armada", "slurm", "armada", "conversions/01-slurm-to-volcano/source.sh"},
 	{"slurm_to_volcano", "slurm", "volcano", "conversions/01-slurm-to-volcano/source.sh"},
 	{"slurm_to_pbs", "slurm", "pbs", "conversions/01-slurm-to-volcano/source.sh"},
+	{"slurm_to_yunikorn", "slurm", "yunikorn", "conversions/01-slurm-to-volcano/source.sh"},
+	{"armada_to_yunikorn", "armada", "yunikorn", "conversions/05-armada-to-slurm/source.yaml"},
 
 	{"pbs_to_splat", "pbs", "splat", "conversions/03-htcondor-to-pbs/target.sh"},
 	{"pbs_to_pbs", "pbs", "pbs", "conversions/03-htcondor-to-pbs/target.sh"},
