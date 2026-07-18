@@ -8,6 +8,7 @@ on:
 permissions:
   contents: write   # create GitHub release
   id-token: write   # cosign keyless signing
+  packages: write   # push image to GHCR
 
 jobs:
   release:
@@ -29,6 +30,18 @@ jobs:
       # Install syft for SBOM generation.
       - uses: anchore/sbom-action/download-syft@v0
 
+      # Multi-arch Docker builds need QEMU + buildx.
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+
+      # Authenticate to GHCR so GoReleaser can push the image.
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
@@ -37,6 +50,10 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # PAT with write access to InsightSoftmax/homebrew-tap. Falls back to
+          # GITHUB_TOKEN so a release without the secret still succeeds for every
+          # other artifact (the Homebrew push is the only step that needs it).
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN || secrets.GITHUB_TOKEN }}
 
       # Sign checksums file — this is the common pattern for Go CLIs.
       # Consumers verify with: cosign verify-blob --certificate-identity-regexp ...
