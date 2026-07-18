@@ -20,6 +20,18 @@ Usage (with uv — no manual venv needed):
     uv run scripts/corpus/fetch_corpus.py slurm
     uv run scripts/corpus/fetch_corpus.py --list
     uv run scripts/corpus/fetch_corpus.py volcano --limit 100
+    uv run scripts/corpus/fetch_corpus.py pairs        # repo-level pair hunting
+
+The "pairs" mode is different: instead of scraping one scheduler by file, it
+scans every scheduler's searches at repo granularity and keeps only repos that
+contain specs for >= --min-schedulers different schedulers. Co-located specs
+from different schedulers are candidate cross-scheduler *equivalent* pairs —
+ground truth for conversion tests — which essentially never co-occur across the
+independently-scraped single-scheduler corpora. Output goes to
+testdata/corpus/candidate-pairs/<owner__repo>/<scheduler>/ with a manifest.
+
+Every mode skips our own org (see EXCLUDED_OWNERS) to avoid re-ingesting BAMMM's
+own examples back into the corpus.
 
 Options:
     --list              List supported schedulers and exit.
@@ -31,6 +43,8 @@ Options:
     --max-bytes N       Skip files larger than this (default: 65536).
     --token TOKEN       GitHub PAT (default: $GITHUB_TOKEN).
     --resume            Skip files already saved in --out.
+    --min-schedulers N  pairs: min distinct formats a repo must span (default: 2).
+    --search-limit N    pairs: max search hits scanned per scheduler (default: 200).
 
 Rate limits:
     GitHub code search allows ~30 requests/min with auth. The script paces
@@ -209,6 +223,15 @@ SCHEDULERS: dict[str, Scheduler] = {
 
 # ── Generic machinery ────────────────────────────────────────────────────────
 
+# Never scrape our own org — otherwise we ingest BAMMM's own conversions/ and
+# corpus back into the corpus (self-contamination).
+EXCLUDED_OWNERS = {"insightsoftmax"}
+
+
+def is_excluded(full_name: str) -> bool:
+    return full_name.split("/", 1)[0].lower() in EXCLUDED_OWNERS
+
+
 def make_session(token: str) -> requests.Session:
     s = requests.Session()
     s.headers.update({
@@ -298,8 +321,10 @@ def run(sched: Scheduler, args):
                 break
             if Path(item["path"]).suffix.lower() not in sched.extensions:
                 continue
-            filename = safe_filename(item)
             repo = item["repository"]["full_name"]
+            if is_excluded(repo):
+                continue
+            filename = safe_filename(item)
             if filename in seen or repo_counts.get(repo, 0) >= args.per_repo_limit:
                 continue
 
@@ -337,10 +362,82 @@ def run(sched: Scheduler, args):
     print(f"\nDone. {collected} files in {out_dir}/")
 
 
+# ── Pair hunting ─────────────────────────────────────────────────────────────
+
+def run_pairs(args):
+    """Find repos that contain specs for >= --min-schedulers different
+    schedulers — candidate sources of cross-scheduler *equivalent* pairs, which
+    almost never co-occur across independently-scraped single-scheduler corpora.
+    """
+    out_dir = Path(args.out or "testdata/corpus/candidate-pairs")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    session = make_session(args.token)
+
+    # Phase 1 — search only (no content fetch): map repo -> {scheduler: [items]}.
+    repo_map: dict[str, dict[str, list]] = {}
+    for name, sched in SCHEDULERS.items():
+        print(f"\n== searching {name} ==", flush=True)
+        found = 0
+        for query in sched.queries:
+            if found >= args.search_limit:
+                break
+            for item in search_code(session, query):
+                if found >= args.search_limit:
+                    break
+                repo = item["repository"]["full_name"]
+                if is_excluded(repo):
+                    continue
+                if Path(item["path"]).suffix.lower() not in sched.extensions:
+                    continue
+                bucket = repo_map.setdefault(repo, {}).setdefault(name, [])
+                if item["path"] not in {it["path"] for it in bucket}:
+                    bucket.append(item)
+                    found += 1
+
+    # Phase 2 — keep repos spanning >= min_schedulers formats.
+    candidates = {r: sm for r, sm in repo_map.items() if len(sm) >= args.min_schedulers}
+    print(f"\n{len(candidates)} repos span >= {args.min_schedulers} scheduler formats", flush=True)
+
+    # Phase 3 — fetch, quality-check, and save the specs from those repos.
+    manifest: dict = {}
+    manifest_path = out_dir / "manifest.json"
+    for repo, sm in sorted(candidates.items()):
+        print(f"\n{repo}  [{', '.join(sorted(sm))}]", flush=True)
+        files: dict[str, list] = {}
+        stars = 0
+        for name, items in sm.items():
+            sched = SCHEDULERS[name]
+            for item in items[:args.per_repo_limit]:
+                stars = item["repository"].get("stargazers_count", stars)
+                content = fetch_content(session, item)
+                if content is None or len(content.encode()) > args.max_bytes:
+                    continue
+                ok, reason = sched.accept(content, item["path"], args)
+                if not ok:
+                    print(f"  SKIP {name}: {item['path']} ({reason})")
+                    continue
+                dest = out_dir / repo.replace("/", "__") / name
+                dest.mkdir(parents=True, exist_ok=True)
+                (dest / Path(item["path"]).name).write_text(content, encoding="utf-8")
+                files.setdefault(name, []).append({
+                    "path": item["path"], "html_url": item["html_url"], "sha": item["sha"],
+                })
+                print(f"  OK {name}: {item['path']}")
+                time.sleep(0.3)
+        # A repo only counts if it still spans >= min_schedulers after verification.
+        if len(files) >= args.min_schedulers:
+            manifest[repo] = {"repo": repo, "stars": stars,
+                              "schedulers": sorted(files), "files": files}
+            manifest_path.write_text(json.dumps(manifest, indent=2))
+
+    print(f"\nDone. {len(manifest)} candidate pair-repos in {out_dir}/")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("scheduler", nargs="?", help="scheduler to scrape (see --list)")
+    ap.add_argument("scheduler", nargs="?",
+                    help="scheduler to scrape, or 'pairs' for repo-level pair hunting (see --list)")
     ap.add_argument("--list", action="store_true", help="list supported schedulers and exit")
     ap.add_argument("--out", default="", help="output directory (default: testdata/corpus/<scheduler>)")
     ap.add_argument("--limit", type=int, default=300)
@@ -350,6 +447,11 @@ def main():
     ap.add_argument("--max-bytes", type=int, default=65536)
     ap.add_argument("--token", default=os.environ.get("GITHUB_TOKEN"))
     ap.add_argument("--resume", action="store_true")
+    # pairs-mode only
+    ap.add_argument("--min-schedulers", type=int, default=2,
+                    help="pairs: minimum distinct scheduler formats a repo must span")
+    ap.add_argument("--search-limit", type=int, default=200,
+                    help="pairs: max search hits to scan per scheduler in phase 1")
     args = ap.parse_args()
 
     if args.list or not args.scheduler:
@@ -357,13 +459,20 @@ def main():
         for name, s in SCHEDULERS.items():
             exts = " ".join(sorted(e for e in s.extensions if e))
             print(f"  {name:10s} {exts}")
+        print("\nSpecial modes:")
+        print("  pairs      hunt repos spanning >= --min-schedulers formats (candidate equivalent pairs)")
         sys.exit(0 if args.list else 2)
+
+    if not args.token:
+        sys.exit("Error: set GITHUB_TOKEN or pass --token (unauthenticated hits rate limits instantly).")
+
+    if args.scheduler == "pairs":
+        run_pairs(args)
+        return
 
     sched = SCHEDULERS.get(args.scheduler)
     if sched is None:
-        sys.exit(f"Unknown scheduler {args.scheduler!r}. Options: {', '.join(SCHEDULERS)}")
-    if not args.token:
-        sys.exit("Error: set GITHUB_TOKEN or pass --token (unauthenticated hits rate limits instantly).")
+        sys.exit(f"Unknown scheduler {args.scheduler!r}. Options: {', '.join(SCHEDULERS)}, pairs")
 
     run(sched, args)
 
