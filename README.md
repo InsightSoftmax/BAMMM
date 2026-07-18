@@ -79,7 +79,7 @@ Wherever the translation is lossy, BAMMM tells you exactly what got dropped, wha
 | **Volcano** | K8s | ✅ | ✅ |
 | **Kueue** | K8s | ✅ | ✅ |
 | **Armada** | K8s | ✅ | ✅ |
-| **OpenPBS** | HPC | 🚧 | 🚧 |
+| **OpenPBS** | HPC | ✅ | ✅ |
 | **HTCondor** | HPC | 🚧 | 🚧 |
 | **Flux** | HPC | 🚧 | 🚧 |
 | **YuniKorn** | K8s | 🚧 | 🚧 |

@@ -415,7 +415,7 @@ func denormalizePath(p string) string {
 	replacements := []struct{ from, to string }{
 		{"{job_id}", "%j"},
 		{"{job_name}", "%x"},
-		{"{array_task_id}", "%a"},
+		{"{array_index}", "%a"},
 		{"{array_job_id}", "%A"},
 		{"{node_name}", "%N"},
 		{"{node_rank}", "%n"},
