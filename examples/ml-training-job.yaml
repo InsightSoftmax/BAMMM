@@ -13,26 +13,26 @@ spec:
   schedule:
     queue: ml-gpu-queue
     priority: 600
-    priority_class: high-priority
+    priorityClass: high-priority
     account: nlp-project
     walltime: PT6H
   resources:
     nodes: 4
     tasks: 4                       # 1 worker per node
-    cpus_per_task: 32
-    memory_per_task: "128Gi"
+    cpusPerTask: 32
+    memoryPerTask: "128Gi"
     gpu:
       count: 8
       type: h100
       memory: "80Gi"
-  distributed_framework: pytorch
-  workload_type: training
+  distributedFramework: pytorch
+  workloadType: training
   tasks:
     - name: worker
       replicas: 4
       resources:
-        cpus_per_task: 32
-        memory_per_task: "128Gi"
+        cpusPerTask: 32
+        memoryPerTask: "128Gi"
         gpu:
           count: 8
           type: h100
@@ -54,35 +54,35 @@ spec:
               NCCL_DEBUG: INFO
               NCCL_IB_DISABLE: "0"
   gang:
-    min_available: 4
+    minAvailable: 4
     style: hard
     timeout: PT10M
   placement:
-    node_selector:
+    nodeSelector:
       cloud.google.com/gke-accelerator: nvidia-h100-80gb
       node-type: on-demand
     tolerations:
       - key: "nvidia.com/gpu"
         operator: Exists
         effect: NoSchedule
-    node_pools:
+    nodePools:
       - h100-pool
       - a100-80gb-pool             # fallback
   volumes:
     - name: dataset
-      mount_path: /data
-      read_only: true
+      mountPath: /data
+      readOnly: true
       pvc: bert-dataset-pvc
     - name: checkpoints
-      mount_path: /checkpoints
+      mountPath: /checkpoints
       pvc: bert-checkpoints-pvc
     - name: scratch
-      mount_path: /tmp/scratch
-      empty_dir: true
+      mountPath: /tmp/scratch
+      emptyDir: true
   lifecycle:
-    max_retries: 2
-    requeue_on_failure: true
-    ttl_after_finished: PT2H
+    maxRetries: 2
+    requeueOnFailure: true
+    ttlAfterFinished: PT2H
   output:
     stdout: "/checkpoints/logs/{job_id}.out"
     stderr: "/checkpoints/logs/{job_id}.err"
@@ -120,5 +120,5 @@ spec:
       project: nlp-team
       department: research
       large_shm: true
-      node_pools: [h100-pool, a100-80gb-pool]
+      nodePools: [h100-pool, a100-80gb-pool]
       pod_group_policy: all

@@ -61,9 +61,9 @@ spec:
   placement:    # node selection, topology, exclusivity
   output:       # stdout/stderr paths
   notifications:# email alerts
-  file_staging: # data movement before/after job
+  fileStaging: # data movement before/after job
   volumes:      # K8s PVC/ConfigMap/hostPath mounts
-  workload_type: # training | interactive | inference | batch
+  workloadType: # training | interactive | inference | batch
   extensions:   # scheduler-specific passthrough blocks
 ```
 
@@ -82,7 +82,7 @@ metadata:
     key: value
   annotations:                 # opaque key-value annotations (not interpreted by BAMMM)
     key: value
-  client_id: string            # idempotency key; safe to resubmit on network failure
+  clientId: string            # idempotency key; safe to resubmit on network failure
                                # Armada: client_id; others: deduplicated by BAMMM
 ```
 
@@ -105,7 +105,7 @@ spec:
                                # Armada 0–1000. nice/fair-share style values (lower = higher) invert.
                                # Slurm: --priority; PBS: -p; HTCondor: priority; LSF: -sp; Flux: --urgency
                                # Armada/Volcano: priorityClassName is preferred; use priority_class
-    priority_class: string     # K8s PriorityClass name (K8s-based schedulers only)
+    priorityClass: string     # K8s PriorityClass name (K8s-based schedulers only)
                                # Takes precedence over `priority` for K8s schedulers
     account: string            # billing account / allocation
                                # Slurm: --account; PBS: -A; LSF: -P; Flux: --bank
@@ -124,16 +124,16 @@ For K8s schedulers, "task" maps to a container / pod.
 ```yaml
 spec:
   resources:
-    cpus_per_task: integer     # CPUs per task
+    cpusPerTask: integer     # CPUs per task
                                # Slurm: --cpus-per-task; K8s: resources.requests.cpu
                                # PBS: ncpus per chunk; LSF: -n / ptile-derived
-    memory_per_task: quantity  # memory per task; accepts "4Gi", "4G", "4096M", "4096"(MB)
+    memoryPerTask: quantity  # memory per task; accepts "4Gi", "4G", "4096M", "4096"(MB)
                                # Canonical unit: Gi/Mi; HPC formats converted on output
     tasks: integer             # total number of tasks / MPI ranks / pods
                                # Slurm: --ntasks; PBS: select×mpiprocs; K8s: replicas sum
     nodes: integer             # node count (HPC convenience; K8s: derived from tasks)
                                # Slurm: --nodes; PBS: select count; LSF: -n / span-derived
-    tasks_per_node: integer    # Slurm: --ntasks-per-node; PBS: mpiprocs per chunk
+    tasksPerNode: integer    # Slurm: --ntasks-per-node; PBS: mpiprocs per chunk
     gpu:
       count: number            # GPUs per task; float for fractions (e.g., 0.5)
                                # Slurm: --gpus-per-task; K8s: nvidia.com/gpu request
@@ -142,17 +142,17 @@ spec:
                                # Slurm: --gres=gpu:<type>:N; K8s: nodeSelector
       memory: quantity         # GPU VRAM request (Run.ai: gpuMemory; K8s: advisory)
       fraction: float          # 0 < x ≤ 1; Run.ai fractional GPU; else rounds up to 1
-      mig_profile: string      # NVIDIA MIG partition e.g. "1g.10gb"
+      migProfile: string      # NVIDIA MIG partition e.g. "1g.10gb"
                                # Run.ai: migProfile; K8s: nvidia.com/mig-<profile>
-    disk_per_task: quantity    # local scratch disk per task
+    diskPerTask: quantity    # local scratch disk per task
                                # Slurm: (no direct; hint for tmpfs); K8s: ephemeral-storage
                                # HTCondor: request_disk; PBS: scratch per chunk
-    generic_resources:         # arbitrary consumable resources
+    genericResources:         # arbitrary consumable resources
       <name>: integer          # Slurm: --gres=<name>:<count>; HTCondor: request_<name>
                                # PBS: custom chunk resource; LSF: rusage[<name>=N]
     limits:                    # K8s resource limits (optional; defaults to = requests)
-      cpus_per_task: integer
-      memory_per_task: quantity
+      cpusPerTask: integer
+      memoryPerTask: quantity
 ```
 
 ### `spec.execution`
@@ -163,8 +163,8 @@ spec:
     # ── Container mode (K8s-based schedulers) ────────────────────────────
     container:
       image: string            # OCI image reference (required for K8s schedulers)
-      image_pull_policy: Always | IfNotPresent | Never
-      image_pull_secrets: [string]
+      imagePullPolicy: Always | IfNotPresent | Never
+      imagePullSecrets: [string]
       command: [string]        # entrypoint override (K8s: command; Docker: ENTRYPOINT)
       args: [string]           # arguments (K8s: args; Docker: CMD)
 
@@ -177,7 +177,7 @@ spec:
     shell: string              # interpreter for script (PBS: -S; default: /bin/bash)
 
     # ── Common to both ────────────────────────────────────────────────────
-    working_dir: string        # working directory
+    workingDir: string        # working directory
                                # Slurm: --chdir; PBS: derived; Flux: attributes.system.cwd
                                # K8s: container.workingDir
 
@@ -186,13 +186,13 @@ spec:
         KEY: value             # Slurm: export KEY=val; K8s: env[]; Flux: attributes.system.environment
       secrets:                 # from K8s Secrets (K8s schedulers only)
         - name: ENV_VAR_NAME
-          secret_name: my-secret
-          secret_key: secret-field
-      config_maps:             # from K8s ConfigMaps (K8s schedulers only)
+          secretName: my-secret
+          secretKey: secret-field
+      configMaps:             # from K8s ConfigMaps (K8s schedulers only)
         - name: ENV_VAR_NAME
-          config_map_name: my-cm
-          config_map_key: cm-field
-      inherit_from_submitter: boolean
+          configMapName: my-cm
+          configMapKey: cm-field
+      inheritFromSubmitter: boolean
                                # PBS: -V; HTCondor: getenv=True; LSF: -env all
                                # K8s: not applicable (always isolated)
 
@@ -211,8 +211,8 @@ spec:
                                # LSF: %J→{job_id}, %I→{array_index}
                                # HTCondor: $(Cluster)→{job_id}, $(Process)→{array_index}
     stderr: string             # path template for stderr
-    merge_stderr: boolean      # combine stdout and stderr (Slurm: no -e; PBS: -j oe)
-    open_mode: truncate | append   # Slurm: --open-mode; default: truncate
+    mergeStderr: boolean      # combine stdout and stderr (Slurm: no -e; PBS: -j oe)
+    openMode: truncate | append   # Slurm: --open-mode; default: truncate
 ```
 
 ---
@@ -230,13 +230,13 @@ spec:
                                # Slurm: --hold; PBS: -h; LSF: -H; HTCondor: hold=True
     reservation: string        # named advance reservation
                                # Slurm: --reservation; LSF: -U; PBS: -l advres=<name>
-    begin_after: datetime      # defer start until this ISO 8601 datetime
+    beginAfter: datetime      # defer start until this ISO 8601 datetime
                                # Slurm: --begin; PBS: -a; LSF: -b; HTCondor: +DeferralTime
     deadline: datetime         # hard kill-by time
                                # Slurm: --deadline; LSF: -t
-    walltime_min: duration     # minimum acceptable runtime (backfill hint)
+    walltimeMin: duration     # minimum acceptable runtime (backfill hint)
                                # Slurm: --time-min; others: ignored (advisory)
-    signal_before_end: string  # "SIGNAL@SECONDS" — send signal before walltime expires
+    signalBeforeEnd: string  # "SIGNAL@SECONDS" — send signal before walltime expires
                                # Slurm: --signal; Flux: via --signal option; others: N/A
 ```
 
@@ -245,7 +245,7 @@ spec:
 ```yaml
 spec:
   gang:
-    min_available: integer     # minimum tasks that must start simultaneously
+    minAvailable: integer     # minimum tasks that must start simultaneously
                                # Volcano: spec.minAvailable; Armada: PodGroup annotation
                                # YuniKorn: sum of task group minMember
                                # Slurm: implied by --nodes (all nodes or none)
@@ -268,7 +268,7 @@ spec:
                                #          "1,3,7-12" (explicit), "0-99%10" (max concurrent)
                                # Slurm: --array; PBS: -J; LSF: -J "name[...]"; HTCondor: queue N
                                # Flux: --cc (copies); HTCondor: queue N from list
-    max_concurrent: integer    # max simultaneously running array elements
+    maxConcurrent: integer    # max simultaneously running array elements
                                # Slurm: % suffix; PBS: % suffix; LSF: % suffix
     # Environment variable injected per element (normalized name):
     # BAMMM_ARRAY_INDEX → Slurm: SLURM_ARRAY_TASK_ID
@@ -313,15 +313,15 @@ spec:
 ```yaml
 spec:
   lifecycle:
-    max_retries: integer       # retry count on failure
+    maxRetries: integer       # retry count on failure
                                # Volcano: spec.maxRetry; Run.ai: backoffLimit
                                # K8s: .spec.backoffLimit; Slurm: (requeue + scontrol requeue)
                                # HTCondor: max_retries; Flux: --requeue-count
-    requeue_on_failure: boolean  # auto-requeue on transient failures
+    requeueOnFailure: boolean  # auto-requeue on transient failures
                                # Slurm: --requeue; PBS: -r y; LSF: -r; HTCondor: via periodic_release
-    success_exit_codes: [integer]  # non-zero exit codes treated as success
+    successExitCodes: [integer]  # non-zero exit codes treated as success
                                # HTCondor: success_exit_code; Slurm: (script-level only)
-    ttl_after_finished: duration   # delete/clean up job record after completion
+    ttlAfterFinished: duration   # delete/clean up job record after completion
                                # Volcano: ttlSecondsAfterFinished; K8s: ttlSecondsAfterFinished
 ```
 
@@ -331,19 +331,19 @@ spec:
 spec:
   placement:
     # ── K8s-native placement ───────────────────────────────────────────────
-    node_selector:             # require nodes with these labels
+    nodeSelector:             # require nodes with these labels
       key: value               # K8s: nodeSelector; YuniKorn: inherits from PodSpec
                                # Slurm: --constraint (BAMMM maps to feature flags)
     tolerations: [object]      # K8s tolerations (pass-through; K8s schedulers only)
     affinity: object           # K8s NodeAffinity/PodAffinity (pass-through; K8s only)
-    topology_spread: [object]  # K8s topologySpreadConstraints (pass-through; K8s only)
+    topologySpread: [object]  # K8s topologySpreadConstraints (pass-through; K8s only)
 
     # ── HPC placement ─────────────────────────────────────────────────────
     topology: scatter | pack | free
                                # scatter: one task per node (PBS: place=scatter; Slurm: --spread-job)
                                # pack:    all tasks on one node (PBS: place=pack; Slurm: --nodes=1)
                                # free:    scheduler decides (default)
-    group_by: string           # group tasks within same network/rack domain
+    groupBy: string           # group tasks within same network/rack domain
                                # PBS: place=group=<resource>; Slurm: --switches (approximation)
     constraint: string         # hardware feature constraint string
                                # Slurm: --constraint (e.g., "avx512&infiniband")
@@ -355,7 +355,7 @@ spec:
                                # K8s: approximated via taints; not natively supported
 
     # ── Ordered node pool preference (Run.ai, Kueue flavors) ──────────────
-    node_pools: [string]       # ordered preference list of node pools / resource flavors
+    nodePools: [string]       # ordered preference list of node pools / resource flavors
                                # Run.ai: nodePools; Kueue: resourceFlavor preference (advisory)
 ```
 
@@ -382,7 +382,7 @@ spec:
 
 ```yaml
 spec:
-  file_staging:
+  fileStaging:
     inputs:                    # copy files TO the compute node before job starts
       - src: string            # source: local path, s3://..., gs://..., host:/path
         dst: string            # destination path on compute node
@@ -392,14 +392,14 @@ spec:
       - src: string            # source path on compute node
         dst: string            # destination: path, s3://..., gs://...
                                # PBS: stageout= ; LSF: -f "src < dst"; HTCondor: transfer_output_files
-    embedded_files:            # inline files in the jobspec (Flux-native; others: sidecar copy)
+    embeddedFiles:            # inline files in the jobspec (Flux-native; others: sidecar copy)
       - name: string           # filename relative to working_dir
         content: string        # file content
         encoding: utf-8 | base64
         permissions: string    # octal string, e.g., "0755"
-    transfer_policy: always | if_needed | never
+    transferPolicy: always | if_needed | never
                                # HTCondor: should_transfer_files; others: always assumed
-    checkpoint_files: [string] # files to preserve across retries / checkpoint cycles
+    checkpointFiles: [string] # files to preserve across retries / checkpoint cycles
                                # HTCondor: transfer_checkpoint_files; others: user-managed
 ```
 
@@ -409,14 +409,14 @@ spec:
 spec:
   volumes:
     - name: string
-      mount_path: string
-      read_only: boolean
+      mountPath: string
+      readOnly: boolean
       # Exactly one source:
       pvc: string              # PVC claim name
-      config_map: string       # ConfigMap name
+      configMap: string       # ConfigMap name
       secret: string           # Secret name
-      host_path: string        # host directory (requires hostPath permission)
-      empty_dir: boolean       # ephemeral tmpfs scratch
+      hostPath: string        # host directory (requires hostPath permission)
+      emptyDir: boolean       # ephemeral tmpfs scratch
       nfs:
         server: string
         path: string
@@ -432,17 +432,17 @@ spec:
   tasks:
     - name: string             # role name (master, worker, ps, evaluator, etc.)
       replicas: integer        # pod/slot count for this role
-      min_replicas: integer    # minimum for gang (YuniKorn: taskGroup.minMember)
+      minReplicas: integer    # minimum for gang (YuniKorn: taskGroup.minMember)
       resources: <resources>   # per-task resources for this role (overrides top-level)
       execution: <execution>   # execution config for this role (overrides top-level)
       lifecycle:
-        max_retries: integer
+        maxRetries: integer
         policies:              # Volcano-style event/action FSM (Volcano only; see extensions)
           - event: string
             action: string
             timeout: duration
       placement: <placement>   # per-role placement constraints (YuniKorn: per task group)
-      depends_on:              # intra-job task ordering (Volcano: DependsOn)
+      dependsOn:              # intra-job task ordering (Volcano: DependsOn)
         - name: string         # task name that must complete before this task starts
 ```
 
@@ -450,13 +450,13 @@ spec:
 
 ```yaml
 spec:
-  workload_type: training | interactive | inference | batch
+  workloadType: training | interactive | inference | batch
                                # Run.ai: TrainingWorkload vs InteractiveWorkload vs InferenceWorkload
                                # interactive = long-running, lower priority, non-preemptible by default
                                # training = finite, preemptible by default
                                # inference = latency-sensitive serving
                                # batch = generic (default)
-  distributed_framework: pytorch | tensorflow | mpi | horovod | xgboost | none
+  distributedFramework: pytorch | tensorflow | mpi | horovod | xgboost | none
                                # Run.ai: distributedFramework; Volcano: plugins (pytorch, tensorflow, mpi)
                                # Slurm: --mpi= option; PBS: mpiprocs chunk resource
 ```
@@ -557,7 +557,7 @@ spec:
       periodic_vacate: string            # ClassAd expression
       on_exit_hold: string               # ClassAd expression evaluated at exit
       on_exit_remove: string             # ClassAd expression evaluated at exit
-      checkpoint_exit_code: integer      # exit with this code = checkpoint saved, requeue
+      checkpointExitCode: integer      # exit with this code = checkpoint saved, requeue
       concurrency_limits: [string]       # named token pool limits e.g. ["cms.higgs:5"]
       max_materialize: integer           # late materialization cap
       max_idle: integer                  # idle job cap for factory jobs
@@ -589,7 +589,7 @@ spec:
           value: string                  # named data artifact
           type: in | out | inout         # consume / produce / both
           scope: user | global           # visibility scope
-      embedded_files:                    # RFC 37 files inline in jobspec
+      embeddedFiles:                    # RFC 37 files inline in jobspec
         <name>:
           encoding: utf-8 | base64
           data: string
@@ -669,10 +669,10 @@ spec:
       department: string                 # organizational grouping above project
       interactive: boolean               # use InteractiveWorkload CRD
       large_shm: boolean                 # mount /dev/shm as large tmpfs for PyTorch DDP
-      min_replicas: integer              # elastic distributed: minimum worker count
+      minReplicas: integer              # elastic distributed: minimum worker count
       max_replicas: integer              # elastic distributed: maximum worker count
-      node_pools: [string]               # ordered node pool preference list
-      mig_profile: string                # NVIDIA MIG profile e.g. "1g.10gb"
+      nodePools: [string]               # ordered node pool preference list
+      migProfile: string                # NVIDIA MIG profile e.g. "1g.10gb"
       pod_group_policy: all | none       # gang scheduling policy
       run_as_user: boolean               # run as container's default user
       service_account: string            # Kubernetes service account
@@ -774,7 +774,7 @@ so tooling can warn users.
 | `dependencies[singleton]` | Slurm | PBS/LSF/HTCondor/Flux/K8s | BAMMM resolves the name to a job ID at submit time (requires BAMMM to have scheduler access). |
 | `resources.gpu.type` | Any | Most | Used as a `nodeSelector` hint; not all schedulers support GPU model filtering natively. |
 | Volcano event/action policies | Volcano | Others | Other schedulers support only `max_retries`. Conditional completion logic (`if TaskCompleted → CompleteJob`) cannot be expressed generically. |
-| `spec.workload_type: interactive` | Run.ai | Others | Interactive scheduling semantics (non-preemptible, long-running) are approximated as high-priority + `--exclusive` where applicable. |
+| `spec.workloadType: interactive` | Run.ai | Others | Interactive scheduling semantics (non-preemptible, long-running) are approximated as high-priority + `--exclusive` where applicable. |
 | Slurm heterogeneous jobs | Slurm | Others | `extensions.slurm.het_components` preserves the spec. Only Slurm can execute het-jobs; other schedulers receive only the first component with a warning. |
 
 ---

@@ -13,15 +13,15 @@ spec:
     queue: mpi-queue
     account: proj-cfd
     walltime: PT8H
-    walltime_min: PT2H              # Slurm backfill: accept as short as 2h in gaps
+    walltimeMin: PT2H              # Slurm backfill: accept as short as 2h in gaps
     priority: 500
   resources:
     nodes: 8
     tasks: 64                       # total MPI ranks
-    tasks_per_node: 8
-    tasks_per_socket: 4
-    cpus_per_task: 4                # OpenMP threads per rank
-    memory_per_task: "8Gi"
+    tasksPerNode: 8
+    tasksPerSocket: 4
+    cpusPerTask: 4                # OpenMP threads per rank
+    memoryPerTask: "8Gi"
     gpu:
       count: 1
       type: a100
@@ -31,12 +31,12 @@ spec:
       module load openmpi/4.1.5 cuda/12.1
       export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-4}
       srun ./cfd-solver --input input.cfg --output /scratch/results/
-    working_dir: /scratch/cfd-run
+    workingDir: /scratch/cfd-run
     environment:
       vars:
         OMP_NUM_THREADS: "4"
         OMPI_MCA_btl_openib_allow_ib: "1"
-      inherit_from_submitter: false
+      inheritFromSubmitter: false
     stdin: /dev/null
   placement:
     constraint: "infiniband&avx512"
@@ -48,7 +48,7 @@ spec:
   notifications:
     email: "engineer@example.com"
     events: [end, fail]
-  file_staging:
+  fileStaging:
     inputs:
       - src: "/nfs/shared/cfd-inputs/input.cfg"
         dst: "/scratch/cfd-run/input.cfg"
@@ -56,8 +56,8 @@ spec:
       - src: "/scratch/results/"
         dst: "/nfs/shared/cfd-results/{job_id}/"
   lifecycle:
-    max_retries: 1
-    requeue_on_failure: false
+    maxRetries: 1
+    requeueOnFailure: false
 
   extensions:
     slurm:

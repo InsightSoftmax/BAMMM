@@ -10,18 +10,18 @@ spec:
     priority: 600
     walltime: PT30M
   gang:
-    min_available: 4
+    minAvailable: 4
     style: hard
     timeout: PT5M
   tasks:
     - name: data-prep
       replicas: 1
       resources:
-        cpus_per_task: 1
-        memory_per_task: "1Gi"
+        cpusPerTask: 1
+        memoryPerTask: "1Gi"
         limits:
-          cpus_per_task: 2
-          memory_per_task: "2Gi"
+          cpusPerTask: 2
+          memoryPerTask: "2Gi"
       execution:
         container:
           image: alpine:latest
@@ -40,11 +40,11 @@ spec:
     - name: compute-worker
       replicas: 3
       resources:
-        cpus_per_task: 2
-        memory_per_task: "2Gi"
+        cpusPerTask: 2
+        memoryPerTask: "2Gi"
         limits:
-          cpus_per_task: 4
-          memory_per_task: "4Gi"
+          cpusPerTask: 4
+          memoryPerTask: "4Gi"
       execution:
         container:
           image: busybox:latest
@@ -62,5 +62,5 @@ spec:
           echo "Starting compute worker ${BAMMM_TASK_INDEX}"
           sleep 60
           echo "Compute worker ${BAMMM_TASK_INDEX} completed"
-      depends_on:
+      dependsOn:
         - name: data-prep
