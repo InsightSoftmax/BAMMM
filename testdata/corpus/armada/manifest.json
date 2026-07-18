@@ -1,0 +1,202 @@
+{
+  "armadaproject__armada__example__jobs.yaml": {
+    "repo": "armadaproject/armada",
+    "path": "example/jobs.yaml",
+    "html_url": "https://github.com/armadaproject/armada/blob/648652ca914abb7648a3ea730063ed93798908b5/example/jobs.yaml",
+    "sha": "4f1d45a5ff7501191b95d9bc1c2867369288eac1",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "InsightSoftmax__BAMMM__conversions__05-armada-to-slurm__source.yaml": {
+    "repo": "InsightSoftmax/BAMMM",
+    "path": "conversions/05-armada-to-slurm/source.yaml",
+    "html_url": "https://github.com/InsightSoftmax/BAMMM/blob/72ad75b8dad1c136b735a7bfe2c5d7d1e11f78c1/conversions/05-armada-to-slurm/source.yaml",
+    "sha": "376205e14d01ff5ebffdda2455927f4a0300c685",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "armadaproject__armada-operator__dev__quickstart__example-job.yaml": {
+    "repo": "armadaproject/armada-operator",
+    "path": "dev/quickstart/example-job.yaml",
+    "html_url": "https://github.com/armadaproject/armada-operator/blob/5fc51b4c183b1f333c5f3f13fc88b8c8815d79b8/dev/quickstart/example-job.yaml",
+    "sha": "93dbe68264aa097f4bedeae50daabe3265bcdfe8",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "tabathad__armada__testsuite__testcases__basic__preempt_by_id_1x1.yaml": {
+    "repo": "tabathad/armada",
+    "path": "testsuite/testcases/basic/preempt_by_id_1x1.yaml",
+    "html_url": "https://github.com/tabathad/armada/blob/09e0553bbd8b7e90db82e1e8eeb79c289cd7162c/testsuite/testcases/basic/preempt_by_id_1x1.yaml",
+    "sha": "2adbec604f6763162efaa8ef7797ae9cb08e2b4a",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "armadaproject__armada__example__example-job-with-service.yaml": {
+    "repo": "armadaproject/armada",
+    "path": "example/example-job-with-service.yaml",
+    "html_url": "https://github.com/armadaproject/armada/blob/648652ca914abb7648a3ea730063ed93798908b5/example/example-job-with-service.yaml",
+    "sha": "dedbbbc7f5457ccf24cc4b00748a4e60a49f1dd9",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "washcycle__armada-vscode__dev__examples__hello-world.armada.yaml": {
+    "repo": "washcycle/armada-vscode",
+    "path": "dev/examples/hello-world.armada.yaml",
+    "html_url": "https://github.com/washcycle/armada-vscode/blob/9db7062ef10510565e5d54a1d27912b88013d895/dev/examples/hello-world.armada.yaml",
+    "sha": "d6c887816a6e536cc07e642e10b1773dcefbd6f2",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "tabathad__armada__developer__config__job.yaml": {
+    "repo": "tabathad/armada",
+    "path": "developer/config/job.yaml",
+    "html_url": "https://github.com/tabathad/armada/blob/09e0553bbd8b7e90db82e1e8eeb79c289cd7162c/developer/config/job.yaml",
+    "sha": "38906368930f88f4b50c6768a69bb51f2c585446",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "stackedsax__circleci-app-test__example__jobs.yaml": {
+    "repo": "stackedsax/circleci-app-test",
+    "path": "example/jobs.yaml",
+    "html_url": "https://github.com/stackedsax/circleci-app-test/blob/341e314ed21e050d57fabac4277f125174f0720c/example/jobs.yaml",
+    "sha": "7df02dd8e31def093e927b2a1ea0a36a90f1f0b3",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "armadaproject__armada__example__two-container-job.yaml": {
+    "repo": "armadaproject/armada",
+    "path": "example/two-container-job.yaml",
+    "html_url": "https://github.com/armadaproject/armada/blob/648652ca914abb7648a3ea730063ed93798908b5/example/two-container-job.yaml",
+    "sha": "2ca32ca915632c38d8dec8cce74a9e89c04ca340",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "InsightSoftmax__BAMMM__conversions__05-armada-to-slurm__intermediate.yaml": {
+    "repo": "InsightSoftmax/BAMMM",
+    "path": "conversions/05-armada-to-slurm/intermediate.yaml",
+    "html_url": "https://github.com/InsightSoftmax/BAMMM/blob/72ad75b8dad1c136b735a7bfe2c5d7d1e11f78c1/conversions/05-armada-to-slurm/intermediate.yaml",
+    "sha": "69f310d6bf5566c53211c4dab9e42902b70acf68",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "washcycle__armada-vscode__dev__examples__advanced-job.armada.yaml": {
+    "repo": "washcycle/armada-vscode",
+    "path": "dev/examples/advanced-job.armada.yaml",
+    "html_url": "https://github.com/washcycle/armada-vscode/blob/9db7062ef10510565e5d54a1d27912b88013d895/dev/examples/advanced-job.armada.yaml",
+    "sha": "72f97abafafd7ff5ed08b40ba56d2aca9297580d",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "armadaproject__armada__testsuite__testcases__basic__preempt_by_id_1x1.yaml": {
+    "repo": "armadaproject/armada",
+    "path": "testsuite/testcases/basic/preempt_by_id_1x1.yaml",
+    "html_url": "https://github.com/armadaproject/armada/blob/648652ca914abb7648a3ea730063ed93798908b5/testsuite/testcases/basic/preempt_by_id_1x1.yaml",
+    "sha": "dec7024a129faf9278933a30f57b178b28102e8c",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "stackedsax__circleci-app-test__docs__quickstart__job-queue-b.yaml": {
+    "repo": "stackedsax/circleci-app-test",
+    "path": "docs/quickstart/job-queue-b.yaml",
+    "html_url": "https://github.com/stackedsax/circleci-app-test/blob/341e314ed21e050d57fabac4277f125174f0720c/docs/quickstart/job-queue-b.yaml",
+    "sha": "c888ef531e0b9c103002b504bf2290d001d06934",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "tabathad__armada__testsuite__testcases__basic__preempt_by_ids_1x5.yaml": {
+    "repo": "tabathad/armada",
+    "path": "testsuite/testcases/basic/preempt_by_ids_1x5.yaml",
+    "html_url": "https://github.com/tabathad/armada/blob/09e0553bbd8b7e90db82e1e8eeb79c289cd7162c/testsuite/testcases/basic/preempt_by_ids_1x5.yaml",
+    "sha": "a743320ea35782113b70c07575138d00ebbb4e00",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "armadaproject__armada___local__readiness-job.yaml": {
+    "repo": "armadaproject/armada",
+    "path": "_local/readiness-job.yaml",
+    "html_url": "https://github.com/armadaproject/armada/blob/648652ca914abb7648a3ea730063ed93798908b5/_local/readiness-job.yaml",
+    "sha": "38906368930f88f4b50c6768a69bb51f2c585446",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "stackedsax__circleci-app-test__docs__quickstart__job-queue-a.yaml": {
+    "repo": "stackedsax/circleci-app-test",
+    "path": "docs/quickstart/job-queue-a.yaml",
+    "html_url": "https://github.com/stackedsax/circleci-app-test/blob/341e314ed21e050d57fabac4277f125174f0720c/docs/quickstart/job-queue-a.yaml",
+    "sha": "5338435668ceaafb862e659a2a2f9679c2f8b1a7",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "armadaproject__armada-operator__dev__quickstart__job.yaml": {
+    "repo": "armadaproject/armada-operator",
+    "path": "dev/quickstart/job.yaml",
+    "html_url": "https://github.com/armadaproject/armada-operator/blob/5fc51b4c183b1f333c5f3f13fc88b8c8815d79b8/dev/quickstart/job.yaml",
+    "sha": "5338435668ceaafb862e659a2a2f9679c2f8b1a7",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "armadaproject__armada-operator__dev__quickstart__example-job-preemptible.yaml": {
+    "repo": "armadaproject/armada-operator",
+    "path": "dev/quickstart/example-job-preemptible.yaml",
+    "html_url": "https://github.com/armadaproject/armada-operator/blob/5fc51b4c183b1f333c5f3f13fc88b8c8815d79b8/dev/quickstart/example-job-preemptible.yaml",
+    "sha": "922f87f22a8ab891684815674314af252122aa11",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "boettiger-lab__data-workflows__catalog__carbon__k8s__v2__armada-test.yaml": {
+    "repo": "boettiger-lab/data-workflows",
+    "path": "catalog/carbon/k8s/v2/armada-test.yaml",
+    "html_url": "https://github.com/boettiger-lab/data-workflows/blob/b5d3ebf350907b2137c4af6cdec458afc6b289f5/catalog/carbon/k8s/v2/armada-test.yaml",
+    "sha": "4a311fa5f1fd6a73b89f93ce6f77941e0d649259",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "stackedsax__circleci-app-test__pkg__client__validation__testdata__invalid_field_multi_job.yaml": {
+    "repo": "stackedsax/circleci-app-test",
+    "path": "pkg/client/validation/testdata/invalid_field_multi_job.yaml",
+    "html_url": "https://github.com/stackedsax/circleci-app-test/blob/341e314ed21e050d57fabac4277f125174f0720c/pkg/client/validation/testdata/invalid_field_multi_job.yaml",
+    "sha": "ddf2991a15be9533c995ffb009c6986e4bf7c0cf",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "InsightSoftmax__BAMMM__internal__convert__testdata__golden__slurm_to_armada.yaml": {
+    "repo": "InsightSoftmax/BAMMM",
+    "path": "internal/convert/testdata/golden/slurm_to_armada.yaml",
+    "html_url": "https://github.com/InsightSoftmax/BAMMM/blob/72ad75b8dad1c136b735a7bfe2c5d7d1e11f78c1/internal/convert/testdata/golden/slurm_to_armada.yaml",
+    "sha": "595ba15db58ef7bc895afd2a349b95731a3eabfa",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "washcycle__armada-vscode__src__test__fixtures__test-job.armada.yaml": {
+    "repo": "washcycle/armada-vscode",
+    "path": "src/test/fixtures/test-job.armada.yaml",
+    "html_url": "https://github.com/washcycle/armada-vscode/blob/9db7062ef10510565e5d54a1d27912b88013d895/src/test/fixtures/test-job.armada.yaml",
+    "sha": "3e06457a52a76ba2563f1d51f6978b3e7d52e478",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "stackedsax__circleci-app-test__pkg__client__validation__testdata__invalid_field.yaml": {
+    "repo": "stackedsax/circleci-app-test",
+    "path": "pkg/client/validation/testdata/invalid_field.yaml",
+    "html_url": "https://github.com/stackedsax/circleci-app-test/blob/341e314ed21e050d57fabac4277f125174f0720c/pkg/client/validation/testdata/invalid_field.yaml",
+    "sha": "bc3cc021493fc4c4999bea7296765b4cce711c8d",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "tabathad__armada__example__jobs.yaml": {
+    "repo": "tabathad/armada",
+    "path": "example/jobs.yaml",
+    "html_url": "https://github.com/tabathad/armada/blob/09e0553bbd8b7e90db82e1e8eeb79c289cd7162c/example/jobs.yaml",
+    "sha": "4f1d45a5ff7501191b95d9bc1c2867369288eac1",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  },
+  "tabathad__armada__example__example-job-with-service.yaml": {
+    "repo": "tabathad/armada",
+    "path": "example/example-job-with-service.yaml",
+    "html_url": "https://github.com/tabathad/armada/blob/09e0553bbd8b7e90db82e1e8eeb79c289cd7162c/example/example-job-with-service.yaml",
+    "sha": "dedbbbc7f5457ccf24cc4b00748a4e60a49f1dd9",
+    "stars": 0,
+    "query": "jobSetId podSpec extension:yaml"
+  }
+}

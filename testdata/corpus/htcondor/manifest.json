@@ -1,0 +1,1002 @@
+{
+  "aurelio-amerio__sbibm-jax__sub__queue_script.sub": {
+    "repo": "aurelio-amerio/sbibm-jax",
+    "path": "sub/queue_script.sub",
+    "html_url": "https://github.com/aurelio-amerio/sbibm-jax/blob/c05f7ce4eb460a662932eff8165c8f4d5408628b/sub/queue_script.sub",
+    "sha": "c581711cfab624db4a16a9b3dce616ba6e1fdb4b",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "pangyuteng__hello-htcondor__vanilla-universe__condor.sub": {
+    "repo": "pangyuteng/hello-htcondor",
+    "path": "vanilla-universe/condor.sub",
+    "html_url": "https://github.com/pangyuteng/hello-htcondor/blob/9d3becd83bcb46eda1e01db777c76a9d61d6f96b/vanilla-universe/condor.sub",
+    "sha": "e0fd4a724107f0a4ffb8af5c713dde24ef03578b",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "phcerdan__htcondor_massey__cpp_vanilla_sample__hola.sub": {
+    "repo": "phcerdan/htcondor_massey",
+    "path": "cpp_vanilla_sample/hola.sub",
+    "html_url": "https://github.com/phcerdan/htcondor_massey/blob/57fe15d20da6d6dbb8b3a8b2f6a6504ec1097a3c/cpp_vanilla_sample/hola.sub",
+    "sha": "1b5323c0750151275052538d031158c7ab6013f6",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "koksal__tps__pcsf__submit_permuted.sub": {
+    "repo": "koksal/tps",
+    "path": "pcsf/submit_permuted.sub",
+    "html_url": "https://github.com/koksal/tps/blob/bb58d6d89e24dbc39e976a02f1e31387dbe17dfb/pcsf/submit_permuted.sub",
+    "sha": "8f851524b7cb0f21fd0656bc6fa3f500e570a7d4",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "lscsoft__lalsuite__lalpulsar__bin__Hough__scripts__MCscript.sub": {
+    "repo": "lscsoft/lalsuite",
+    "path": "lalpulsar/bin/Hough/scripts/MCscript.sub",
+    "html_url": "https://github.com/lscsoft/lalsuite/blob/6372a6e2313397e5e65655ac15e6af2da3135abd/lalpulsar/bin/Hough/scripts/MCscript.sub",
+    "sha": "cd40bc79c3bd6a590a3c816b728ec2cd168ea5d3",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "Cloud-PG__ansible-role-condor_client__files__simple-job.sub": {
+    "repo": "Cloud-PG/ansible-role-condor_client",
+    "path": "files/simple-job.sub",
+    "html_url": "https://github.com/Cloud-PG/ansible-role-condor_client/blob/c194821f385d23ba3b7b2ba2b49530e412aeaac2/files/simple-job.sub",
+    "sha": "326bd35f52203a7507a6dd4a3e8494b35124293d",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "sigma-cache__Theano-DBNs-For-Drug-Discovery__wid_jobs__wid-random_forests-tox21.sub": {
+    "repo": "sigma-cache/Theano-DBNs-For-Drug-Discovery",
+    "path": "wid_jobs/wid-random_forests-tox21.sub",
+    "html_url": "https://github.com/sigma-cache/Theano-DBNs-For-Drug-Discovery/blob/dac6b87ce6ac76eb3b6606b447cc7013bfb34a50/wid_jobs/wid-random_forests-tox21.sub",
+    "sha": "51c366afee1c92597fa93c95489410822dee3ebf",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "z4027163__UROP_darkphoton__findBS__condor_E.sub": {
+    "repo": "z4027163/UROP_darkphoton",
+    "path": "findBS/condor_E.sub",
+    "html_url": "https://github.com/z4027163/UROP_darkphoton/blob/8250e11835563b413d4fd680feb7462f32d60890/findBS/condor_E.sub",
+    "sha": "f9d47a27cab0ddebb4c3f759f7ae7018a9da02c4",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "csl-iisc__DWS-HPCA2021__v3.x__pthread_benchmark__submit.sub": {
+    "repo": "csl-iisc/DWS-HPCA2021",
+    "path": "v3.x/pthread_benchmark/submit.sub",
+    "html_url": "https://github.com/csl-iisc/DWS-HPCA2021/blob/46d6c60d2b832525a8edf7b117b4d392c6a2f967/v3.x/pthread_benchmark/submit.sub",
+    "sha": "cfd2c9a2011b4d5e03063efd001c738b05045e79",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "geant-val__HGCALTB__script__HGCALTB_HTCondor.sub": {
+    "repo": "geant-val/HGCALTB",
+    "path": "script/HGCALTB_HTCondor.sub",
+    "html_url": "https://github.com/geant-val/HGCALTB/blob/d8d6a571f037070d6f8166cdb67bacad04b7cfb3/script/HGCALTB_HTCondor.sub",
+    "sha": "cee02687875ccc2fc202169973a221a3c86f29af",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "manuparra__ht-condor__examples__hello.sub": {
+    "repo": "manuparra/ht-condor",
+    "path": "examples/hello.sub",
+    "html_url": "https://github.com/manuparra/ht-condor/blob/1f6cd911c855f6f75bb99f2d30678742e3144c4a/examples/hello.sub",
+    "sha": "93296e5fa45f5b6e3af62cad89c04ef1ac2c0573",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "SpencerLimSzeSing__ImageProcessing-HTCondor__workflow__imgtbl.sub": {
+    "repo": "SpencerLimSzeSing/ImageProcessing-HTCondor",
+    "path": "workflow/imgtbl.sub",
+    "html_url": "https://github.com/SpencerLimSzeSing/ImageProcessing-HTCondor/blob/29e47ef533b798fad09480514b3df622ded01c99/workflow/imgtbl.sub",
+    "sha": "eb024ce7b19eaf7779fe68f4b9083e05eb087db5",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "shubhambansal11-code__ChargedHiggs_Statistical_Analysis_Code__run_job.sub": {
+    "repo": "shubhambansal11-code/ChargedHiggs_Statistical_Analysis_Code",
+    "path": "run_job.sub",
+    "html_url": "https://github.com/shubhambansal11-code/ChargedHiggs_Statistical_Analysis_Code/blob/5ff1dc6c13b8899b61d042d7b0203806fb65faa2/run_job.sub",
+    "sha": "d4a3ae9dc07c2e584aaba4f9117b0ef27e1029f0",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "blfitzgerald__SLAM__scripts__1._PP2WAP__1.PP2WAP.sub": {
+    "repo": "blfitzgerald/SLAM",
+    "path": "scripts/1. PP2WAP/1.PP2WAP.sub",
+    "html_url": "https://github.com/blfitzgerald/SLAM/blob/d0e16aee5335724d20f1ad3e441b21ad47fbd421/scripts/1.%20PP2WAP/1.PP2WAP.sub",
+    "sha": "27ab60bae7f34066fb62c36e98a7356cbf9e9181",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "LeviCondren__Tracking_pipeline__Examples__condor__run_example.sub": {
+    "repo": "LeviCondren/Tracking_pipeline",
+    "path": "Examples/condor/run_example.sub",
+    "html_url": "https://github.com/LeviCondren/Tracking_pipeline/blob/95510b625b1ccf561fbdb8847c9169ac24e1fa12/Examples/condor/run_example.sub",
+    "sha": "568ebd23f4ad494ded515e0c3a257c38de2e8e8d",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "ShinonL__Parallel-And-Distributed-Computing_UTCN__Lab_5__example__start.sub": {
+    "repo": "ShinonL/Parallel-And-Distributed-Computing_UTCN",
+    "path": "Lab_5/example/start.sub",
+    "html_url": "https://github.com/ShinonL/Parallel-And-Distributed-Computing_UTCN/blob/e68e4d285a58cf3951516d26053cc9329a76a3ee/Lab_5/example/start.sub",
+    "sha": "1c65b9729c6ffd48b134976fc8e370550f68b08a",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "INTREPID-hep__omtf_gnn_study__condor__eval_das_filtered.sub": {
+    "repo": "INTREPID-hep/omtf_gnn_study",
+    "path": "condor/eval_das_filtered.sub",
+    "html_url": "https://github.com/INTREPID-hep/omtf_gnn_study/blob/29076224c765533108e4d47d9168f7afdddd62e2/condor/eval_das_filtered.sub",
+    "sha": "4883b271623704ea9cd59c9a3198e4b531a1320e",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "carolinewang01__dshape__src__condor_reacher.sub": {
+    "repo": "carolinewang01/dshape",
+    "path": "src/condor_reacher.sub",
+    "html_url": "https://github.com/carolinewang01/dshape/blob/e148b2d9d14a6c01fc74030087ddbbd8783069c4/src/condor_reacher.sub",
+    "sha": "fa6744845ac7d3bdf7a3a58335267c764b0d3786",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "mbontrager__Eaffinis_pooled__condor_sub__bin__extractfastq1.sub": {
+    "repo": "mbontrager/Eaffinis_pooled",
+    "path": "condor_sub/bin/extractfastq1.sub",
+    "html_url": "https://github.com/mbontrager/Eaffinis_pooled/blob/3d0c3ac429fbd04e4e54ac31d3f623b200362a23/condor_sub/bin/extractfastq1.sub",
+    "sha": "790f81817089de3ef694ee33d243a0c55090bcaa",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "gitter-lab__metl-pub__data__eve__htcondor__submit_inference.sub": {
+    "repo": "gitter-lab/metl-pub",
+    "path": "data/eve/htcondor/submit_inference.sub",
+    "html_url": "https://github.com/gitter-lab/metl-pub/blob/c4770057a594271ecd6f3e906ecf7945b1d80eb4/data/eve/htcondor/submit_inference.sub",
+    "sha": "27a72b07581a3e56f51260c96471259a089ac6e3",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "FaroutYLq__otx__hello_world__submit_02count.sub": {
+    "repo": "FaroutYLq/otx",
+    "path": "hello_world/submit_02count.sub",
+    "html_url": "https://github.com/FaroutYLq/otx/blob/07171f5f138b442834dbe235eb014efb84d1cca1/hello_world/submit_02count.sub",
+    "sha": "96a8e41d2210f25b7f4cf68125e660c5bfae5ad5",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "nipingel__LGLBS_Imaging__N6822_dag__untar_images.sub": {
+    "repo": "nipingel/LGLBS_Imaging",
+    "path": "N6822_dag/untar_images.sub",
+    "html_url": "https://github.com/nipingel/LGLBS_Imaging/blob/0b0d15b70bf2f1313ee148aee1a252825060dab2/N6822_dag/untar_images.sub",
+    "sha": "613fd6e7408b6bf88abb9f34431a5b4899288101",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "labani-01__Parameter_Estimation_test__submit_GW150914_acc.sub": {
+    "repo": "labani-01/Parameter_Estimation_test",
+    "path": "submit_GW150914_acc.sub",
+    "html_url": "https://github.com/labani-01/Parameter_Estimation_test/blob/f4f9abfceef5b7d0f89a8ea87c186ad8d4f1deb8/submit_GW150914_acc.sub",
+    "sha": "1fba9ad2bbb15ad9df72e4a4ca5e8548007d5037",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "IzaakWN__CRAB__submit_fragment_SL6.sub": {
+    "repo": "IzaakWN/CRAB",
+    "path": "submit_fragment_SL6.sub",
+    "html_url": "https://github.com/IzaakWN/CRAB/blob/5e2af7c9cfe6319cbd9b647e52918c7cf68a2962/submit_fragment_SL6.sub",
+    "sha": "23ecbd67638dc0d0f6901d85d113b364f2bd6457",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "Eric100911__ntuples-toHTCondor__job_template.sub": {
+    "repo": "Eric100911/ntuples-toHTCondor",
+    "path": "job_template.sub",
+    "html_url": "https://github.com/Eric100911/ntuples-toHTCondor/blob/02badb3c36261cdb54c1e3b46f01145b7b072312/job_template.sub",
+    "sha": "75f2948a8e3f83114d77070394a7ed092116e96b",
+    "stars": 0,
+    "query": "universe = vanilla queue extension:sub"
+  },
+  "FelixMaurer__RedPatterns__condor_docker_queue.sub": {
+    "repo": "FelixMaurer/RedPatterns",
+    "path": "condor_docker_queue.sub",
+    "html_url": "https://github.com/FelixMaurer/RedPatterns/blob/90ddfe9ee6b4b1440219d599be554b4958478cd5/condor_docker_queue.sub",
+    "sha": "86c8fbbb09106480b2e1ce6b2a88d65c835b6aaf",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "CHTC__templates-GPUs__pixi__mnist_gpu.sub": {
+    "repo": "CHTC/templates-GPUs",
+    "path": "pixi/mnist_gpu.sub",
+    "html_url": "https://github.com/CHTC/templates-GPUs/blob/4c16336b0260d30455fb1c624da5ad0e6fd45e77/pixi/mnist_gpu.sub",
+    "sha": "a9a5f47ca709cf8793a13156b781ce24c9327d97",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "LTesan__PINN_pl_diff_2D__src__executables__run.sub": {
+    "repo": "LTesan/PINN_pl_diff_2D",
+    "path": "src/executables/run.sub",
+    "html_url": "https://github.com/LTesan/PINN_pl_diff_2D/blob/8c45332fa7c4801acfa545fb2ce6561c8235de59/src/executables/run.sub",
+    "sha": "0fb3f596934b18e00b3e559b2458669e720543c7",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "UW-COSMOS__Cosmos__htcosmos__post.sub": {
+    "repo": "UW-COSMOS/Cosmos",
+    "path": "htcosmos/post.sub",
+    "html_url": "https://github.com/UW-COSMOS/Cosmos/blob/a1d82d1a4ad4e1997f6ef458c428058555651e6e/htcosmos/post.sub",
+    "sha": "09672c40e90fc0d473b45f397c0408ec4ad29f5d",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "MPForte__SGNify__submission.sub": {
+    "repo": "MPForte/SGNify",
+    "path": "submission.sub",
+    "html_url": "https://github.com/MPForte/SGNify/blob/bae2a71d8388df73af56117731f7f454e36e5b2e/submission.sub",
+    "sha": "839c7a333adfd175b98d5bbc02aed66c1e59e1e6",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "airscholar__WSP_BranchAndBound__queue__mpi.sub": {
+    "repo": "airscholar/WSP_BranchAndBound",
+    "path": "queue/mpi.sub",
+    "html_url": "https://github.com/airscholar/WSP_BranchAndBound/blob/8ec7f9ad4004a37d3e692d7574ac1e91cd69d0dc/queue/mpi.sub",
+    "sha": "920ff95e619ac4dc558dbca1c963595b0212444a",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "socialfoundations__tttlm__condor__distances.sub": {
+    "repo": "socialfoundations/tttlm",
+    "path": "condor/distances.sub",
+    "html_url": "https://github.com/socialfoundations/tttlm/blob/99d4e0aab7fc7ad6977247feb912485cd5e3078b/condor/distances.sub",
+    "sha": "c9627a60a7d68698db77b3449d4752522acd29c1",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "aisa-group__skill-inject__apptainer__debug.sub": {
+    "repo": "aisa-group/skill-inject",
+    "path": "apptainer/debug.sub",
+    "html_url": "https://github.com/aisa-group/skill-inject/blob/182f3d9d9836e81cdae213e9b9cec1d9be96eea3/apptainer/debug.sub",
+    "sha": "89b036810beea25e57957034883bdaa376c13d61",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "SyracuseUniversity__OrangeGridExamples__Examples__R__r_demo.sub": {
+    "repo": "SyracuseUniversity/OrangeGridExamples",
+    "path": "Examples/R/r_demo.sub",
+    "html_url": "https://github.com/SyracuseUniversity/OrangeGridExamples/blob/6b6b0c4f127e57ad1bde2692e1b3166c75c4de9b/Examples/R/r_demo.sub",
+    "sha": "3dd43af91fbab94a007261ee3e590519caea4a13",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "htcondor__vscode-htcondor__src__sleep.sub": {
+    "repo": "htcondor/vscode-htcondor",
+    "path": "src/sleep.sub",
+    "html_url": "https://github.com/htcondor/vscode-htcondor/blob/41acaf595bc2f90f4de742346b562132c59a3494/src/sleep.sub",
+    "sha": "55434b877a1b1bc9a5c4025d19d63d144fdb311b",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "lpsinger__observing-scenarios-simulations__condor__localize.sub": {
+    "repo": "lpsinger/observing-scenarios-simulations",
+    "path": "condor/localize.sub",
+    "html_url": "https://github.com/lpsinger/observing-scenarios-simulations/blob/9ea5da8fc042df5c6657fe8d786748184851c64e/condor/localize.sub",
+    "sha": "22020668de5d473b06a78b0506144d32a56526ec",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "opensciencegrid__vm-test-runs__jobs__true.sub": {
+    "repo": "opensciencegrid/vm-test-runs",
+    "path": "jobs/true.sub",
+    "html_url": "https://github.com/opensciencegrid/vm-test-runs/blob/5f6abf26d15f356839b2926f404633156625cc58/jobs/true.sub",
+    "sha": "58455b9efb8caecf9aa572961d07f3207c2a9905",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "Reed-CompBio__spras__htcondor__spras.sub": {
+    "repo": "Reed-CompBio/spras",
+    "path": "htcondor/spras.sub",
+    "html_url": "https://github.com/Reed-CompBio/spras/blob/07707bf766166496c40d8d29cb66166140167806/htcondor/spras.sub",
+    "sha": "b48d0fb3a1a2cd4c65112c7b8b20f501176e8ae6",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "NMRbox__htcondor-tutorial__cluster.sub": {
+    "repo": "NMRbox/htcondor-tutorial",
+    "path": "cluster.sub",
+    "html_url": "https://github.com/NMRbox/htcondor-tutorial/blob/d29cc4c25c2bd45bc8da7a800e0d2069669a0d90/cluster.sub",
+    "sha": "dff057ab885c0f28d37e79faf42a49ef87434d20",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "HondaNM__hover_net_zhimin__run_train.sub": {
+    "repo": "HondaNM/hover_net_zhimin",
+    "path": "run_train.sub",
+    "html_url": "https://github.com/HondaNM/hover_net_zhimin/blob/4655e08d1dddf9edd37e3b4852cc4d9addace59c/run_train.sub",
+    "sha": "cd83763ef264456fad89b0ba216419e4cb13f7ba",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "comses__megadapt__src__r__submit__reduce.sub": {
+    "repo": "comses/megadapt",
+    "path": "src/r/submit/reduce.sub",
+    "html_url": "https://github.com/comses/megadapt/blob/6230bb4710ed4326e1298edf4788d8fb84bcbf20/src/r/submit/reduce.sub",
+    "sha": "f1e78429a1f1128c30e60e77accdc3de723a1364",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "osg-htc__tutorial-matlab-HelloWorld__hello_world.sub": {
+    "repo": "osg-htc/tutorial-matlab-HelloWorld",
+    "path": "hello_world.sub",
+    "html_url": "https://github.com/osg-htc/tutorial-matlab-HelloWorld/blob/a4ca30f7a4dd1a8612a602c33124df8d516e84b4/hello_world.sub",
+    "sha": "0a648a395245f5fb8082173db5b8f62955269182",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "gabrielpmatos__calo-ml__condor__submit.sub": {
+    "repo": "gabrielpmatos/calo-ml",
+    "path": "condor/submit.sub",
+    "html_url": "https://github.com/gabrielpmatos/calo-ml/blob/72b3b29dd264e1c509fefa2f0dc1955b769ca33e/condor/submit.sub",
+    "sha": "f55669c7e36d90cfdc3e398a24aa31a9f84d5368",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "koksal__tps__pcsf__submit_net_rand.sub": {
+    "repo": "koksal/tps",
+    "path": "pcsf/submit_net_rand.sub",
+    "html_url": "https://github.com/koksal/tps/blob/bb58d6d89e24dbc39e976a02f1e31387dbe17dfb/pcsf/submit_net_rand.sub",
+    "sha": "d0f5774d002d7495cb01094bc84a9a081a98405c",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "cms-steam__SteamRatesEdmWorkflow__Prod__condor_cluster.sub": {
+    "repo": "cms-steam/SteamRatesEdmWorkflow",
+    "path": "Prod/condor_cluster.sub",
+    "html_url": "https://github.com/cms-steam/SteamRatesEdmWorkflow/blob/6f42214a796b53d51ad14e42b0fb13b56f6f00cc/Prod/condor_cluster.sub",
+    "sha": "2bbdfbbaf577073a39b27e7a94aebcaf8223b36b",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "ironbar__ParameterServerStrategy__condor.sub": {
+    "repo": "ironbar/ParameterServerStrategy",
+    "path": "condor.sub",
+    "html_url": "https://github.com/ironbar/ParameterServerStrategy/blob/90a0c98511a3ac665d74f3572634fa3d957aaf77/condor.sub",
+    "sha": "0edf0bb5edf232ebca795005a788bc093968075e",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "koksal__tps__pcsf__submit_bootstrap.sub": {
+    "repo": "koksal/tps",
+    "path": "pcsf/submit_bootstrap.sub",
+    "html_url": "https://github.com/koksal/tps/blob/bb58d6d89e24dbc39e976a02f1e31387dbe17dfb/pcsf/submit_bootstrap.sub",
+    "sha": "7ea3019fd6764098c19810de6ea2188808b387c5",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "yuenherny__um-wqd7008-pdc-yolov5__gdrive.sub": {
+    "repo": "yuenherny/um-wqd7008-pdc-yolov5",
+    "path": "gdrive.sub",
+    "html_url": "https://github.com/yuenherny/um-wqd7008-pdc-yolov5/blob/21685be8258b8e1ccad902a5c5adc2dff26a9950/gdrive.sub",
+    "sha": "7f11ecaa6d7f456bd4ef3110caaa967dfbd34b70",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "cms-steam__SteamRatesEdmWorkflow__Rates__condor_cluster.sub": {
+    "repo": "cms-steam/SteamRatesEdmWorkflow",
+    "path": "Rates/condor_cluster.sub",
+    "html_url": "https://github.com/cms-steam/SteamRatesEdmWorkflow/blob/6f42214a796b53d51ad14e42b0fb13b56f6f00cc/Rates/condor_cluster.sub",
+    "sha": "8509ade4b8905c27b24e691c33a3843507eb7124",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "USGS-OWI__condor-examples__LearnR__toy.sub": {
+    "repo": "USGS-OWI/condor-examples",
+    "path": "LearnR/toy.sub",
+    "html_url": "https://github.com/USGS-OWI/condor-examples/blob/d01e41e8f9e6581984c646c529457950503dc4b9/LearnR/toy.sub",
+    "sha": "62435022f421ce6ac5702a6cab2ec55dcb4ee0da",
+    "stars": 0,
+    "query": "executable = queue extension:sub"
+  },
+  "aisa-group__PostTrainBench__src__commit_utils__single_task.sub": {
+    "repo": "aisa-group/PostTrainBench",
+    "path": "src/commit_utils/single_task.sub",
+    "html_url": "https://github.com/aisa-group/PostTrainBench/blob/d3496fa7d5788a007d6cd143167471ccdfc688d0/src/commit_utils/single_task.sub",
+    "sha": "ea7f8790b97301dcdb6f3c104c5555d7ddf4e06a",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "HaoZhang990127__TECA__scripts__run_teca_hair.sub": {
+    "repo": "HaoZhang990127/TECA",
+    "path": "scripts/run_teca_hair.sub",
+    "html_url": "https://github.com/HaoZhang990127/TECA/blob/256590ae21728aa7623e8cef321ee4451c987b64/scripts/run_teca_hair.sub",
+    "sha": "cb012e6b83b7b981f274760caeb8e0bb850cbcc1",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "yz-cnsdqz__PSI-release__cluster_mpi__htcondor_submission.sub": {
+    "repo": "yz-cnsdqz/PSI-release",
+    "path": "cluster_mpi/htcondor_submission.sub",
+    "html_url": "https://github.com/yz-cnsdqz/PSI-release/blob/229da2fddddab0e13a12188dd895816d1931b62c/cluster_mpi/htcondor_submission.sub",
+    "sha": "e4aca938a343fdedcd0782a10d248225132784a2",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "SyracuseUniversity__OrangeGridExamples__Examples__Grobid__run_grobid.sub": {
+    "repo": "SyracuseUniversity/OrangeGridExamples",
+    "path": "Examples/Grobid/run_grobid.sub",
+    "html_url": "https://github.com/SyracuseUniversity/OrangeGridExamples/blob/6b6b0c4f127e57ad1bde2692e1b3166c75c4de9b/Examples/Grobid/run_grobid.sub",
+    "sha": "c514a0d5b847be6dde07ec773b38e02f9d0d6164",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "Niccolo-Ajroldi__plainLM__cluster__multi_gpu__condor.sub": {
+    "repo": "Niccolo-Ajroldi/plainLM",
+    "path": "cluster/multi_gpu/condor.sub",
+    "html_url": "https://github.com/Niccolo-Ajroldi/plainLM/blob/bdeaea7796cbe95d0ae0dd692957c86814542baf/cluster/multi_gpu/condor.sub",
+    "sha": "7d3c75324562e9b66b6204a916eff011308d107b",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "gabrielpmatos__calo-ml__ml__pfn__submit.sub": {
+    "repo": "gabrielpmatos/calo-ml",
+    "path": "ml/pfn/submit.sub",
+    "html_url": "https://github.com/gabrielpmatos/calo-ml/blob/72b3b29dd264e1c509fefa2f0dc1955b769ca33e/ml/pfn/submit.sub",
+    "sha": "6effb9f251cf8ed555d28161dadae381baddae95",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "CHTC__templates-GPUs__checkpointing__tensorflow__checkpoint.sub": {
+    "repo": "CHTC/templates-GPUs",
+    "path": "checkpointing/tensorflow/checkpoint.sub",
+    "html_url": "https://github.com/CHTC/templates-GPUs/blob/4c16336b0260d30455fb1c624da5ad0e6fd45e77/checkpointing/tensorflow/checkpoint.sub",
+    "sha": "6ea956b737755f398bff2d5030671b409d235ed4",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "Autoencoders-compression-anomaly__AE-Compression-pytorch__train_models__custom_norm__27d_run.sub": {
+    "repo": "Autoencoders-compression-anomaly/AE-Compression-pytorch",
+    "path": "train_models/custom_norm/27d_run.sub",
+    "html_url": "https://github.com/Autoencoders-compression-anomaly/AE-Compression-pytorch/blob/3ebb5662f45ede9150813df9b8fc865ffc3f4c0d/train_models/custom_norm/27d_run.sub",
+    "sha": "611b49424bc8c5725014e0f824aaea6742b55d03",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "sorawitj__counterfactual-mean-embedding__counterfactual_sample__cluster__jobs__power_analysis.sub": {
+    "repo": "sorawitj/counterfactual-mean-embedding",
+    "path": "counterfactual_sample/cluster/jobs/power_analysis.sub",
+    "html_url": "https://github.com/sorawitj/counterfactual-mean-embedding/blob/9cac4c66ddbfd7fc87a6c6bff602831e51431e95/counterfactual_sample/cluster/jobs/power_analysis.sub",
+    "sha": "9834ad7537c1c229b65d025c510a8738e49a072f",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "uds-lsv__domain-adaptation-molecular-transformers__htcondor__submit_files__compare.sub": {
+    "repo": "uds-lsv/domain-adaptation-molecular-transformers",
+    "path": "htcondor/submit_files/compare.sub",
+    "html_url": "https://github.com/uds-lsv/domain-adaptation-molecular-transformers/blob/7f229e145cd51fb16d957dbee4020f0d96c793b5/htcondor/submit_files/compare.sub",
+    "sha": "d0c1a8da6c81ed16857684cac1e9dbc589fff0fa",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "mmarchegiani__ttHbb_SPANet__jobs__job.sub": {
+    "repo": "mmarchegiani/ttHbb_SPANet",
+    "path": "jobs/job.sub",
+    "html_url": "https://github.com/mmarchegiani/ttHbb_SPANet/blob/1fa053bf715911b621681d3dbdc8b4cfeb6e6d55/jobs/job.sub",
+    "sha": "9dacb6d431c034bc8d6c73a2950d49be1403faf7",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "Himanshu-1994__EntityMatching__submit_mat_llm.sub": {
+    "repo": "Himanshu-1994/EntityMatching",
+    "path": "submit_mat_llm.sub",
+    "html_url": "https://github.com/Himanshu-1994/EntityMatching/blob/644a3c3fd4dee67f0f6e681013dbe5157926b050/submit_mat_llm.sub",
+    "sha": "40eee4d51eb4f6f4dece5709b7431e10f197300d",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "EngAbdullahHanif__DLDockingBenchSeminar__condor__p3_finetune.sub": {
+    "repo": "EngAbdullahHanif/DLDockingBenchSeminar",
+    "path": "condor/p3_finetune.sub",
+    "html_url": "https://github.com/EngAbdullahHanif/DLDockingBenchSeminar/blob/4e824d8505c34058c1e03ce2ff43e90e5e8ea935/condor/p3_finetune.sub",
+    "sha": "8dd1a1d2545475d8c2fdec26497b447021353d03",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "valsdav__MEMFlow__jobs__condor_mmd_huber.sub": {
+    "repo": "valsdav/MEMFlow",
+    "path": "jobs/condor_mmd_huber.sub",
+    "html_url": "https://github.com/valsdav/MEMFlow/blob/8a921e656fd3477766bfe8b3733aaff05b0d97f6/jobs/condor_mmd_huber.sub",
+    "sha": "b3b94cd903fd80eb19745c752b38f36ba468c7a1",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "WilliamPLaCroix__masters-thesis__experiments__scripts__merge.sub": {
+    "repo": "WilliamPLaCroix/masters-thesis",
+    "path": "experiments/scripts/merge.sub",
+    "html_url": "https://github.com/WilliamPLaCroix/masters-thesis/blob/6a441ff3a9611b5ac34f2d8cc2911fcf256a454c/experiments/scripts/merge.sub",
+    "sha": "74314589dc83c0df8ebd2f131c5f70b4b249a816",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "pangyuteng__hello-voxelmorph__voxelmorph__torch__scripts__train.sub": {
+    "repo": "pangyuteng/hello-voxelmorph",
+    "path": "voxelmorph/torch/scripts/train.sub",
+    "html_url": "https://github.com/pangyuteng/hello-voxelmorph/blob/64b317bd30f372bbcb6f72c9aa562b8116d1bbf7/voxelmorph/torch/scripts/train.sub",
+    "sha": "744e84e2144bbcc82a9a1d047306c06854bd1a85",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "FedericoCorchia__BoloGAN__BoloGAN__model__condorTEMPLATE.sub": {
+    "repo": "FedericoCorchia/BoloGAN",
+    "path": "BoloGAN/model/condorTEMPLATE.sub",
+    "html_url": "https://github.com/FedericoCorchia/BoloGAN/blob/0d02c5ad58f3286b490970456850525acaff3d77/BoloGAN/model/condorTEMPLATE.sub",
+    "sha": "919d85c5fa51c08bbbd238caf69e072f7d9bb7fa",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "MARKST-47__automated-causal-abstraction__cluster_utils__run_boundless_das.sub": {
+    "repo": "MARKST-47/automated-causal-abstraction",
+    "path": "cluster_utils/run_boundless_das.sub",
+    "html_url": "https://github.com/MARKST-47/automated-causal-abstraction/blob/e6ba651d360675000953adf69712c90bc820181f/cluster_utils/run_boundless_das.sub",
+    "sha": "7a78a4cc6f10dddab3674e7bce75f7b5752a4d6b",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "NMRbox__htcondor-tutorial__pdb.sub": {
+    "repo": "NMRbox/htcondor-tutorial",
+    "path": "pdb.sub",
+    "html_url": "https://github.com/NMRbox/htcondor-tutorial/blob/d29cc4c25c2bd45bc8da7a800e0d2069669a0d90/pdb.sub",
+    "sha": "24a47df5cff2157490af93e58f9d54953150dd55",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "fragilefort__Project-Dhvani__code__submit_job.sub": {
+    "repo": "fragilefort/Project-Dhvani",
+    "path": "code/submit_job.sub",
+    "html_url": "https://github.com/fragilefort/Project-Dhvani/blob/251d364bff4f1a44ddeaf5ea8cc6f6f0fb7885e8/code/submit_job.sub",
+    "sha": "c99c035def01b4bf8230c887ac55f2ecfdd987b8",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "UW-Madison-CBML__ZZFormer__ZZFormer__concatenation_model__CHTC_scripts__mntedb2.sub": {
+    "repo": "UW-Madison-CBML/ZZFormer",
+    "path": "ZZFormer/concatenation_model/CHTC_scripts/mntedb2.sub",
+    "html_url": "https://github.com/UW-Madison-CBML/ZZFormer/blob/02190761d08832cd6f42928abd6a8e8c70e5e684/ZZFormer/concatenation_model/CHTC_scripts/mntedb2.sub",
+    "sha": "9fa0b4ea594a613342b29f1e6c4894e82b3ff115",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "scolloms__Nflows_AMAZE_paper__outputs__prod_trainCE__submit_model_select.sub": {
+    "repo": "scolloms/Nflows_AMAZE_paper",
+    "path": "outputs/prod_trainCE/submit_model_select.sub",
+    "html_url": "https://github.com/scolloms/Nflows_AMAZE_paper/blob/b6a73809c68686433f1d77d08a6b7eeda76003cb/outputs/prod_trainCE/submit_model_select.sub",
+    "sha": "17fba77d3176fcf56042f49b6efeb1c41e05abf3",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "osama11osama__tml-assignment1__work__final_attack_pipeline__cluster__mia_fap_shadow_pub.sub": {
+    "repo": "osama11osama/tml-assignment1",
+    "path": "work/final_attack_pipeline/cluster/mia_fap_shadow_pub.sub",
+    "html_url": "https://github.com/osama11osama/tml-assignment1/blob/ea3e30d462b36ba5f9859d4481788285e968cde5/work/final_attack_pipeline/cluster/mia_fap_shadow_pub.sub",
+    "sha": "f63a9d2b6cfd580996f25bd559ad11e427c5ccd4",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "volkamerlab__assay-ml__condor__train_dti.sub": {
+    "repo": "volkamerlab/assay-ml",
+    "path": "condor/train_dti.sub",
+    "html_url": "https://github.com/volkamerlab/assay-ml/blob/2cd17ca66620fc95c8eb2406db56775cd0f4bb07/condor/train_dti.sub",
+    "sha": "5f6d8f958dcf81f357a1e92cb45be7dff4837f98",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "hongxuzhou__lct_master_project__colloquium_prep__pilot_eval__hpc__infer_full.sub": {
+    "repo": "hongxuzhou/lct_master_project",
+    "path": "colloquium_prep/pilot_eval/hpc/infer_full.sub",
+    "html_url": "https://github.com/hongxuzhou/lct_master_project/blob/e03829ba68fe7cb71dbd6d45152adbe9e007fd77/colloquium_prep/pilot_eval/hpc/infer_full.sub",
+    "sha": "84cf76897727d7116a4bcc03e8b98bc4e86aed24",
+    "stars": 0,
+    "query": "request_gpus queue extension:sub"
+  },
+  "wuwuz__SquirRL__MultiAgent__run_py.sub": {
+    "repo": "wuwuz/SquirRL",
+    "path": "MultiAgent/run_py.sub",
+    "html_url": "https://github.com/wuwuz/SquirRL/blob/8e5fc08aad731b0d7ee61a403d3e06f70824389e/MultiAgent/run_py.sub",
+    "sha": "7a6718982388a65f5cc73c41ac5b10fac1fbfc1f",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "egluckthaler__starfish__apptainer__build.sub": {
+    "repo": "egluckthaler/starfish",
+    "path": "apptainer/build.sub",
+    "html_url": "https://github.com/egluckthaler/starfish/blob/37a05449a97a1bdf512d4fafe8342df1d5340bbb/apptainer/build.sub",
+    "sha": "fdb0b7bd5d4e54cdb91be5d3c8c9cd69a46ceaaf",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "CHTC__templates-GPUs__multi_gpu__submit.sub": {
+    "repo": "CHTC/templates-GPUs",
+    "path": "multi_gpu/submit.sub",
+    "html_url": "https://github.com/CHTC/templates-GPUs/blob/4c16336b0260d30455fb1c624da5ad0e6fd45e77/multi_gpu/submit.sub",
+    "sha": "783568237411e87cdf907f0febb8caa16b762b86",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "lovelaced__htcondor_submit_scripts__wid_upgrade__job.sub": {
+    "repo": "lovelaced/htcondor_submit_scripts",
+    "path": "wid_upgrade/job.sub",
+    "html_url": "https://github.com/lovelaced/htcondor_submit_scripts/blob/0d73b7b1146865912af42fb78d9fcb343a9306af/wid_upgrade/job.sub",
+    "sha": "36abb6af36698134c5f3ca994202fa7c8e10d4ee",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "Niccolo-Ajroldi__plainLM__cluster__single_gpu__condor.sub": {
+    "repo": "Niccolo-Ajroldi/plainLM",
+    "path": "cluster/single_gpu/condor.sub",
+    "html_url": "https://github.com/Niccolo-Ajroldi/plainLM/blob/bdeaea7796cbe95d0ae0dd692957c86814542baf/cluster/single_gpu/condor.sub",
+    "sha": "163ddcfecabb304f6969d8c150571dc4a98b52ce",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "alex-weichun-huang__video_features__condor__template.sub": {
+    "repo": "alex-weichun-huang/video_features",
+    "path": "condor/template.sub",
+    "html_url": "https://github.com/alex-weichun-huang/video_features/blob/118a6deb5f1d0694b45d366960cbedca9f7860e8/condor/template.sub",
+    "sha": "24912cac7055c4cf396f9a6dedbfdcc4fb607a9f",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "sigma-cache__Theano-DBNs-For-Drug-Discovery__wid_jobs__wid-stnn_dbn-muv.sub": {
+    "repo": "sigma-cache/Theano-DBNs-For-Drug-Discovery",
+    "path": "wid_jobs/wid-stnn_dbn-muv.sub",
+    "html_url": "https://github.com/sigma-cache/Theano-DBNs-For-Drug-Discovery/blob/dac6b87ce6ac76eb3b6606b447cc7013bfb34a50/wid_jobs/wid-stnn_dbn-muv.sub",
+    "sha": "2be3759a7e2784b3423563c201e04a59e5fba9fa",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "SyracuseUniversity__OrangeGridExamples__Examples__uv__example.sub": {
+    "repo": "SyracuseUniversity/OrangeGridExamples",
+    "path": "Examples/uv/example.sub",
+    "html_url": "https://github.com/SyracuseUniversity/OrangeGridExamples/blob/6b6b0c4f127e57ad1bde2692e1b3166c75c4de9b/Examples/uv/example.sub",
+    "sha": "203464bda1818786de08b54ed39cf1615ffa3539",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "volkamerlab__kinodata-3D-affinity-prediction__condor__train_voxel.sub": {
+    "repo": "volkamerlab/kinodata-3D-affinity-prediction",
+    "path": "condor/train_voxel.sub",
+    "html_url": "https://github.com/volkamerlab/kinodata-3D-affinity-prediction/blob/8677162b02a0a007a5cdfb5cc3b771317cda135e/condor/train_voxel.sub",
+    "sha": "d1d1704d9b6c03c3fde3f20ffca25677e4a53e31",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "maxwnewcomer__NWTOPT__nwtopt.sub": {
+    "repo": "maxwnewcomer/NWTOPT",
+    "path": "nwtopt.sub",
+    "html_url": "https://github.com/maxwnewcomer/NWTOPT/blob/7dffc4f3f8e876e35d5541c35b4e26c84fa2b7bc/nwtopt.sub",
+    "sha": "a08288389bea588c3c952103f72716541d77fea7",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "RCIC-UCI-Public__website-rcic__docs__source__slurm__files__hybrid.sub": {
+    "repo": "RCIC-UCI-Public/website-rcic",
+    "path": "docs/source/slurm/files/hybrid.sub",
+    "html_url": "https://github.com/RCIC-UCI-Public/website-rcic/blob/6e714c7d8542c00e0dcd7203bea2eccc4111585a/docs/source/slurm/files/hybrid.sub",
+    "sha": "b8ac46ab4d5fc3bc496c7920765698e2d4722256",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "UW-xDD__text2graph_llm__chtc__debug_job.sub": {
+    "repo": "UW-xDD/text2graph_llm",
+    "path": "chtc/debug_job.sub",
+    "html_url": "https://github.com/UW-xDD/text2graph_llm/blob/a1c0457f014b9aa8700f7e9a51d1f24474fc5e32/chtc/debug_job.sub",
+    "sha": "eba9fe2c1f814cb8934fe489a49d8fc99663d96a",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "enesduran__FUSION__sh_scripts__ablation3.sub": {
+    "repo": "enesduran/FUSION",
+    "path": "sh_scripts/ablation3.sub",
+    "html_url": "https://github.com/enesduran/FUSION/blob/5f6b8ae22fbc7f35230e71a679c3201b30176b8c/sh_scripts/ablation3.sub",
+    "sha": "704576a02e994f52e47282507b20dff4b42775a9",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "enesduran__FUSION__sh_scripts__ablation1.sub": {
+    "repo": "enesduran/FUSION",
+    "path": "sh_scripts/ablation1.sub",
+    "html_url": "https://github.com/enesduran/FUSION/blob/5f6b8ae22fbc7f35230e71a679c3201b30176b8c/sh_scripts/ablation1.sub",
+    "sha": "d969810fa36c1312b09042e4d818068ba502f6a0",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "enesduran__FUSION__sh_scripts__ablation2.sub": {
+    "repo": "enesduran/FUSION",
+    "path": "sh_scripts/ablation2.sub",
+    "html_url": "https://github.com/enesduran/FUSION/blob/5f6b8ae22fbc7f35230e71a679c3201b30176b8c/sh_scripts/ablation2.sub",
+    "sha": "9417e8dc85c6e40cfb8bb1bd741e429e43c09043",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "icecube__reco_processing__rec_tau.sub": {
+    "repo": "icecube/reco_processing",
+    "path": "rec_tau.sub",
+    "html_url": "https://github.com/icecube/reco_processing/blob/15b31b039aa8e1cbc34830de455db8c33c408313/rec_tau.sub",
+    "sha": "31df0a20921e75bfc7b7c8fc636f378138e6e973",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "icecube__run_taupede_ftp__dag__reco.sub": {
+    "repo": "icecube/run_taupede_ftp",
+    "path": "dag/reco.sub",
+    "html_url": "https://github.com/icecube/run_taupede_ftp/blob/f7ce178df116e7c4b700aab72b2bc8af196f668d/dag/reco.sub",
+    "sha": "9dacd7c65210c682c43ee6121915a7eafa117e2f",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "phnazari__quark__cluster__gla.sub": {
+    "repo": "phnazari/quark",
+    "path": "cluster/gla.sub",
+    "html_url": "https://github.com/phnazari/quark/blob/b13614e843b780900ef94fd91f07c1d19f882175/cluster/gla.sub",
+    "sha": "5281b5a1279f473549797a0838fa3534dbbc7113",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "icecube__reco_processing__hdf__to_hdf5.sub": {
+    "repo": "icecube/reco_processing",
+    "path": "hdf/to_hdf5.sub",
+    "html_url": "https://github.com/icecube/reco_processing/blob/15b31b039aa8e1cbc34830de455db8c33c408313/hdf/to_hdf5.sub",
+    "sha": "1ab944af53752e7f916ee9308239871495618ed0",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "agitter__adaptyvbio-egfr__round2__build_bindcraft.sub": {
+    "repo": "agitter/adaptyvbio-egfr",
+    "path": "round2/build_bindcraft.sub",
+    "html_url": "https://github.com/agitter/adaptyvbio-egfr/blob/f87709c5f2f358d98b4d269fcbc13a1cbab9f833/round2/build_bindcraft.sub",
+    "sha": "f9999f6c62a7ca207911e4fc8651f948ddfc3933",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "enesduran__FUSION__sh_scripts__train_ddp.sub": {
+    "repo": "enesduran/FUSION",
+    "path": "sh_scripts/train_ddp.sub",
+    "html_url": "https://github.com/enesduran/FUSION/blob/5f6b8ae22fbc7f35230e71a679c3201b30176b8c/sh_scripts/train_ddp.sub",
+    "sha": "f59fcb600556e45ebd351939c0a6a46dcc9c32b8",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "abirharrasse__MultilingualCLTs__example__gpt2__run_on_gpt2.sub": {
+    "repo": "abirharrasse/MultilingualCLTs",
+    "path": "example/gpt2/run_on_gpt2.sub",
+    "html_url": "https://github.com/abirharrasse/MultilingualCLTs/blob/aca8cb03ef19f12100fb5552b69da81e1a2c198c/example/gpt2/run_on_gpt2.sub",
+    "sha": "bca1c65c69a35833ef4ecb0ed98a3aef8a50520c",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "phnazari__quark__cluster__deltanet.sub": {
+    "repo": "phnazari/quark",
+    "path": "cluster/deltanet.sub",
+    "html_url": "https://github.com/phnazari/quark/blob/b13614e843b780900ef94fd91f07c1d19f882175/cluster/deltanet.sub",
+    "sha": "1defc0f35d0c18dabae0d3bae26582e30c9d7be0",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "OpenForecaster__scaling-forecasting-training__news__src__tokenize_for_rag.sub": {
+    "repo": "OpenForecaster/scaling-forecasting-training",
+    "path": "news/src/tokenize_for_rag.sub",
+    "html_url": "https://github.com/OpenForecaster/scaling-forecasting-training/blob/4f8527cd172977e9970276c9da64dc0d65439743/news/src/tokenize_for_rag.sub",
+    "sha": "597649f6c24db872cc0f6809804cfa156b901ea1",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "NMRbox__htcondor-tutorial__gromacs__gmx.sub": {
+    "repo": "NMRbox/htcondor-tutorial",
+    "path": "gromacs/gmx.sub",
+    "html_url": "https://github.com/NMRbox/htcondor-tutorial/blob/d29cc4c25c2bd45bc8da7a800e0d2069669a0d90/gromacs/gmx.sub",
+    "sha": "69a98f9480806ae71bf8327e80fdd90ea791afd3",
+    "stars": 0,
+    "query": "requirements queue extension:sub"
+  },
+  "yaoppeng__U-Net_v2__nnunetv2__run__train.jdl": {
+    "repo": "yaoppeng/U-Net_v2",
+    "path": "nnunetv2/run/train.jdl",
+    "html_url": "https://github.com/yaoppeng/U-Net_v2/blob/ae60bd0c7bae78956cbfdbeebdce8906972acd7f/nnunetv2/run/train.jdl",
+    "sha": "128bcfadec7530249ef248ce4d6abe1f6e520d93",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "LPC-HH__HH4b__src__condor__submit.templ.jdl": {
+    "repo": "LPC-HH/HH4b",
+    "path": "src/condor/submit.templ.jdl",
+    "html_url": "https://github.com/LPC-HH/HH4b/blob/ade23942c4000917cdab653a8ebfbb4d88cbee84/src/condor/submit.templ.jdl",
+    "sha": "7b4d0305448382a94434439480a9841c16884b53",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "CMS-SUS-XPAG__GenLHEfiles__Run2Mechanism__jobExecCondor.jdl": {
+    "repo": "CMS-SUS-XPAG/GenLHEfiles",
+    "path": "Run2Mechanism/jobExecCondor.jdl",
+    "html_url": "https://github.com/CMS-SUS-XPAG/GenLHEfiles/blob/36f43658ede9d555f036284e8a1af20c07d91008/Run2Mechanism/jobExecCondor.jdl",
+    "sha": "8ad8e91996741eabad50608eee09540c646bfe8d",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "cmstas__nanoaodtools-skimmer__submit.jdl": {
+    "repo": "cmstas/nanoaodtools-skimmer",
+    "path": "submit.jdl",
+    "html_url": "https://github.com/cmstas/nanoaodtools-skimmer/blob/bc04f53e695e9a6eece78baec4cc518bc9d42112/submit.jdl",
+    "sha": "3aab43e3dfd0ae69873532ad167c7a9e98266873",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "rkansal47__HHbbVV__src__HHbbVV__combine__submit__submit_bias.templ.jdl": {
+    "repo": "rkansal47/HHbbVV",
+    "path": "src/HHbbVV/combine/submit/submit_bias.templ.jdl",
+    "html_url": "https://github.com/rkansal47/HHbbVV/blob/3a51b9e1fad705f0b7e71097b189a73e20886cbd/src/HHbbVV/combine/submit/submit_bias.templ.jdl",
+    "sha": "88245ffced01bc3fd4c315669fa1dbefbfdc314e",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "jpata__hepaccelerate-cms__batch__cache.jdl": {
+    "repo": "jpata/hepaccelerate-cms",
+    "path": "batch/cache.jdl",
+    "html_url": "https://github.com/jpata/hepaccelerate-cms/blob/840246ea04b55fddbf7d2773879984c39fd0a319/batch/cache.jdl",
+    "sha": "5c661da0eb67c08b547fca5a0d49ef0475f73094",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "unibonn__htcondor-bonn__files__Rocky9_lotto.jdl": {
+    "repo": "unibonn/htcondor-bonn",
+    "path": "files/Rocky9_lotto.jdl",
+    "html_url": "https://github.com/unibonn/htcondor-bonn/blob/934b8c74f9b2220654cf84b9d48f055e40749676/files/Rocky9_lotto.jdl",
+    "sha": "adb35dc68f87d97b4747aef9aa13c637ea42414d",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "DUNE__dqmconfig__htcondor__psub.jdl": {
+    "repo": "DUNE/dqmconfig",
+    "path": "htcondor/psub.jdl",
+    "html_url": "https://github.com/DUNE/dqmconfig/blob/c2e57c29c98235911e43c2e69cd907c1db55572f/htcondor/psub.jdl",
+    "sha": "85d2042902fcd64f9b1f338e66b404d8210e069b",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "cms-ljmet__Ljmet-singlelepton__condor__singleLeptonTemplate.jdl": {
+    "repo": "cms-ljmet/Ljmet-singlelepton",
+    "path": "condor/singleLeptonTemplate.jdl",
+    "html_url": "https://github.com/cms-ljmet/Ljmet-singlelepton/blob/a8e43824a1898501bcad79c1d11d1729ecb37755/condor/singleLeptonTemplate.jdl",
+    "sha": "ed14768b647775731c946ca00f4a068f2a8e7c82",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "CMSSUSYPhotons__LimitSetting_Jan2012__condor_submit__wino_mN375.jdl": {
+    "repo": "CMSSUSYPhotons/LimitSetting_Jan2012",
+    "path": "condor_submit/wino_mN375.jdl",
+    "html_url": "https://github.com/CMSSUSYPhotons/LimitSetting_Jan2012/blob/82a8d07cc1c1f4e3a52870897fc99b492370c436/condor_submit/wino_mN375.jdl",
+    "sha": "78fc71415c9268da2ca5ba576d2798614fb84a03",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "KIT-CMS__sm-htt-analysis__condor_jobs__produce_shapes_slc6.jdl": {
+    "repo": "KIT-CMS/sm-htt-analysis",
+    "path": "condor_jobs/produce_shapes_slc6.jdl",
+    "html_url": "https://github.com/KIT-CMS/sm-htt-analysis/blob/dd62545c0411c806721c1d79f0e9cdb706ff3acd/condor_jobs/produce_shapes_slc6.jdl",
+    "sha": "1ffd5450012e36266d162fa5068af1dbfa622290",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "MaxHuesca__Tabula_Muris_Trasncriptomics_analysis__src__jdl__pseudo_align.jdl": {
+    "repo": "MaxHuesca/Tabula_Muris_Trasncriptomics_analysis",
+    "path": "src/jdl/pseudo_align.jdl",
+    "html_url": "https://github.com/MaxHuesca/Tabula_Muris_Trasncriptomics_analysis/blob/99a73c52fd11770de9f855816bf1fd66fb3d4af2/src/jdl/pseudo_align.jdl",
+    "sha": "812c39351cc4e0d77039f10781a656ad2bf24f1d",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "MiT-HEP__MCProduction__Upgrade102__MinBiasNoPu__condor.jdl": {
+    "repo": "MiT-HEP/MCProduction",
+    "path": "Upgrade102/MinBiasNoPu/condor.jdl",
+    "html_url": "https://github.com/MiT-HEP/MCProduction/blob/df019d7a15717a9eafd9502f2a310023dcd584f5/Upgrade102/MinBiasNoPu/condor.jdl",
+    "sha": "3278d5631f4737be7088ce298e1c6856da95c938",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "asady1__HVH2016__VH__condor_Config_Wp_3000.jdl": {
+    "repo": "asady1/HVH2016",
+    "path": "VH/condor_Config_Wp_3000.jdl",
+    "html_url": "https://github.com/asady1/HVH2016/blob/12ab44a30dc68d95abc01c3d63faf4d277c434a1/VH/condor_Config_Wp_3000.jdl",
+    "sha": "aea215513a01307157cf025be4fe24599bbb411d",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "dnoonan08__TTGammaSemiLep_13TeV__submitNtuples.jdl": {
+    "repo": "dnoonan08/TTGammaSemiLep_13TeV",
+    "path": "submitNtuples.jdl",
+    "html_url": "https://github.com/dnoonan08/TTGammaSemiLep_13TeV/blob/38c27f0c93ce26783080ca71704aea28cbf913ed/submitNtuples.jdl",
+    "sha": "c91a57a24e3a45df97bbc688d69da01167c70664",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "aperloff__TAMUWW__MVA__bin__MVABatchJob.jdl": {
+    "repo": "aperloff/TAMUWW",
+    "path": "MVA/bin/MVABatchJob.jdl",
+    "html_url": "https://github.com/aperloff/TAMUWW/blob/c18e4b7822076bf74ee919509a6bd1f3cf780e11/MVA/bin/MVABatchJob.jdl",
+    "sha": "3f56cf09125f4d88da64f86aff2ddeb9218a0a28",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "lsowa__recoil_correction__sub.jdl": {
+    "repo": "lsowa/recoil_correction",
+    "path": "sub.jdl",
+    "html_url": "https://github.com/lsowa/recoil_correction/blob/377580d7eabffdf84ea82e8b1647d9742e35d65e/sub.jdl",
+    "sha": "d272d2f2b4c637dbc206e82bbb8948a5b706aec8",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "gqlcms__XWWNano__Powheg__submit_nanov9.jdl": {
+    "repo": "gqlcms/XWWNano",
+    "path": "Powheg/submit_nanov9.jdl",
+    "html_url": "https://github.com/gqlcms/XWWNano/blob/c57fb51b63ced951653311797334364bd7834451/Powheg/submit_nanov9.jdl",
+    "sha": "6fa176f29767a9a47b64bd4bdc5c6c0abe0b6d50",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "jhover__provisioning-templates__condor__ec2vmjob.jdl": {
+    "repo": "jhover/provisioning-templates",
+    "path": "condor/ec2vmjob.jdl",
+    "html_url": "https://github.com/jhover/provisioning-templates/blob/035a916891fd6c7498017143944072ca41c7b639/condor/ec2vmjob.jdl",
+    "sha": "6a13bf8422223fe6f675ab07b68a731f133a0b2e",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "yhshin11__lysim-herad__LYSim.jdl": {
+    "repo": "yhshin11/lysim-herad",
+    "path": "LYSim.jdl",
+    "html_url": "https://github.com/yhshin11/lysim-herad/blob/8a48f3dde253b9dd7518730663c201463bef9870/LYSim.jdl",
+    "sha": "be5ff3650528626fc24fcc5550c3d9d16b90e76f",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "awhitbeck__boostedHiggsPlusMET__src__batchExecute.jdl": {
+    "repo": "awhitbeck/boostedHiggsPlusMET",
+    "path": "src/batchExecute.jdl",
+    "html_url": "https://github.com/awhitbeck/boostedHiggsPlusMET/blob/f94d9019fe5a20cc96efd14e16d12a757f9241e3/src/batchExecute.jdl",
+    "sha": "d098355689fb39e9e6701bc2eab853eecdfcaba8",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "bnl-sdcc__dcde-templates__sc19-demo__bnl__by-hand__relion-bnl-demo.jdl": {
+    "repo": "bnl-sdcc/dcde-templates",
+    "path": "sc19-demo/bnl/by-hand/relion-bnl-demo.jdl",
+    "html_url": "https://github.com/bnl-sdcc/dcde-templates/blob/f5dd6fab04015a4e9ce9191150ca5aa02ae63c19/sc19-demo/bnl/by-hand/relion-bnl-demo.jdl",
+    "sha": "42b675f93df9a2ceff52863bc88c8c43f3e56725",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "nsmith-__coffea-dask-condor__workers.jdl": {
+    "repo": "nsmith-/coffea-dask-condor",
+    "path": "workers.jdl",
+    "html_url": "https://github.com/nsmith-/coffea-dask-condor/blob/3ce0f82f0e604206ad0dbffc383db340dbfd12a3/workers.jdl",
+    "sha": "de6c043dcce0b890c1b4629d3531d9d66fb668b0",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "akobert__NanoAODTools__MC50__run.jdl": {
+    "repo": "akobert/NanoAODTools",
+    "path": "MC50/run.jdl",
+    "html_url": "https://github.com/akobert/NanoAODTools/blob/5d42506501db893cb4a0bc7b6b2f90695112ac10/MC50/run.jdl",
+    "sha": "37f5fc05f49a3a6e8b9c2783025cf7c811b2bb2c",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  },
+  "akobert__NanoAODTools__MC10__run.jdl": {
+    "repo": "akobert/NanoAODTools",
+    "path": "MC10/run.jdl",
+    "html_url": "https://github.com/akobert/NanoAODTools/blob/5d42506501db893cb4a0bc7b6b2f90695112ac10/MC10/run.jdl",
+    "sha": "0841a1f0eaa719099ff19615b440646c0a22705a",
+    "stars": 0,
+    "query": "queue extension:jdl"
+  }
+}
