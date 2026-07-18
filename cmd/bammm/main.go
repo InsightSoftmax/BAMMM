@@ -14,6 +14,7 @@ import (
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/all"
 	"github.com/InsightSoftmax/BAMMM/internal/parser"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/all"
+	"github.com/InsightSoftmax/BAMMM/internal/rules"
 	"github.com/InsightSoftmax/BAMMM/internal/splat"
 )
 
@@ -45,7 +46,7 @@ func newRootCmd() *cobra.Command {
 func newConvertCmd() *cobra.Command {
 	var from, to, inputFile, inputDir, outputDir, pattern string
 	var recursive, report bool
-	var priorityRange string
+	var priorityRange, rulesFile string
 
 	cmd := &cobra.Command{
 		Use:   "convert [file...]",
@@ -73,6 +74,11 @@ Use --from splat / --to splat to validate or round-trip without converting.`,
 				splat.CanonicalScale = scale
 			}
 
+			ruleSet, err := loadRules(rulesFile)
+			if err != nil {
+				return err
+			}
+
 			items, batch, err := gatherInputs(args, inputDir, pattern, recursive)
 			if err != nil {
 				return err
@@ -80,11 +86,11 @@ Use --from splat / --to splat to validate or round-trip without converting.`,
 
 			var runErr error
 			if !batch {
-				runErr = convertSingle(cmd, items, inputFile, from, to, outputDir)
+				runErr = convertSingle(cmd, items, inputFile, from, to, outputDir, ruleSet)
 			} else if outputDir == "" {
 				return fmt.Errorf("--output-dir is required when converting multiple files or --input-dir")
 			} else {
-				res, err := runBatch(items, from, to, outputDir, cmd.ErrOrStderr())
+				res, err := runBatch(items, from, to, outputDir, cmd.ErrOrStderr(), ruleSet)
 				if err != nil {
 					return err
 				}
@@ -113,14 +119,27 @@ Use --from splat / --to splat to validate or round-trip without converting.`,
 	cmd.Flags().BoolVar(&recursive, "recursive", true, "recurse into subdirectories of --input-dir")
 	cmd.Flags().BoolVar(&report, "report", false, "print a SPLAT field-coverage report over the inputs")
 	cmd.Flags().StringVar(&priorityRange, "priority-range", "0:1000", "canonical priority band MIN:MAX; widen to reduce round-trip rounding loss")
+	cmd.Flags().StringVar(&rulesFile, "rules", "", "user rules file to rewrite the SPLAT IR mid-conversion (see docs/translation-rules.md)")
 	_ = cmd.MarkFlagRequired("from")
 	_ = cmd.MarkFlagRequired("to")
 	return cmd
 }
 
+// loadRules reads and parses a --rules file, returning nil when none is given.
+func loadRules(path string) (*rules.Ruleset, error) {
+	if path == "" {
+		return nil, nil
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("reading --rules: %w", err)
+	}
+	return rules.Load(data)
+}
+
 // convertSingle handles the one-input case: read from a file/stdin and write to
 // stdout, or to a single named file when --output-dir is set.
-func convertSingle(cmd *cobra.Command, items []inputItem, inputFile, from, to, outputDir string) error {
+func convertSingle(cmd *cobra.Command, items []inputItem, inputFile, from, to, outputDir string, rs *rules.Ruleset) error {
 	var args []string
 	if len(items) == 1 {
 		args = []string{items[0].path}
@@ -129,9 +148,12 @@ func convertSingle(cmd *cobra.Command, items []inputItem, inputFile, from, to, o
 	if err != nil {
 		return fmt.Errorf("reading input: %w", err)
 	}
-	out, err := convert.Convert(data, from, to)
+	out, warnings, err := convert.ConvertWithRules(data, from, to, rs)
 	if err != nil {
 		return err
+	}
+	for _, warn := range warnings {
+		fmt.Fprintf(cmd.ErrOrStderr(), "rule: %s\n", warn)
 	}
 	if outputDir == "" {
 		_, err = fmt.Fprint(cmd.OutOrStdout(), string(out))

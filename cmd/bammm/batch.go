@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/InsightSoftmax/BAMMM/internal/convert"
+	"github.com/InsightSoftmax/BAMMM/internal/rules"
 )
 
 // inputItem is one file to convert. rel is the path relative to the output
@@ -93,7 +94,7 @@ type batchResult struct {
 // swapping each file's extension for the target format's. It continues past
 // per-file failures, writing a summary to w, and only returns a non-nil error
 // for problems that abort the whole run (e.g. an unwritable output dir).
-func runBatch(items []inputItem, from, to, outDir string, w io.Writer) (batchResult, error) {
+func runBatch(items []inputItem, from, to, outDir string, w io.Writer, rs *rules.Ruleset) (batchResult, error) {
 	var res batchResult
 	ext := convert.Extension(to)
 
@@ -106,10 +107,13 @@ func runBatch(items []inputItem, from, to, outDir string, w io.Writer) (batchRes
 			res.failures = append(res.failures, batchFailure{it.rel, err.Error()})
 			continue
 		}
-		out, err := convert.Convert(data, from, to)
+		out, warnings, err := convert.ConvertWithRules(data, from, to, rs)
 		if err != nil {
 			res.failures = append(res.failures, batchFailure{it.rel, err.Error()})
 			continue
+		}
+		for _, warn := range warnings {
+			fmt.Fprintf(w, "  %s: rule: %s\n", it.rel, warn)
 		}
 		outPath := filepath.Join(outDir, swapExt(it.rel, ext))
 		if err := os.MkdirAll(filepath.Dir(outPath), 0o755); err != nil {

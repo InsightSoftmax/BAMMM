@@ -6,6 +6,7 @@ import (
 
 	"github.com/InsightSoftmax/BAMMM/internal/emitter"
 	"github.com/InsightSoftmax/BAMMM/internal/parser"
+	"github.com/InsightSoftmax/BAMMM/internal/rules"
 	"github.com/InsightSoftmax/BAMMM/internal/splat"
 )
 
@@ -27,11 +28,27 @@ func Extension(format string) string {
 // Convert translates job spec bytes from one scheduler format to another.
 // Use "splat" as from/to for SPLAT pass-through (useful for validation).
 func Convert(input []byte, from, to string) ([]byte, error) {
+	out, _, err := ConvertWithRules(input, from, to, nil)
+	return out, err
+}
+
+// ConvertWithRules is Convert plus an optional user rule set that rewrites the
+// SPLAT IR between parse and emit. It also returns any warnings the matched
+// rules emitted. A nil ruleset is a plain conversion.
+func ConvertWithRules(input []byte, from, to string, rs *rules.Ruleset) ([]byte, []string, error) {
 	job, err := parse(input, from)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	return emit(job, to)
+	warnings, err := rs.Apply(job, from, to)
+	if err != nil {
+		return nil, nil, err
+	}
+	out, err := emit(job, to)
+	if err != nil {
+		return nil, warnings, err
+	}
+	return out, warnings, nil
 }
 
 // Parse converts source bytes into a SPLAT job without emitting, so callers

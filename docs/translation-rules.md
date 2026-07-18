@@ -1,91 +1,64 @@
-# User-defined translation rules (design — planned)
+# User-defined translation rules
 
-> **Status: proposed, not yet implemented.** This document is the design for a
-> feature that lets users adjust translations *without patching BAMMM's source*.
-> It exists so the feature is specified before it is built; nothing here works
-> today.
-
-## Problem
-
-BAMMM maps native fields to SPLAT and back. When it meets something it doesn't
-anticipate — a site-specific resource, a custom directive, a field a given
-scheduler version added — the current options are:
-
-1. it lands in `extensions.<scheduler>` (preserved for round-trip, but **not**
-   translated to a *different* scheduler), or
-2. it's dropped.
-
-Neither lets a user say "when converting X → Y, turn *this* into *that*" without
-editing Go and rebuilding.
-
-## Approach: a declarative rules file
-
-A user supplies a rules file and points BAMMM at it:
+Adjust a conversion **without patching BAMMM**: supply a rules file that rewrites
+the SPLAT intermediate representation between parse and emit.
 
 ```sh
 bammm convert --from slurm --to pbs --rules my-rules.yaml job.sh
 ```
 
-Rules operate on the **SPLAT IR** (after parse, before emit), so one rule set
-works regardless of the source/target pair. Each rule is a `match` → `action`.
+Rules operate on the SPLAT IR (after the source is parsed, before the target is
+emitted), so one rule set works regardless of the source/target pair. See a
+worked example in [`examples/rules/`](../examples/rules/).
 
-### Sketch
+## Why
+
+When BAMMM meets something it doesn't anticipate — a site-specific resource, a
+custom directive, a field a scheduler version added — it either preserves it
+under `extensions.<scheduler>` (round-trips back, but doesn't translate to a
+*different* scheduler) or drops it. Rules let you say "when converting X → Y,
+turn *this* into *that*" yourself.
+
+## Format
 
 ```yaml
 apiVersion: bammm.io/rules/v1alpha1
 rules:
-  # Promote a preserved Slurm extension into a first-class field for the target.
   - when:
-      from: slurm
-      has: extensions.slurm.switches          # dotted path into the SPLAT IR
-    set:
-      placement.constraint: "network=switch"  # target-agnostic SPLAT field
-
-  # Rename / remap a value.
-  - when:
-      has: schedule.qos
-      equals: { schedule.qos: debug }
-    set:
-      schedule.queue: debug-queue
-
-  # Drop with an explicit warning instead of silent loss.
-  - when:
-      to: pbs
-      has: extensions.htcondor.requirements
-    drop:
-      warn: "HTCondor requirements expression cannot be expressed in PBS"
+      from: slurm                       # optional: source format must equal this
+      to: pbs                           # optional: target format must equal this
+      has: spec.schedule.qos            # optional: path(s) must exist (string or list)
+      equals:                           # optional: path == value
+        spec.schedule.qos: debug
+    # Actions, applied in this order when `when` matches:
+    default:                            # set only if the path is absent
+      spec.schedule.queue: normal
+    set:                                # set (overwrite)
+      spec.schedule.queue: debug-queue
+    rename:                             # move a value from one path to another
+      spec.schedule.account: spec.schedule.project
+    remove:                             # delete path(s) (string or list)
+      - spec.extensions.slurm.switches
+    warn: routed debug QoS to debug-queue   # optional: printed to stderr when the rule fires
 ```
 
-Action verbs (initial set): `set`, `rename`, `drop` (with `warn`), `default`
-(set only if absent).
+### Paths
 
-### Match expressions
+Paths are **full SPLAT document paths**, exactly as they appear in
+`bammm convert --to splat` output — e.g. `spec.schedule.queue`,
+`metadata.name`, `spec.extensions.htcondor.requirements`. (Array indices are not
+supported yet.)
 
-Start with simple structural predicates (`has`, `equals`, `from`, `to`). If that
-proves too limited, add an embedded **CEL** (`cel-go`) expression for conditions
-and computed values — sandboxed, no code execution, e.g.:
+### Matching
 
-```yaml
-  - when:
-      expr: 'has(spec.resources.gpu) && spec.resources.gpu.count > 4'
-    set:
-      schedule.queue: gpu-large
-```
+All conditions in a `when` must hold for the rule to fire. An empty `when: {}`
+always matches. Multiple rules are evaluated in order; each matching rule's
+actions apply cumulatively.
 
-Starlark or external pre/post hooks are a possible later escalation for
-transforms that a declarative form can't express, but the declarative rules file
-is the primary interface.
+## Roadmap
 
-## Open questions
-
-- Precedence when multiple rules match (first-wins vs. all-apply).
-- Whether rules may write into `extensions.*` (target-specific escape hatch).
-- How rule-driven changes surface in `--report` and the lossiness accounting.
-- Packaging: site-wide default rules vs. per-invocation `--rules`.
-
-## When built
-
-This feature must ship with: a `SPEC` section (or its own `SPEC-rules.md`), CLI
-help for `--rules`, worked examples under `examples/rules/`, and a note in
-[gotchas.md](gotchas.md) about rule precedence. Update this document from
-"proposed" to the real reference at that point.
+- **CEL expressions** (`cel-go`) for `when` conditions and computed values, when
+  the structural predicates above prove too limited.
+- **Array-index paths** for list elements.
+- Starlark or external pre/post hooks for transforms a declarative form can't
+  express — an escalation, not a replacement for the rules file.

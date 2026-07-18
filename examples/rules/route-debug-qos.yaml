@@ -1,0 +1,22 @@
+# Example BAMMM translation rules. Apply with:
+#   bammm convert --from slurm --to pbs --rules examples/rules/route-debug-qos.yaml job.sh
+#
+# Paths are full SPLAT document paths (what you see in `--to splat` output).
+apiVersion: bammm.io/rules/v1alpha1
+rules:
+  # Jobs submitted at the "debug" QoS should land in the debug queue on the target.
+  - when:
+      equals:
+        spec.schedule.qos: debug
+    set:
+      spec.schedule.queue: debug-queue
+    warn: routed debug QoS to the debug-queue
+
+  # HTCondor requirements expressions can't be expressed in PBS — drop them loudly
+  # rather than silently carrying a dead extension across.
+  - when:
+      to: pbs
+      has: spec.extensions.htcondor.requirements
+    remove:
+      - spec.extensions.htcondor.requirements
+    warn: dropped HTCondor requirements (no PBS equivalent)
