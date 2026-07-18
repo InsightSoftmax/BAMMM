@@ -11,6 +11,7 @@ import (
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/htcondor"
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/kueue"
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/pbs"
+	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/runai"
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/slurm"
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/volcano"
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/yunikorn"

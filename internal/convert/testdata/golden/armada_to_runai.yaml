@@ -1,0 +1,26 @@
+apiVersion: run.ai/v2alpha1
+kind: TrainingWorkload
+metadata:
+  labels:
+    app: monte-carlo-sim
+    experiment: higgs-cross-section
+  name: mc-simulation-batch-2026-06
+  namespace: runai-research-simulations
+spec:
+  arguments:
+    value: |
+      echo "Compute pod starting on $(hostname)"
+      /opt/simulator/worker \
+        --port 8080 \
+        --gpus 4 \
+        --threads 32
+  command:
+    value: /bin/bash -c
+  cpu:
+    value: "32"
+  gpu:
+    value: "4"
+  image:
+    value: cern/mc-simulator:3.2.1-cuda
+  memory:
+    value: 128Gi
