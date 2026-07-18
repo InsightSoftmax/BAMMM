@@ -1,4 +1,4 @@
-.PHONY: build test lint tidy vuln check install clean help validate-schemas corpus dryrun-k8s dryrun-slurm
+.PHONY: build test lint tidy vuln check install clean help validate-schemas schema corpus dryrun-k8s dryrun-slurm
 
 BINARY     := bammm
 CMD        := ./cmd/bammm
@@ -38,6 +38,10 @@ vuln:
 ## validate-schemas: emit K8s conversions and validate them with kubeconform
 validate-schemas:
 	./scripts/validate-schemas.sh
+
+## schema: regenerate schema/splat.schema.json from the Go types
+schema:
+	go test ./internal/splat/schema -update
 
 ## corpus: scrape a scheduler corpus from GitHub (usage: make corpus SCHED=slurm; SCHED=pairs hunts cross-scheduler pairs)
 corpus:
