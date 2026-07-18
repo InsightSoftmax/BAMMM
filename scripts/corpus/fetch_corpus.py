@@ -56,6 +56,7 @@ import base64
 import json
 import os
 import re
+import shutil
 import sys
 import time
 from dataclasses import dataclass, field
@@ -144,13 +145,15 @@ SCHEDULERS: dict[str, Scheduler] = {
         extensions={".sh", ".slurm", ".job", ".sbatch", ".batch", ".sl", ".bash", ""},
         directive=True, marker="#SBATCH",
         accept=accept_directive("#SBATCH"),
+        # Directive phrases are quoted: an unquoted "--array" / "-l" leads with a
+        # dash, which GitHub code search parses as a NOT operator (422 fatal).
         queries=[
-            "#SBATCH --array extension:sh",
-            "#SBATCH --gres=gpu extension:sh",
-            "#SBATCH --ntasks-per-node extension:sh",
-            "#SBATCH --dependency extension:sh",
-            "#SBATCH hetjob extension:sh",
-            "#SBATCH --partition extension:slurm",
+            '"#SBATCH --array" extension:sh',
+            '"#SBATCH --gres=gpu" extension:sh',
+            '"#SBATCH --ntasks-per-node" extension:sh',
+            '"#SBATCH --dependency" extension:sh',
+            '"#SBATCH" hetjob extension:sh',
+            '"#SBATCH --partition" extension:slurm',
         ],
     ),
     "pbs": Scheduler(
@@ -158,13 +161,14 @@ SCHEDULERS: dict[str, Scheduler] = {
         extensions={".sh", ".pbs", ".job", ".bash", ""},
         directive=True, marker="#PBS",
         accept=accept_directive("#PBS"),
+        # Quoted for the same reason as slurm: "-l"/"-q"/"-W" lead with a dash.
         queries=[
-            "#PBS -l select extension:sh",
-            "#PBS -l nodes extension:sh",
-            "#PBS -q extension:pbs",
-            "#PBS -l walltime extension:sh",
-            "#PBS -J extension:sh",              # array jobs
-            "#PBS -W depend extension:sh",       # dependencies
+            '"#PBS -l select" extension:sh',
+            '"#PBS -l nodes" extension:sh',
+            '"#PBS -q" extension:pbs',
+            '"#PBS -l walltime" extension:sh',
+            '"#PBS -J" extension:sh',            # array jobs
+            '"#PBS -W depend" extension:sh',     # dependencies
         ],
     ),
     "htcondor": Scheduler(
@@ -242,14 +246,29 @@ def make_session(token: str) -> requests.Session:
     return s
 
 
-def get_with_retry(session, url, params=None, retries=3):
-    for _ in range(retries):
-        resp = session.get(url, params=params)
+def get_with_retry(session, url, params=None, retries=5):
+    for attempt in range(retries):
+        try:
+            resp = session.get(url, params=params, timeout=30)
+        except requests.exceptions.RequestException as e:
+            # GitHub drops the connection under abuse-detection throttling; treat
+            # it like a rate-limit and back off rather than crashing the run.
+            wait = 15 * (attempt + 1)
+            print(f"    connection error ({type(e).__name__}); sleeping {wait}s", flush=True)
+            time.sleep(wait)
+            continue
         if resp.status_code == 200:
             return resp
         if resp.status_code in (403, 429):
-            reset = int(resp.headers.get("X-RateLimit-Reset", time.time() + 60))
-            wait = max(5, reset - int(time.time()) + 2)
+            # Secondary (abuse) rate limits set Retry-After and can fire even
+            # while the documented per-minute bucket still shows quota, so honor
+            # Retry-After first, then the reset header, then a safe default.
+            retry_after = resp.headers.get("Retry-After")
+            if retry_after and retry_after.isdigit():
+                wait = int(retry_after) + 2
+            else:
+                reset = int(resp.headers.get("X-RateLimit-Reset", time.time() + 60))
+                wait = max(30, reset - int(time.time()) + 2)
             print(f"    rate-limited; sleeping {wait}s", flush=True)
             time.sleep(wait)
             continue
@@ -258,8 +277,20 @@ def get_with_retry(session, url, params=None, retries=3):
             return None
         if resp.status_code == 404:
             return None
+        if resp.status_code in (408, 500, 502, 503, 504):
+            # GitHub's search backend times out (408) or blips (5xx) on broad
+            # queries; back off and retry rather than crashing the run.
+            wait = 15 * (attempt + 1)
+            print(f"    transient {resp.status_code}; sleeping {wait}s", flush=True)
+            time.sleep(wait)
+            continue
         resp.raise_for_status()
     return None
+
+
+# GitHub code search allows ~30 req/min but trips a stricter secondary limit on
+# bursts; pace pages well under that.
+SEARCH_PAGE_GAP = 3.0
 
 
 def search_code(session, query, per_page=100):
@@ -272,7 +303,7 @@ def search_code(session, query, per_page=100):
         yield from items
         if len(items) < per_page:
             break
-        time.sleep(1.2)
+        time.sleep(SEARCH_PAGE_GAP)
 
 
 def fetch_content(session, item):
@@ -370,6 +401,10 @@ def run_pairs(args):
     almost never co-occur across independently-scraped single-scheduler corpora.
     """
     out_dir = Path(args.out or "testdata/corpus/candidate-pairs")
+    # Start clean: pairs mode isn't resumable, and leaving repo dirs from a prior
+    # run would misrepresent this run's results (the manifest is rewritten fresh).
+    if out_dir.exists():
+        shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     session = make_session(args.token)
 
@@ -381,18 +416,24 @@ def run_pairs(args):
         for query in sched.queries:
             if found >= args.search_limit:
                 break
-            for item in search_code(session, query):
-                if found >= args.search_limit:
-                    break
-                repo = item["repository"]["full_name"]
-                if is_excluded(repo):
-                    continue
-                if Path(item["path"]).suffix.lower() not in sched.extensions:
-                    continue
-                bucket = repo_map.setdefault(repo, {}).setdefault(name, [])
-                if item["path"] not in {it["path"] for it in bucket}:
-                    bucket.append(item)
-                    found += 1
+            try:
+                for item in search_code(session, query):
+                    if found >= args.search_limit:
+                        break
+                    repo = item["repository"]["full_name"]
+                    if is_excluded(repo):
+                        continue
+                    if Path(item["path"]).suffix.lower() not in sched.extensions:
+                        continue
+                    bucket = repo_map.setdefault(repo, {}).setdefault(name, [])
+                    if item["path"] not in {it["path"] for it in bucket}:
+                        bucket.append(item)
+                        found += 1
+            except requests.exceptions.RequestException as e:
+                # A single query dying must not abort the whole multi-scheduler
+                # sweep; log it and move on to the next query.
+                print(f"    query failed ({type(e).__name__}); skipping", flush=True)
+                continue
 
     # Phase 2 — keep repos spanning >= min_schedulers formats.
     candidates = {r: sm for r, sm in repo_map.items() if len(sm) >= args.min_schedulers}
@@ -409,7 +450,11 @@ def run_pairs(args):
             sched = SCHEDULERS[name]
             for item in items[:args.per_repo_limit]:
                 stars = item["repository"].get("stargazers_count", stars)
-                content = fetch_content(session, item)
+                try:
+                    content = fetch_content(session, item)
+                except requests.exceptions.RequestException as e:
+                    print(f"  SKIP {name}: {item['path']} ({type(e).__name__})")
+                    continue
                 if content is None or len(content.encode()) > args.max_bytes:
                     continue
                 ok, reason = sched.accept(content, item["path"], args)
