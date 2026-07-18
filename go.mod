@@ -12,6 +12,7 @@ require (
 
 require (
 	github.com/invopop/jsonschema v0.14.0
+	github.com/santhosh-tekuri/jsonschema/v6 v6.0.2
 	k8s.io/api v0.31.3
 	k8s.io/apimachinery v0.31.3
 )
