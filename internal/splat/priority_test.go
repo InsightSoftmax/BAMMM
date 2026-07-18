@@ -48,6 +48,50 @@ func TestPriorityScale_Invert(t *testing.T) {
 	}
 }
 
+func TestParseRange(t *testing.T) {
+	s, err := ParseRange("0:10000")
+	if err != nil || s.Min != 0 || s.Max != 10000 {
+		t.Fatalf("ParseRange(0:10000): got %+v, %v", s, err)
+	}
+	if s, err := ParseRange(" -5 : 5 "); err != nil || s.Min != -5 || s.Max != 5 {
+		t.Errorf("ParseRange with spaces: got %+v, %v", s, err)
+	}
+	for _, bad := range []string{"", "0", "5:5", "10:2", "a:b", "0:x"} {
+		if _, err := ParseRange(bad); err == nil {
+			t.Errorf("ParseRange(%q): expected error", bad)
+		}
+	}
+}
+
+func TestPriority_WideCanonicalImprovesRoundTrip(t *testing.T) {
+	orig := CanonicalScale
+	defer func() { CanonicalScale = orig }()
+
+	// PBS has 2048 distinct native values; the default 0–1000 band cannot
+	// represent them all, so some native→canonical→native round-trips lose
+	// precision. Count how many.
+	lossy := func() int {
+		n := 0
+		for v := PBSPriority.Min; v <= PBSPriority.Max; v++ {
+			if PBSPriority.Denormalize(PBSPriority.Normalize(v)) != v {
+				n++
+			}
+		}
+		return n
+	}
+
+	CanonicalScale = PriorityScale{Min: 0, Max: 1000}
+	if lossy() == 0 {
+		t.Fatal("expected the default 0–1000 band to lose precision across PBS's range")
+	}
+
+	// A band at least as wide as the native range makes the round-trip lossless.
+	CanonicalScale = PriorityScale{Min: 0, Max: 100000}
+	if n := lossy(); n != 0 {
+		t.Errorf("wide band should be lossless, got %d lossy values", n)
+	}
+}
+
 func TestPriorityScale_DirectionAgreement(t *testing.T) {
 	// Two schedulers with opposite native directions must agree on canonical
 	// ordering: the higher-priority job stays higher-priority after conversion.
