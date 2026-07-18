@@ -92,8 +92,8 @@ Wherever the translation is lossy, BAMMM tells you exactly what got dropped, wha
 | **HTCondor** | HPC | ✅ | ✅ |
 | **Flux** | HPC | 🚧 | 🚧 |
 | **YuniKorn** | K8s | ✅ | ✅ |
-| **Run.ai** | K8s (Partner) | ✅ | ✅ |
-| **LSF** | HPC (Community) | 🚧 | 🚧 |
+| **Run.ai** | K8s | ✅ | ✅ |
+| **LSF** | HPC | 🚧 | 🚧 |
 
 Plus `splat` as both `--from` and `--to` for validation / round-tripping. Run `bammm formats` for the live list.
 

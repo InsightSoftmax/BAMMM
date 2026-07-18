@@ -117,7 +117,7 @@ func TestRunBatch_ContinuesAndMirrors(t *testing.T) {
 	}
 
 	var buf strings.Builder
-	res, err := runBatch(items, "slurm", "splat", out, &buf)
+	res, err := runBatch(items, "slurm", "splat", out, &buf, nil)
 	if err != nil {
 		t.Fatalf("runBatch: %v", err)
 	}
