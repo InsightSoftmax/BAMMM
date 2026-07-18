@@ -52,11 +52,15 @@ var iso8601Re = regexp.MustCompile(
 //	HH:MM:SS
 //	HH:MM        (no seconds)
 //	MM           bare minutes
+//
+// Minute/second fields need not be zero-padded (real-world walltimes like
+// "6:0:0" occur). A four-field colon form D:HH:MM:SS is also accepted.
 var (
-	dHHMMSSRe = regexp.MustCompile(`^(\d+)-(\d+):(\d{2}):(\d{2})$`)
-	dHHMMRe   = regexp.MustCompile(`^(\d+)-(\d+):(\d{2})$`)
-	hhmmssRe  = regexp.MustCompile(`^(\d+):(\d{2}):(\d{2})$`)
-	hhmmRe    = regexp.MustCompile(`^(\d+):(\d{2})$`)
+	dHHMMSSRe   = regexp.MustCompile(`^(\d+)-(\d+):(\d{1,2}):(\d{1,2})$`)
+	dHHMMRe     = regexp.MustCompile(`^(\d+)-(\d+):(\d{1,2})$`)
+	dColonHMSRe = regexp.MustCompile(`^(\d+):(\d{1,2}):(\d{1,2}):(\d{1,2})$`)
+	hhmmssRe    = regexp.MustCompile(`^(\d+):(\d{1,2}):(\d{1,2})$`)
+	hhmmRe      = regexp.MustCompile(`^(\d+):(\d{1,2})$`)
 )
 
 func (d *Duration) parse(s string) error {
@@ -79,6 +83,15 @@ func (d *Duration) parse(s string) error {
 		h, _ := strconv.ParseInt(m[2], 10, 64)
 		min, _ := strconv.ParseInt(m[3], 10, 64)
 		d.d = time.Duration(days*86400+h*3600+min*60) * time.Second
+		return nil
+	}
+	// D:HH:MM:SS (four colon-separated fields)
+	if m := dColonHMSRe.FindStringSubmatch(s); m != nil {
+		days, _ := strconv.ParseInt(m[1], 10, 64)
+		h, _ := strconv.ParseInt(m[2], 10, 64)
+		min, _ := strconv.ParseInt(m[3], 10, 64)
+		sec, _ := strconv.ParseInt(m[4], 10, 64)
+		d.d = time.Duration(days*86400+h*3600+min*60+sec) * time.Second
 		return nil
 	}
 	// HH:MM:SS

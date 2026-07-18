@@ -19,6 +19,9 @@ func TestDurationRoundTrip(t *testing.T) {
 		{"P1DT2H3M4S", 93784, "26:03:04"},
 		{"3600", 3600, "01:00:00"},
 		{"14400", 14400, "04:00:00"},
+		{"6:0:0", 21600, "06:00:00"},      // unpadded fields
+		{"0:00:10:00", 600, "00:10:00"},   // four-field D:HH:MM:SS
+		{"1:02:03:04", 93784, "26:03:04"}, // one day, colon form
 	}
 	for _, tc := range cases {
 		t.Run(tc.input, func(t *testing.T) {

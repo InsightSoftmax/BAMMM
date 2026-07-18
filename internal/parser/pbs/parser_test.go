@@ -79,6 +79,32 @@ func TestParse_ArrayAndNotifications(t *testing.T) {
 	}
 }
 
+func TestParse_Hardening(t *testing.T) {
+	// Comma-separated -l list, inline # comment, and single-letter/uppercase
+	// memory suffix — all seen in the real corpus.
+	script := []byte("#!/bin/bash\n" +
+		"#PBS -N h\n" +
+		"#PBS -l nodes=1:ppn=40           # request one node\n" +
+		"#PBS -l mem=250gb,walltime=18:00:00\n" +
+		"#PBS -l mem=50G\n" +
+		"echo hi\n")
+	job, err := pbs.Parse(script)
+	if err != nil {
+		t.Fatalf("Parse: %v", err)
+	}
+	r := job.Spec.Resources
+	if r.TasksPerNode != 40 {
+		t.Errorf("ppn (with inline comment): got %d want 40", r.TasksPerNode)
+	}
+	// The last mem= wins (50G = 50 GiB).
+	if r.MemoryPerTask == nil || r.MemoryPerTask.String() != "50Gi" {
+		t.Errorf("mem 50G: got %v want 50Gi", r.MemoryPerTask)
+	}
+	if job.Spec.Schedule.Walltime == nil || job.Spec.Schedule.Walltime.Duration() != 18*time.Hour {
+		t.Errorf("comma-list walltime: got %v want 18h", job.Spec.Schedule.Walltime)
+	}
+}
+
 func TestParse_LegacyNodes(t *testing.T) {
 	script := []byte("#!/bin/bash\n#PBS -N legacy\n#PBS -l nodes=4:ppn=8\n#PBS -l walltime=01:00:00\necho hi\n")
 	job, err := pbs.Parse(script)

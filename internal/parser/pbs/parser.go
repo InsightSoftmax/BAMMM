@@ -62,7 +62,7 @@ func extract(data []byte) ([]directive, string, error) {
 		trimmed := strings.TrimSpace(line)
 		if strings.HasPrefix(trimmed, "#PBS") {
 			sawDirective = true
-			rest := strings.TrimSpace(trimmed[len("#PBS"):])
+			rest := stripInlineComment(strings.TrimSpace(trimmed[len("#PBS"):]))
 			if rest == "" {
 				continue
 			}
@@ -80,6 +80,17 @@ func extract(data []byte) ([]directive, string, error) {
 		return nil, "", err
 	}
 	return directives, strings.TrimSpace(strings.Join(body, "\n")), nil
+}
+
+// stripInlineComment removes a trailing " #comment" (whitespace + hash) from a
+// PBS directive line, e.g. "-l nodes=1:ppn=40   # request one node".
+func stripInlineComment(s string) string {
+	for i := 1; i < len(s); i++ {
+		if s[i] == '#' && (s[i-1] == ' ' || s[i-1] == '\t') {
+			return strings.TrimSpace(s[:i])
+		}
+	}
+	return s
 }
 
 // splitDirective splits "-l select=1:ncpus=8" into flag "-l" and the remainder.
@@ -113,7 +124,18 @@ func apply(job *splat.Job, flag, value string) error {
 	case "-J":
 		job.Spec.Array = parseArray(value)
 	case "-l":
-		return applyResource(job, value)
+		// A single -l may carry a comma-separated resource list, e.g.
+		// "-l mem=250gb,walltime=18:00:00,nodes=1:ppn=4".
+		for _, part := range strings.Split(value, ",") {
+			part = strings.TrimSpace(part)
+			if part == "" {
+				continue
+			}
+			if err := applyResource(job, part); err != nil {
+				return err
+			}
+		}
+		return nil
 	case "-o":
 		job.Spec.Output.Stdout = normalizePath(value)
 	case "-e":
@@ -386,13 +408,14 @@ func parseDuration(s string) (*splat.Duration, error) {
 	return &d, nil
 }
 
-// parseMemory parses PBS memory strings (kb/mb/gb/tb, powers of 1024).
+// parseMemory parses PBS memory strings. PBS suffixes are powers of 1024 and
+// case-insensitive, with the trailing "b" optional: 128gb / 128GB / 128g / 128G
+// all mean 128 GiB. A bare number is bytes (PBS's default unit).
 func parseMemory(s string) (*splat.Quantity, error) {
-	s = strings.TrimSpace(s)
-	lower := strings.ToLower(s)
-	for _, pair := range [][2]string{{"tb", "Ti"}, {"gb", "Gi"}, {"mb", "Mi"}, {"kb", "Ki"}} {
+	lower := strings.TrimSuffix(strings.ToLower(strings.TrimSpace(s)), "b")
+	for _, pair := range [][2]string{{"t", "Ti"}, {"g", "Gi"}, {"m", "Mi"}, {"k", "Ki"}} {
 		if strings.HasSuffix(lower, pair[0]) {
-			iec := s[:len(s)-2] + pair[1]
+			iec := strings.TrimSuffix(lower, pair[0]) + pair[1]
 			var q splat.Quantity
 			if err := q.UnmarshalJSON([]byte(`"` + iec + `"`)); err != nil {
 				return nil, fmt.Errorf("memory %q: %w", s, err)
@@ -400,13 +423,10 @@ func parseMemory(s string) (*splat.Quantity, error) {
 			return &q, nil
 		}
 	}
-	// Bare "b" suffix or plain number: treat as bytes → round to MiB via string.
-	if strings.HasSuffix(lower, "b") {
-		s = s[:len(s)-1]
-	}
-	var q splat.Quantity
-	if err := q.UnmarshalJSON([]byte(s)); err != nil {
+	// No unit suffix: PBS treats a bare number as bytes.
+	n, err := strconv.ParseInt(lower, 10, 64)
+	if err != nil {
 		return nil, fmt.Errorf("memory %q: %w", s, err)
 	}
-	return &q, nil
+	return splat.QuantityOf(n), nil
 }
