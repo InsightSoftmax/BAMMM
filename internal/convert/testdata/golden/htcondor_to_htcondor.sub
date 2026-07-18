@@ -1,0 +1,33 @@
+universe = docker
+docker_image = broadinstitute/gatk:4.5.0.0
+batch_name = genomics-sweep-2026-06
+executable = /scripts/run-variant-calling.sh
+arguments = $(sample_id) $(bam_file) $(output_dir)
+request_cpus = 8
+request_memory = 32G
+request_disk = 200G
+request_gpus = 1
+output = /scratch/logs/gatk-$(Cluster)-$(Process).out
+error = /scratch/logs/gatk-$(Cluster)-$(Process).err
+transfer_input_files = /scripts/run-variant-calling.sh, /reference/hg38.fa, /reference/hg38.fa.fai, /reference/known-sites.vcf.gz
+transfer_output_files = $(output_dir)/$(sample_id).vcf.gz, $(output_dir)/$(sample_id).vcf.gz.tbi
+max_retries = 3
+notification = Complete
+notify_user = pipeline@genomics.org
++ProjectName = genomics-pipeline
++AccountingGroup = bio.variant-calling
+gpus_minimum_capability = 7.5
+log = /scratch/logs/gatk-$(Cluster).log
+periodic_hold = (JobStatus == 2) && (time() - JobCurrentStartDate > 172800)
+periodic_hold_reason = Exceeded 48-hour runtime limit
+periodic_release = (HoldReasonCode == 3)
+periodic_remove = (JobStatus == 1) && (time() - EnteredCurrentStatus > 604800)
+rank = TARGET.Memory / 1024 + TARGET.GPUMemoryMb / 4096
+require_gpus = (GlobalMemoryMb >= 24576)
+requirements = (HasInfiniband =?= True) &&                (Disk >= 500*1024*1024) &&                (OpSysAndVer == "CentOS7" || OpSysAndVer == "AlmaLinux9") &&                (Target.HasGATK4 =?= True || HasSingularity =?= True)
+retry_request_memory = 65536M, 131072M
+retry_request_memory_increase = 32768M
+should_transfer_files = YES
+transfer_output_remaps = $(sample_id).vcf.gz = /results/$(sample_id)/$(sample_id).vcf.gz
+when_to_transfer_output = ON_EXIT_OR_EVICT
+queue sample_id, bam_file, output_dir from /scratch/sample-manifest.txt
