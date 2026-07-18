@@ -122,7 +122,7 @@ func apply(job *splat.Job, key, val string) {
 		job.Spec.Output.Stderr = normalizeVars(val)
 	case "priority":
 		if n, err := strconv.Atoi(val); err == nil {
-			s.Priority = n
+			s.Priority = splat.HTCondorPriority.Normalize(n)
 		}
 	case "notification":
 		applyNotification(job, val)

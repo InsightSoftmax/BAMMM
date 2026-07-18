@@ -120,7 +120,7 @@ func apply(job *splat.Job, flag, value string) error {
 		if err != nil {
 			return fmt.Errorf("priority: %w", err)
 		}
-		s.Priority = n
+		s.Priority = splat.PBSPriority.Normalize(n)
 	case "-J":
 		job.Spec.Array = parseArray(value)
 	case "-l":

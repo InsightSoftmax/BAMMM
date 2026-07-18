@@ -69,7 +69,7 @@ func directives(job *splat.Job) []string {
 		out = append(out, "-P "+s.Project)
 	}
 	if s.Priority != 0 {
-		out = append(out, "-p "+strconv.Itoa(s.Priority))
+		out = append(out, "-p "+strconv.Itoa(splat.PBSPriority.Denormalize(s.Priority)))
 	}
 	if a := job.Spec.Array; a != nil && a.Indices != "" {
 		val := a.Indices

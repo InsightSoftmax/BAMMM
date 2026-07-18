@@ -94,9 +94,13 @@ spec:
     queue: string              # target queue / partition name
                                # Slurm: --partition; PBS: -q; LSF: -q; Flux: --queue
                                # Armada/Volcano/Kueue/YuniKorn: queue or localQueue name
-    priority: integer          # 0–1000 normalized scale (500 = normal)
-                               # Slurm: --priority (scaled); PBS: -p (scaled to -1024..1023)
-                               # LSF: -sp (scaled); Flux: --urgency (scaled to 0–16)
+    priority: integer          # canonical 0–1000 scale, HIGHER = HIGHER PRIORITY (500 = normal)
+                               # Each scheduler's native priority is normalized into this band on
+                               # parse and denormalized back to its native range on emit, so cross-
+                               # scheduler conversions stay in-range and keep the right direction.
+                               # Native ranges: Slurm 0–1000, PBS -1024..1023, HTCondor -1000..1000,
+                               # Armada 0–1000. nice/fair-share style values (lower = higher) invert.
+                               # Slurm: --priority; PBS: -p; HTCondor: priority; LSF: -sp; Flux: --urgency
                                # Armada/Volcano: priorityClassName is preferred; use priority_class
     priority_class: string     # K8s PriorityClass name (K8s-based schedulers only)
                                # Takes precedence over `priority` for K8s schedulers
