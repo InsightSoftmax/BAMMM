@@ -9,4 +9,5 @@ import (
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/pbs"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/slurm"
 	_ "github.com/InsightSoftmax/BAMMM/internal/parser/volcano"
+	_ "github.com/InsightSoftmax/BAMMM/internal/parser/yunikorn"
 )

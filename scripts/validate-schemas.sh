@@ -29,6 +29,8 @@ CONVERSIONS=(
   "volcano:volcano:conversions/02-volcano-to-slurm/source.yaml"
   "armada:kueue:conversions/05-armada-to-slurm/source.yaml"
   "armada:volcano:conversions/05-armada-to-slurm/source.yaml"
+  "slurm:yunikorn:conversions/01-slurm-to-volcano/source.sh"
+  "armada:yunikorn:conversions/05-armada-to-slurm/source.yaml"
 )
 
 echo "Building bammm..."

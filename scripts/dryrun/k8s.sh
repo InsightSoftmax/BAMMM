@@ -37,6 +37,10 @@ strip_ref() { sed '/# Reference LocalQueue/,$d'; }
 "$BAMMM" convert -f volcano -t volcano conversions/02-volcano-to-slurm/source.yaml            > "$OUT/volcano_volcano.yaml"
 "$BAMMM" convert -f armada -t kueue   conversions/05-armada-to-slurm/source.yaml  | strip_ref > "$OUT/armada_kueue.yaml"
 "$BAMMM" convert -f armada -t volcano conversions/05-armada-to-slurm/source.yaml              > "$OUT/armada_volcano.yaml"
+# YuniKorn schedules standard batch/v1 Job / JobSet (schedulerName: yunikorn);
+# no operator needed for server dry-run.
+"$BAMMM" convert -f slurm  -t yunikorn conversions/01-slurm-to-volcano/source.sh              > "$OUT/slurm_yunikorn.yaml"
+"$BAMMM" convert -f armada -t yunikorn conversions/05-armada-to-slurm/source.yaml             > "$OUT/armada_yunikorn.yaml"
 
 # Armada podSpecs → bare Pods (Armada is not a CRD).
 "$BAMMM" convert -f armada -t armada conversions/05-armada-to-slurm/source.yaml \
@@ -48,6 +52,8 @@ dryrun "volcano→kueue (JobSet)"   "$OUT/volcano_kueue.yaml"
 dryrun "volcano→volcano (vcjob)"  "$OUT/volcano_volcano.yaml"
 dryrun "armada→kueue (JobSet)"    "$OUT/armada_kueue.yaml"
 dryrun "armada→volcano (vcjob)"   "$OUT/armada_volcano.yaml"
+dryrun "slurm→yunikorn (Job)"     "$OUT/slurm_yunikorn.yaml"
+dryrun "armada→yunikorn (JobSet)" "$OUT/armada_yunikorn.yaml"
 dryrun "armada podSpecs (Pods)"   "$OUT/armada_pods.yaml"
 
 if [ "$fail" -ne 0 ]; then

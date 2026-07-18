@@ -13,4 +13,5 @@ import (
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/pbs"
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/slurm"
 	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/volcano"
+	_ "github.com/InsightSoftmax/BAMMM/internal/emitter/yunikorn"
 )
